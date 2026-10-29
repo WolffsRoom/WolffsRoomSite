@@ -12,3 +12,5 @@ body{background:var(--bg);color:var(--text);transition:background-color .2s,colo
 
 /* Paw remains white in both themes; this treatment does not depend on the theme. */
 .paw-mark,.archive-symbol .paw-mark,.footer-top .paw-mark{filter:brightness(0) invert(1)}
+.brand-wordmark.original-brand,.light .brand-wordmark.original-brand{filter:brightness(0) invert(1)}
+
