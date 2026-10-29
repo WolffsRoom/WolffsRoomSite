@@ -2,6 +2,10 @@
 
 Site editorial de Mods, Ports, Traduções e Reviews para PlayStation Vita, com código e conteúdo versionados neste repositório.
 
+## Identidade e temas
+
+A interface usa cinza, branco e preto, com o lobo e a marca em pixel art originais do WordPress. O botão de tema alterna entre modo claro e escuro, salva a escolha neste navegador e, antes de uma escolha manual, acompanha a preferência do sistema. Os ícones de interface são do Lucide, com os avisos de licença em `THIRD_PARTY_NOTICES.md`. As imagens dos jogos preservam suas cores.
+
 ## Publicação
 
 Endereço previsto do GitHub Pages: **https://wolffsroom.github.io/WolffsRoomSite/**
