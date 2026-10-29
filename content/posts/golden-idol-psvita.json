@@ -1,0 +1,28 @@
+{
+  "slug": "golden-idol-psvita",
+  "title": "The Case of the Golden Idol",
+  "subtitle": "Projeto no GitHub",
+  "game": "The Case of the Golden Idol",
+  "category": "Ports",
+  "excerpt": "Conheça o repositório do projeto de port para PS Vita.",
+  "body": "## O projeto\nEste registro aponta para um repositório público da Wolff’s Room.\n\n## Código, compatibilidade e versões\nConsulte o README e a área de Releases para verificar o estado atual, os requisitos e a disponibilidade de arquivos. A presença no catálogo não significa que uma versão jogável tenha sido verificada aqui.",
+  "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1677770/header.jpg",
+  "platform": "PS Vita",
+  "status": "Consultar projeto",
+  "version": "",
+  "author": "Wolff",
+  "publishedAt": "2026-10-29T12:00:00Z",
+  "updatedAt": "2026-10-29T12:00:00Z",
+  "published": true,
+  "featured": false,
+  "sourceUrl": "https://github.com/WolffsRoom/GoldenIdol-PSVita",
+  "downloadUrl": "",
+  "requirements": "Consulte os requisitos no README do repositório.",
+  "installation": "Use somente as instruções oficiais do projeto e os dados originais que forem necessários.",
+  "tags": [
+    "Port",
+    "GitHub"
+  ],
+  "archive": false,
+  "issueNumber": null
+}

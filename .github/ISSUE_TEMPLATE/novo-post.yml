@@ -1,0 +1,63 @@
+name: Publicar uma postagem
+description: Criar ou atualizar conteúdo da Wolff’s Room. Publicação aceita apenas do proprietário.
+title: '[Post] '
+body:
+  - type: markdown
+    attributes:
+      value: 'Preencha os campos e envie para publicar. Apenas a conta WolffsRoom pode publicar. Este formulário é público.'
+  - type: input
+    id: titulo
+    attributes:
+      label: Título
+      placeholder: Nome do jogo ou projeto
+    validations:
+      required: true
+  - type: dropdown
+    id: categoria
+    attributes:
+      label: Categoria
+      options: [Mods, Ports, Traduções, Reviews]
+    validations:
+      required: true
+  - type: textarea
+    id: resumo
+    attributes:
+      label: Resumo
+      description: Apresentação curta para os cards, de 10 a 400 caracteres.
+    validations:
+      required: true
+  - type: input
+    id: capa
+    attributes:
+      label: Imagem de capa
+      description: Link HTTPS da imagem. Anexe no conteúdo para obter um link do GitHub.
+  - type: input
+    id: plataforma
+    attributes:
+      label: Plataforma
+      value: PS Vita
+  - type: dropdown
+    id: estado
+    attributes:
+      label: Estado do projeto
+      options: [Disponível, Em andamento, Finalizado, Planejado, Consultar projeto]
+  - type: input
+    id: projeto
+    attributes:
+      label: Link do projeto
+  - type: input
+    id: download
+    attributes:
+      label: Link de download
+  - type: dropdown
+    id: publicacao
+    attributes:
+      label: Publicação
+      options: [Publicar no site, Rascunho público no repositório]
+  - type: textarea
+    id: conteudo
+    attributes:
+      label: Conteúdo
+      description: Escreva o artigo. Você pode anexar imagens e usar títulos, listas e links.
+    validations:
+      required: true

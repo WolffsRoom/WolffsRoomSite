@@ -1,0 +1,28 @@
+{
+  "slug": "horizon-chase-turbo-patch-de-otimizacao",
+  "title": "Horizon Chase Turbo",
+  "subtitle": "Patch de otimização para PS Vita",
+  "game": "Horizon Chase Turbo",
+  "category": "Mods",
+  "excerpt": "Ajustes de desempenho para voltar à pista com o portátil.",
+  "body": "O projeto apresenta um patch de otimização para a edição de PS Vita. As configurações buscam adaptar resolução e qualidade gráfica ao hardware do console.\n\n## Antes de instalar\nConfira a edição e o identificador do seu jogo, os requisitos do rePatch e as opções disponíveis no artigo original.\n\n## Documentação e arquivos\nOs detalhes técnicos, comparações e instruções completas estão preservados na publicação original.",
+  "cover": "https://wolffsroom.wordpress.com/wp-content/uploads/2026/05/horizon-1.png",
+  "platform": "PS Vita",
+  "status": "Disponível",
+  "version": "",
+  "author": "Wolff",
+  "publishedAt": "2026-05-15T00:52:37-03:00",
+  "updatedAt": "2026-05-15T00:52:37-03:00",
+  "published": true,
+  "featured": true,
+  "sourceUrl": "https://wolffsroom.wordpress.com/2026/05/15/horizon-chase-turbo-patch-de-otimizacao/",
+  "downloadUrl": "",
+  "requirements": "Confira a versão do jogo e os requisitos na publicação original.",
+  "installation": "Consulte as instruções completas no artigo de origem antes de alterar arquivos do jogo.",
+  "tags": [
+    "Modificação",
+    "PS Vita"
+  ],
+  "archive": true,
+  "issueNumber": null
+}

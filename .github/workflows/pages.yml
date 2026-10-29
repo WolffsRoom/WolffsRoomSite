@@ -1,0 +1,60 @@
+name: Publicar Wolff's Room
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  issues:
+    types: [opened, edited, reopened]
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: wolffs-room-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event_name != 'issues' || (github.actor == github.repository_owner && github.event.issue.user.login == github.repository_owner)
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validar publicação enviada pelo editor
+        if: github.event_name == 'issues'
+        id: post
+        run: node scripts/publish-issue.mjs
+      - name: Registrar o post no repositório
+        if: steps.post.outputs.handled == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/posts
+          if ! git diff --cached --quiet; then
+            git commit -m "content: publish owner-reviewed post"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Testar e gerar o site
+        if: github.event_name != 'issues' || steps.post.outputs.handled == 'true'
+        run: |
+          npm test
+          npm run build
+      - name: Configurar Pages
+        if: github.event_name != 'issues' || steps.post.outputs.handled == 'true'
+        uses: actions/configure-pages@v5
+      - name: Preparar o site
+        if: github.event_name != 'issues' || steps.post.outputs.handled == 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - name: Publicar no GitHub Pages
+        if: github.event_name != 'issues' || steps.post.outputs.handled == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4

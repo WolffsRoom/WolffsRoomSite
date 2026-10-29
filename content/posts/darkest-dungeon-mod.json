@@ -1,0 +1,28 @@
+{
+  "slug": "darkest-dungeon-mod",
+  "title": "Darkest Dungeon",
+  "subtitle": "Pilha reforçada",
+  "game": "Darkest Dungeon",
+  "category": "Mods",
+  "excerpt": "Uma modificação para a organização dos itens da aventura.",
+  "body": "A modificação altera parâmetros relacionados às pilhas de itens.\n\n## Detalhes do mod\nOs arquivos, a compatibilidade e as instruções devem ser consultados no artigo original.",
+  "cover": "https://wolffsroom.wordpress.com/wp-content/uploads/2025/01/imagem-3840x1240-1.png",
+  "platform": "PS Vita",
+  "status": "Disponível",
+  "version": "",
+  "author": "Wolff",
+  "publishedAt": "2025-01-27T21:05:30-03:00",
+  "updatedAt": "2025-01-27T21:05:30-03:00",
+  "published": true,
+  "featured": false,
+  "sourceUrl": "https://wolffsroom.wordpress.com/2025/01/27/darkest-dungeon-mod/",
+  "downloadUrl": "",
+  "requirements": "Confira a versão do jogo e os requisitos na publicação original.",
+  "installation": "Consulte as instruções completas no artigo de origem antes de alterar arquivos do jogo.",
+  "tags": [
+    "Modificação",
+    "PS Vita"
+  ],
+  "archive": true,
+  "issueNumber": null
+}

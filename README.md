@@ -64,4 +64,3 @@ As imagens permanecem hospedadas nas fontes originais. O site não inclui jogos 
 O conteúdo publicado é renderizado em HTML durante o build. A leitura e os links principais funcionam sem JavaScript; o editor e os filtros dinâmicos precisam dele. Datas futuras e posts despublicados são excluídos do site. HTML no texto é exibido como texto, sem execução. Links e imagens só aceitam HTTPS. Slugs são validados para impedir escrita fora da pasta de conteúdo. Eventos de pessoas externas são ignorados, mesmo quando imitam uma publicação.
 
 O Pages é estático: a confirmação de publicação acontece no GitHub, e não por uma API secreta no navegador. Depois de enviar, consulte **Actions** para acompanhar o resultado. GitHub Actions pode levar alguns minutos para atualizar o site.
-
