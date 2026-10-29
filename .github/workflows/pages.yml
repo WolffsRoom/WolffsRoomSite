@@ -46,9 +46,6 @@ jobs:
         run: |
           npm test
           npm run build
-      - name: Configurar Pages
-        if: github.event_name != 'issues' || steps.post.outputs.handled == 'true'
-        uses: actions/configure-pages@v5
       - name: Preparar o site
         if: github.event_name != 'issues' || steps.post.outputs.handled == 'true'
         uses: actions/upload-pages-artifact@v4

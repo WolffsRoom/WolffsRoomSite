@@ -52,3 +52,7 @@ SOFTWARE.
 The original pixel-art wolf and wordmark are used from the user’s referenced WordPress site. Source URLs:
 - https://wolffsroom.wordpress.com/wp-content/uploads/2026/01/logosite_branco.png
 - https://wolffsroom.wordpress.com/wp-content/uploads/2025/01/logo.png
+
+## Pixel-art paw
+
+User-selected source asset: https://static.vecteezy.com/system/resources/previews/072/636/832/non_2x/pixel-art-paw-print-icon-free-png.png
