@@ -69,6 +69,36 @@ Primeiro parágrafo: apresentação do projeto.
 - Passo 2
 ```
 
+### Versão em inglês (`post.en.md`)
+
+O site abre em **inglês** (o visitante pode trocar para português no botão EN/PT, acima do botão de som). Para cada post, um arquivo `post.en.md` na mesma pasta traz os textos em inglês. Tudo nele é opcional: o que faltar aparece em português.
+
+```markdown
+---
+titulo: Pizza Tower — SAGE 2019 Demo   # só se mudar
+tag: Port · PS Vita
+status: In progress
+resumo: Port of the SAGE 2019 demo to PS Vita.
+chamada: Text for the home page highlight.
+video_legenda: Trailer
+titulo_barras: Progress
+barras:                 # mesmos números, nomes em inglês
+  Scripts: 90
+  Graphics: 40
+ficha:
+  Game version: PCSE00000
+links:
+  View on GitHub: https://github.com/WolffsRoom/...
+---
+
+First paragraph: the project in English.
+
+## Highlights
+- Item
+```
+
+Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junto.
+
 ### Campos extras
 
 | Campo | Para que serve |

@@ -24,6 +24,7 @@ FIELDS = {
     'Progresso (%)': 'progresso', 'Resumo': 'resumo', 'Texto do post': 'texto', 'Capa': 'capa',
     'Capturas de tela': 'capturas', 'Vídeo (opcional)': 'video', 'Links (opcional)': 'links',
     'Ficha (opcional)': 'ficha', 'Barras de progresso (opcional)': 'barras', 'Destaque': 'destaque',
+    'Título (inglês)': 'titulo_en', 'Resumo (inglês)': 'resumo_en', 'Status (inglês)': 'status_en', 'Texto do post (inglês)': 'texto_en',
 }
 MAX_W = 1600
 
@@ -192,6 +193,17 @@ def main():
 
     head = yaml.safe_dump(fm, sort_keys=False, allow_unicode=True, width=1000)
     open(os.path.join(folder, 'post.md'), 'w', encoding='utf-8').write('---\n' + head + '---\n\n' + text + '\n')
+
+    en = {}
+    for k in ('titulo', 'resumo', 'status'):
+        if f.get(k + '_en'):
+            en[k] = f[k + '_en'].strip()
+    if 'resumo' in en and fm.get('destaque'):
+        en['chamada'] = en['resumo']
+    text_en = re.sub(r'!\[[^\]]*\]\([^)]+\)|<img[^>]*>', '', (f.get('texto_en') or '')).strip()
+    if en or text_en:
+        head_en = yaml.safe_dump(en, sort_keys=False, allow_unicode=True, width=1000) if en else ''
+        open(os.path.join(folder, 'post.en.md'), 'w', encoding='utf-8').write('---\n' + head_en + '---\n\n' + text_en + '\n')
     print(slug)
 
 

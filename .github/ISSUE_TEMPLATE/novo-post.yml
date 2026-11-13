@@ -77,6 +77,29 @@ body:
         - Passo 1
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        **Versão em inglês (recomendado).** O site abre em inglês; se estes campos ficarem vazios, o post aparece em português.
+  - type: input
+    id: titulo_en
+    attributes:
+      label: Título (inglês)
+      description: Deixe vazio se for igual ao título em português.
+  - type: input
+    id: resumo_en
+    attributes:
+      label: Resumo (inglês)
+  - type: input
+    id: status_en
+    attributes:
+      label: Status (inglês)
+      placeholder: "In progress"
+  - type: textarea
+    id: texto_en
+    attributes:
+      label: Texto do post (inglês)
+      description: Mesmo formato do texto em português.
   - type: textarea
     id: capa
     attributes:
