@@ -63,12 +63,16 @@ dd{overflow-wrap:anywhere;min-width:0}
 
 @keyframes wr-typing{from{width:0}}
 @keyframes wr-caret{50%{opacity:0}}
-.wr-feat-art{animation:wr-open .6s steps(6,end) .2s both}
+.wr-feat-art{animation:wr-tv .6s steps(8,end) .2s both}
+@keyframes wr-tv{0%{clip-path:inset(50% 50% 50% 50%);filter:brightness(4)}40%{clip-path:inset(calc(50% - 2px) 0 calc(50% - 2px) 0);filter:brightness(4)}100%{clip-path:inset(0);filter:brightness(1)}}
+.wr-mos{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated;animation:wr-hide .01s step-end both}
+@keyframes wr-hide{to{visibility:hidden}}
 @keyframes wr-open{from{clip-path:inset(50% 0 50% 0)}to{clip-path:inset(0)}}
 .wr-feat-wrap:not(.wr-loaded) .wr-feat-info{visibility:hidden}
 .wr-loaded .wr-feat-info>*{animation:wr-pop .32s steps(4,end) both}
-.wr-loaded .wr-feat-info>:nth-child(1){animation-delay:2.5s}.wr-loaded .wr-feat-info>:nth-child(2){animation-delay:2.62s}.wr-loaded .wr-feat-info>:nth-child(3){animation-delay:2.74s}.wr-loaded .wr-feat-info>:nth-child(4){animation-delay:2.86s}
+.wr-loaded .wr-feat-info>:nth-child(1){animation-delay:3.45s}.wr-loaded .wr-feat-info>:nth-child(2){animation-delay:3.57s}.wr-loaded .wr-feat-info>:nth-child(3){animation-delay:3.69s}.wr-loaded .wr-feat-info>:nth-child(4){animation-delay:3.81s}
 @keyframes wr-pop{from{transform:translateY(16px);opacity:0}}
+.wr-pbdone .wr-mos{display:none}
 .wr-pbdone .wr-ch,.wr-pbdone .wr-caret,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
 .wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
 .wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
@@ -78,10 +82,12 @@ dd{overflow-wrap:anywhere;min-width:0}
 .wr-slide{text-align:left !important}
 .wr-arrow:hover{border-color:#ffffff !important;background:#ffffff !important;color:#0b0b0b !important}
 @media (max-width:720px){.wr-type{font-size:16px !important}.wr-feat-wrap h1{font-size:16px !important}.wr-foot-name{font-size:16px !important}}
-@media (prefers-reduced-motion:reduce){.wr-ch,.wr-caret,.wr-feat-art,.wr-loaded .wr-feat-info>*,.wr-peek .wr-card{animation:none !important}}
-.wr-ch{animation:wr-show .01s step-end both}
+.wr-feat-art .wr-mos{pointer-events:none}
+@media (prefers-reduced-motion:reduce){.wr-mos{display:none}.wr-ch,.wr-caret,.wr-feat-art,.wr-loaded .wr-feat-info>*,.wr-peek .wr-card{animation:none !important}}
+.wr-ch{display:inline-block;animation:wr-chpop .12s steps(3,end) both}
+@keyframes wr-chpop{0%{visibility:hidden;transform:translateY(-8px)}1%{visibility:visible;transform:translateY(-8px)}100%{visibility:visible;transform:none}}
 @keyframes wr-show{from{visibility:hidden}}
-.wr-caret{display:inline-block;width:.5em;height:.75em;margin-left:.15em;background:#ffffff;vertical-align:-.05em;animation:wr-show .01s step-end 2.4s both,wr-caret .5s step-end 2.4s 6}
+.wr-caret{display:inline-block;width:.5em;height:.75em;margin-left:.15em;background:#ffffff;vertical-align:-.05em;animation:wr-show .01s step-end 3.3s both,wr-caret .5s step-end 3.3s 6}
 .wr-feat-wrap .wr-type{margin-top:-8px !important}
 .wr-ico:hover{color:#ffffff !important;transform:translateY(-4px)}
 .wr-ico:active{transform:translate(4px,4px)}
@@ -114,10 +120,14 @@ dd{overflow-wrap:anywhere;min-width:0}
 <div class="dc-if" data-if="on0">
 <section class="wr-home" aria-label="Projeto em andamento" style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
 <div class="wr-feat-wrap" data-bbase="wr-feat-wrap" data-bclass="featCls" style="width: 100%; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 44px">
-<a class="wr-link wr-feat-art wr-sh" href="#topo" data-act="open_pizza" aria-label="Abrir Pizza Tower — SAGE 2019 Demo" style="display: block; width: 100%; line-height: 0; background: #000000">
+<a class="wr-link wr-feat-art wr-sh" href="#topo" data-act="open_pizza" aria-label="Abrir Pizza Tower — SAGE 2019 Demo" style="position: relative; display: block; width: 100%; line-height: 0; background: #000000">
 <img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" data-onload="featLoad" style="width: 100%; height: auto; display: block; image-rendering: pixelated">
+<img class="wr-mos" src="assets/pizza_m240.png" alt="" aria-hidden="true" style="animation-delay: 1.3s">
+<img class="wr-mos" src="assets/pizza_m120.png" alt="" aria-hidden="true" style="animation-delay: 1.15s">
+<img class="wr-mos" src="assets/pizza_m60.png" alt="" aria-hidden="true" style="animation-delay: 1.0s">
+<img class="wr-mos" src="assets/pizza_m30.png" alt="" aria-hidden="true" style="animation-delay: 0.85s">
 </a>
-<p class="wr-type" aria-label="O que será que o Wolff está fazendo...?" style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.5; color: #ffffff; text-shadow: 4px 4px 0 #3a3a3a; text-align: center; max-width: 1100px"><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.00s">O</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.03s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.07s">q</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.10s">u</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.14s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.18s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.21s">s</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.25s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.28s">r</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.31s">á</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.35s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.39s">q</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.42s">u</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.46s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.49s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.52s">o</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.56s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.60s">W</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.63s">o</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.67s">l</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.70s">f</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.74s">f</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.77s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.81s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.84s">s</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.88s">t</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.91s">á</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.95s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.98s">f</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.02s">a</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.05s">z</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.08s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.12s">n</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.16s">d</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.19s">o</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.23s">.</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.26s">.</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.29s">.</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.33s">?</span><span class="wr-caret" aria-hidden="true"></span></p>
+<p class="wr-type" aria-label="O que será que o Wolff está fazendo...?" style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.5; color: #ffffff; text-shadow: 4px 4px 0 #3a3a3a; text-align: center; max-width: 1100px"><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.50s">O</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.54s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.59s">q</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.64s">u</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.68s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.73s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.77s">s</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.81s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.86s">r</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.91s">á</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 1.95s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.00s">q</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.04s">u</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.08s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.13s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.17s">o</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.22s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.27s">W</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.31s">o</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.35s">l</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.40s">f</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.44s">f</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.49s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.54s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.58s">s</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.62s">t</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.67s">á</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.71s">&#160;</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.76s">f</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.80s">a</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.85s">z</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.90s">e</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.94s">n</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 2.98s">d</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 3.03s">o</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 3.08s">.</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 3.12s">.</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 3.17s">.</span><span class="wr-ch" aria-hidden="true" style="animation-delay: 3.21s">?</span><span class="wr-caret" aria-hidden="true"></span></p>
 <div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">
 <span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita · Em andamento</span>
 <h1 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">Pizza Tower — SAGE 2019 Demo</h1>
@@ -2585,43 +2595,95 @@ dd{overflow-wrap:anywhere;min-width:0}
 class Component extends DCLogic {
   componentDidMount() {
     var self = this;
-    this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, 3600);
+    this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, 4400);
     this._fT = setTimeout(function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); }, 3000);
+    this._unlock = function () { var ac = self.audio(); if (ac && ac.state === 'suspended') ac.resume(); };
+    try { document.addEventListener('pointerdown', this._unlock); } catch (e) {}
+    var st = this.state || {};
+    var atHome = !st.post && (!st.view || st.view === 'inicio');
+    this._sfxT = [];
+    if (atHome) {
+      var plan = [[200, 'tvon'], [850, 'mos1'], [1000, 'mos2'], [1150, 'mos3'], [1300, 'mos4']];
+      var kt = 'O que será que o Wolff está fazendo...?';
+      for (var i = 0; i < kt.length; i++) if (kt[i] !== ' ') plan.push([1500 + i * 45, 'type']);
+      plan.push([3450, 'ready']);
+      plan.forEach(function (p) { self._sfxT.push(setTimeout(function () { self.beep(p[1], false, true); }, p[0])); });
+    }
   }
-  componentWillUnmount() { clearTimeout(this._pbT); clearTimeout(this._fT); }
+  componentWillUnmount() {
+    clearTimeout(this._pbT); clearTimeout(this._fT);
+    (this._sfxT || []).forEach(clearTimeout);
+    try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
+  }
+  audio() {
+    try {
+      var C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return null;
+      if (!this._ac) this._ac = new C();
+      return this._ac;
+    } catch (e) { return null; }
+  }
   sndOn() {
     var st = this.state || {};
     if (st.snd !== undefined) return st.snd;
     try { return window.localStorage.getItem('wr-som') !== '0'; } catch (e) { return true; }
   }
-  beep(kind, force) {
+  beep(kind, force, intro) {
     if (!force && !this.sndOn()) return;
+    var ac = this.audio();
+    if (!ac) return;
+    var self = this;
+    if (ac.state !== 'running') {
+      if (intro) return;
+      ac.resume().then(function () { self.play(ac, kind); }, function () {});
+      return;
+    }
+    this.play(ac, kind);
+  }
+  play(ac, kind) {
     try {
-      var C = window.AudioContext || window.webkitAudioContext;
-      if (!C) return;
-      if (!this._ac) this._ac = new C();
-      var ac = this._ac;
-      if (ac.state === 'suspended') ac.resume();
       var out = ac.createGain();
       out.gain.value = 0.05;
       out.connect(ac.destination);
+      var r = 560 + Math.floor(Math.random() * 5) * 30;
       // [freqStart, freqEnd, start, dur, wave]
       var seqs = {
         open: [[988, 988, 0, 0.06, 'square'], [1319, 1319, 0.06, 0.16, 'square']],
         back: [[784, 523, 0, 0.09, 'square'], [392, 262, 0.08, 0.12, 'square']],
         tick: [[1568, 1568, 0, 0.035, 'square']],
-        on: [[523, 523, 0, 0.06, 'square'], [659, 659, 0.06, 0.06, 'square'], [784, 784, 0.12, 0.06, 'square'], [1047, 1568, 0.18, 0.14, 'square'], [131, 131, 0, 0.3, 'triangle']]
+        on: [[523, 523, 0, 0.06, 'square'], [659, 659, 0.06, 0.06, 'square'], [784, 784, 0.12, 0.06, 'square'], [1047, 1568, 0.18, 0.14, 'square'], [131, 131, 0, 0.3, 'triangle']],
+        tvon: [[55, 880, 0, 0.4, 'square'], [110, 110, 0, 0.45, 'triangle']],
+        mos1: [[330, 330, 0, 0.05, 'square']],
+        mos2: [[440, 440, 0, 0.05, 'square']],
+        mos3: [[587, 587, 0, 0.05, 'square']],
+        mos4: [[784, 784, 0, 0.05, 'square'], [1175, 1175, 0.05, 0.08, 'square']],
+        type: [[r, r, 0, 0.03, 'square']],
+        ready: [[659, 659, 0, 0.07, 'square'], [988, 988, 0.07, 0.07, 'square'], [1319, 1319, 0.14, 0.18, 'square'], [165, 165, 0, 0.3, 'triangle']]
       };
       var t0 = ac.currentTime + 0.01;
+      if (kind === 'tvon') {
+        var len = Math.floor(ac.sampleRate * 0.25);
+        var buf = ac.createBuffer(1, len, ac.sampleRate);
+        var d = buf.getChannelData(0);
+        for (var k = 0; k < len; k++) d[k] = (Math.random() * 2 - 1) * (1 - k / len);
+        var src = ac.createBufferSource();
+        var ng = ac.createGain();
+        ng.gain.value = 0.6;
+        src.buffer = buf;
+        src.connect(ng);
+        ng.connect(out);
+        src.start(t0);
+      }
       (seqs[kind] || seqs.open).forEach(function (n) {
         var o = ac.createOscillator();
         var g = ac.createGain();
+        var peak = n[4] === 'triangle' ? 1.6 : 1;
         o.type = n[4];
         o.frequency.setValueAtTime(n[0], t0 + n[2]);
         if (n[1] !== n[0]) o.frequency.exponentialRampToValueAtTime(n[1], t0 + n[2] + n[3]);
         g.gain.setValueAtTime(0.0001, t0 + n[2]);
-        g.gain.linearRampToValueAtTime(n[4] === 'triangle' ? 1.6 : 1, t0 + n[2] + 0.005);
-        g.gain.setValueAtTime(n[4] === 'triangle' ? 1.6 : 1, t0 + n[2] + n[3] * 0.6);
+        g.gain.linearRampToValueAtTime(peak, t0 + n[2] + 0.005);
+        g.gain.setValueAtTime(peak, t0 + n[2] + n[3] * 0.6);
         g.gain.linearRampToValueAtTime(0.0001, t0 + n[2] + n[3]);
         o.connect(g);
         g.connect(out);
