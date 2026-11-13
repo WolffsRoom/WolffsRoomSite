@@ -1,0 +1,5 @@
+WR Start 2P — versão modificada da fonte Press Start 2P (SIL OFL 1.1).
+Mudança: as maiúsculas acentuadas (À Á Â Ã Ä È É Ê Ë Ì Í Î Ï Ò Ó Ô Õ Ö Ù Ú Û Ü Ñ Ý)
+foram redesenhadas no tamanho normal da letra, com o acento acima dela.
+Renomeada para "WR Start 2P" porque "Press Start 2P" é Nome de Fonte Reservado.
+Licença: OFL.txt nesta pasta.

@@ -24,7 +24,7 @@ OUT = os.path.join(ROOT, '_site')
 TEMPLATE = os.path.join(ROOT, 'tools', 'template.html')
 
 e = html.escape
-DF = "font-family: 'Press Start 2P', 'Pixelify Sans', monospace;"
+DF = "font-family: 'WR Start 2P', 'Press Start 2P', 'Pixelify Sans', monospace;"
 CATS = [('ports', 'Ports'), ('ferramentas', 'Ferramentas'), ('traducoes', 'Traduções'), ('reviews', 'Reviews')]
 CAT_NAMES = dict(CATS)
 GROUPS = ['Em andamento', 'Finalizado', 'Próximos', 'Outras equipes']
@@ -59,7 +59,7 @@ def parse_markdown(body):
 def inline(text):
     """Escapa o texto e converte [texto](url) e **negrito**."""
     out = e(text)
-    out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', r'<a href="\2">\1</a>', out)
+    out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', r'<a href="\2" target="_blank" rel="noopener">\1</a>', out)
     out = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', out)
     return out
 
@@ -228,7 +228,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Ferramentas', 'traducoes': 'Traduções', 'reviews': 'Reviews'},
         'groups': {g: g for g in GROUPS}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Ficha', 'links': 'Links', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Links', 'total': 'Total', 'progress': 'Progresso',
         'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -238,7 +238,7 @@ UI = {
         'groups': {'Em andamento': 'In progress', 'Finalizado': 'Finished', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Info', 'links': 'Links', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Links', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -281,7 +281,7 @@ def pic(p, lang='en'):
 
 
 def card(p):
-    return ('<a class="wr-card wr-sh-s" href="#topo" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
+    return ('<a class="wr-card wr-sh-s" href="#' + p['slug'] + '" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
             '<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">\n' + pic(p) + '\n</div>\n'
             '<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">\n'
             f'<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")}</span>\n'
@@ -328,12 +328,12 @@ def article(p0, lang):
               if p['cover'] and p['cover_style'] != 'logo' else '<div style="aspect-ratio: 16 / 9; background: #161616"></div>')
         url = 'https://www.youtube.com/watch?v=' + p['video']
         secs += section(ui['video'],
-                        f'<a class="wr-video wr-sh-s" href="{url}" aria-label="{e(label)} — {e(ui["watch"])}" style="position: relative; display: block; border: 4px solid #ffffff; background: #000000; line-height: 0; color: #ffffff; text-decoration: none">\n{bg}\n'
+                        f'<a class="wr-video wr-sh-s" href="{url}" target="_blank" rel="noopener" aria-label="{e(label)} — {e(ui["watch"])}" style="position: relative; display: block; border: 4px solid #ffffff; background: #000000; line-height: 0; color: #ffffff; text-decoration: none">\n{bg}\n'
                         f'<span style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; line-height: 1.5">{PLAY}<span style="{DF} font-size: 16px; text-transform: uppercase; text-shadow: 4px 4px 0 #000000">{e(ui["watch"])}</span></span>\n</a>\n'
                         f'<span style="color: #a8a8a8">{e(label)}. {e(ui["video_note"])}</span>\n')
     side = ''
     if p['meta']:
-        rows = '\n'.join(f'<div style="display: flex; justify-content: space-between; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="color: #a8a8a8">{e(k)}</dt><dd style="margin: 0; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['meta'])
+        rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['meta'])
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["info"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
     bars = ([bar(ui['total'], p['progress'])] if p['progress'] is not None else []) + [bar(*b) for b in p['bars']]
     if bars:
@@ -342,7 +342,7 @@ def article(p0, lang):
         links = ''
         for i, (lab, url) in enumerate(p['links']):
             st = 'background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff' if i == 0 else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a'
-            links += f'<a class="wr-btn" href="{e(url)}" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n'
+            links += f'<a class="wr-btn" href="{e(url)}" target="_blank" rel="noopener" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n'
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["links"])}</h2>\n{links}</div>\n'
     hero = (f'<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">\n{pic(p0, lang)}\n</div>\n' if p['cover'] else '')
     about = f'<p style="margin: 0; color: #e0e0e0; font-size: 19px">{inline(p["about"])}</p>\n' if p['about'] else ''
@@ -380,7 +380,7 @@ def lists_html(posts, order):
                 body += f'<p style="margin: 0; text-align: center; color: #8a8a8a">{U("nothing")}</p>\n'
             body += '</div>\n'
         if cid in ('ports', 'ferramentas'):
-            body += ('<a class="wr-btn" href="https://github.com/WolffsRoom?tab=repositories" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
+            body += ('<a class="wr-btn" href="https://github.com/WolffsRoom?tab=repositories" target="_blank" rel="noopener" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
         title = T(e(UI['pt']['cats'][cid]), e(UI['en']['cats'][cid]))
         out += ('\n<div class="dc-if" data-if="on' + str(n) + '">\n'
                 f'<section aria-label="{e(UI["en"]["cats"][cid])}" style="display: flex; flex-direction: column; gap: 44px">\n'
@@ -417,15 +417,15 @@ def home_html(posts, order, feat, mosaic):
         + kicker_words(UI[lg]['kicker']) + '</p>\n' for lg in ('en', 'pt'))
     art = (f'<img src="{p["cover"]}" alt="{e(UI["en"]["cover_of"] + " " + V(p, "en")["title"])}" data-onload="featLoad" style="width: 100%; height: auto; display: block{px}">\n'
            if p['cover'] else f'<div style="aspect-ratio: 16 / 9; background: #161616"></div>\n')
-    buttons = '<a class="wr-btn" href="#topo" data-act="open_' + feat + '" style="' + BTN + '; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">' + U('details') + '</a>\n'
+    buttons = '<a class="wr-btn" href="#' + feat + '" data-act="open_' + feat + '" style="' + BTN + '; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">' + U('details') + '</a>\n'
     if gh:
-        buttons += f'<a class="wr-btn" href="{e(gh)}" style="{BTN}; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff">{U("github")}</a>\n'
+        buttons += f'<a class="wr-btn" href="{e(gh)}" target="_blank" rel="noopener" style="{BTN}; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff">{U("github")}</a>\n'
     feat_html = (
         '<div class="dc-if" data-if="on0">\n'
         '<section class="wr-home" aria-label="' + e(UI['en']['open']) + ' ' + e(V(p, 'en')['title']) + '" style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">\n'
         '<div class="wr-feat-wrap" data-bbase="wr-feat-wrap" data-bclass="featCls" style="width: 100%; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 44px">\n'
         '<div class="wr-stage">\n<div class="wr-tvbox">\n'
-        '<a class="wr-link wr-feat-art wr-sh" href="#topo" data-act="open_' + feat + '" aria-label="' + e(UI['en']['open']) + ' ' + e(V(p, 'en')['title']) + '" style="position: relative; display: block; width: 100%; line-height: 0; background: #000000">\n'
+        '<a class="wr-link wr-feat-art wr-sh" href="#' + feat + '" data-act="open_' + feat + '" aria-label="' + e(UI['en']['open']) + ' ' + e(V(p, 'en')['title']) + '" style="position: relative; display: block; width: 100%; line-height: 0; background: #000000">\n'
         + art + mos + '</a>\n</div>\n<div class="wr-kick">\n' + kicker + '</div>\n'
         '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; ' + U('start') + '</span><small>' + U('click') + '</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
