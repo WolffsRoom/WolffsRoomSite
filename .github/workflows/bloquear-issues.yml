@@ -1,0 +1,20 @@
+name: Só o dono abre issues
+on:
+  issues:
+    types: [opened]
+permissions:
+  issues: write
+jobs:
+  fechar:
+    if: github.event.issue.author_association != 'OWNER'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fechar e trancar a issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NUM" -R "$REPO" --body "Issues neste repositório são usadas só pelo dono do site para publicar posts. Esta foi fechada automaticamente. / Issues here are only used by the site owner to publish posts; this one was closed automatically."
+          gh issue close "$NUM" -R "$REPO" --reason "not planned"
+          gh issue lock "$NUM" -R "$REPO" --reason spam || gh issue lock "$NUM" -R "$REPO"

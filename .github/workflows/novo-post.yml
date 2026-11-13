@@ -13,7 +13,7 @@ jobs:
   criar:
     if: >-
       startsWith(github.event.issue.title, '[Post]') &&
-      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+      github.event.issue.author_association == 'OWNER'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
