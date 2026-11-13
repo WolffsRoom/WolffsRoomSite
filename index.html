@@ -54,12 +54,33 @@ main section[aria-label]::after,main article::after,nav.wr-nav::after{content:""
 .wr-foot-dither{height:48px;background:url(assets/w75.png) 0 0 / 16px 16px repeat-x,url(assets/w50.png) 0 16px / 16px 16px repeat-x,url(assets/w25.png) 0 32px / 16px 16px repeat-x;background-color:#111111;image-rendering:pixelated;box-shadow:inset 0 -4px 0 #2e2e2e}
 .wr-chip:hover{border-color:#ffffff !important;background:#ffffff !important;color:#0b0b0b !important}
 .wr-chip:active,.wr-btn:active{transform:translate(4px,4px)}
-.wr-snd{position:fixed;top:16px;right:16px;z-index:50;width:64px;height:64px;padding:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
+.wr-snd{position:fixed;bottom:16px;right:16px;z-index:50;width:64px;height:64px;padding:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
 .wr-snd:hover{border-color:#ffffff}
 .wr-snd[aria-pressed="false"]{color:#5a5a5a}
 .wr-snd:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
 
 dd{overflow-wrap:anywhere;min-width:0}
+
+.wr-type{display:inline-block;white-space:nowrap;overflow:hidden;width:40ch;max-width:100%;animation:wr-typing 1.2s steps(39,end) .2s both}
+.wr-type::after{content:"";display:inline-block;width:16px;height:16px;margin-left:4px;vertical-align:-2px;background:#ffffff;animation:wr-caret .5s step-end 6}
+@keyframes wr-typing{from{width:0}}
+@keyframes wr-caret{50%{opacity:0}}
+.wr-feat-art{animation:wr-open .6s steps(6,end) 1.4s both}
+@keyframes wr-open{from{clip-path:inset(50% 0 50% 0)}to{clip-path:inset(0)}}
+.wr-feat-wrap:not(.wr-loaded) .wr-feat-info{visibility:hidden}
+.wr-loaded .wr-feat-info>*{animation:wr-pop .32s steps(4,end) both}
+.wr-loaded .wr-feat-info>:nth-child(1){animation-delay:2s}.wr-loaded .wr-feat-info>:nth-child(2){animation-delay:2.12s}.wr-loaded .wr-feat-info>:nth-child(3){animation-delay:2.24s}.wr-loaded .wr-feat-info>:nth-child(4){animation-delay:2.36s}
+@keyframes wr-pop{from{transform:translateY(16px);opacity:0}}
+.wr-pbdone .wr-type,.wr-pbdone .wr-type::after,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
+.wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
+.wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
+.wr-slider-track{scrollbar-color:#5a5a5a #111111;scrollbar-width:thin}
+.wr-slider-track::-webkit-scrollbar{height:8px}.wr-slider-track::-webkit-scrollbar-track{background:#111111}.wr-slider-track::-webkit-scrollbar-thumb{background:#5a5a5a}
+.wr-slider-track:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.wr-slide{text-align:left !important}
+.wr-arrow:hover{border-color:#ffffff !important;background:#ffffff !important;color:#0b0b0b !important}
+@media (max-width:720px){.wr-type{white-space:normal;width:auto;animation:wr-pop .32s steps(4,end) both}.wr-feat-wrap h1{font-size:16px !important}.wr-foot-name{font-size:16px !important}}
+@media (prefers-reduced-motion:reduce){.wr-type,.wr-type::after,.wr-feat-art,.wr-loaded .wr-feat-info>*,.wr-peek .wr-card{animation:none !important}}
 .wr-card:hover{border-color:#ffffff !important}
 .wr-btn:hover{border-color:#ffffff !important}
 .wr-btn:focus-visible,.wr-card:focus-visible,.wr-link:focus-visible{outline:4px solid #ffffff;outline-offset:3px}
@@ -72,7 +93,7 @@ dd{overflow-wrap:anywhere;min-width:0}
 </style>
 </head>
 <body>
-<div class="wr-root" data-bclass="rootCls" style="min-height: 100vh; overflow-x: hidden; background: #060606; color: #ffffff; font-family: '8bitoperator', '8-bit Operator+', 'Pixel Operator', 'Pixelify Sans', monospace; font-size: 18px; line-height: 1.45; display: flex; flex-direction: column">
+<div class="wr-root" data-bbase="wr-root" data-bclass="rootCls" style="min-height: 100vh; overflow-x: hidden; background: #060606; color: #ffffff; font-family: '8bitoperator', '8-bit Operator+', 'Pixel Operator', 'Pixelify Sans', monospace; font-size: 18px; line-height: 1.45; display: flex; flex-direction: column">
 
 <header id="topo" class="wr-pad" style="padding: 48px 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
 <button class="wr-link" type="button" data-act="goHome" aria-label="Wolff's Room — início" style="border: 0; padding: 0; background: transparent; cursor: pointer; line-height: 0">
@@ -86,32 +107,397 @@ dd{overflow-wrap:anywhere;min-width:0}
 <main class="wr-pad" style="flex-grow: 1; width: 100%; max-width: 1180px; margin: 0 auto; box-sizing: border-box; padding: 0 40px 72px; display: flex; flex-direction: column; gap: 48px">
 
 <div class="dc-if" data-if="on0">
-<section class="wr-sh" aria-label="Projeto em andamento mais recente" style="border: 4px solid #ffffff; background: #0e0e0e; display: flex; flex-direction: column">
-<a class="wr-link" href="#topo" data-act="open_pizza" style="display: block; line-height: 0; background: #000000">
-<img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" style="width: 100%; height: auto; display: block; image-rendering: pixelated">
+<section class="wr-home" aria-label="Projeto em andamento" style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">
+<p class="wr-type" style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; color: #c4c4c4">O que será que o Wolff está fazendo...?</p>
+<div class="wr-feat-wrap" data-bbase="wr-feat-wrap" data-bclass="featCls" style="width: 100%; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 44px">
+<a class="wr-link wr-feat-art wr-sh" href="#topo" data-act="open_pizza" aria-label="Abrir Pizza Tower — SAGE 2019 Demo" style="display: block; width: 100%; line-height: 0; background: #000000">
+<img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" data-onload="featLoad" style="width: 100%; height: auto; display: block; image-rendering: pixelated">
 </a>
-<div style="padding: 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; justify-content: space-between; border-top: 4px solid #2e2e2e">
-<div style="flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
+<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">
+<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita · Em andamento</span>
 <h1 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">Pizza Tower — SAGE 2019 Demo</h1>
 <p style="margin: 0; color: #c4c4c4; max-width: 640px">Port não oficial da demo de Pizza Tower lançada na SAGE 2019, com Peppino e Snick, para o PS Vita. Usa os dados da demo gratuita do itch.io.</p>
-<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita · Em andamento</span>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">
+<a class="wr-btn" href="#topo" data-act="open_pizza" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">Ver detalhes</a>
+<a class="wr-btn" href="https://github.com/WolffsRoom/PizzaTowerSage2019Vita" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff">Ver no GitHub</a>
 </div>
-<div style="flex: 1 1 220px; max-width: 300px; display: flex; flex-direction: column; gap: 14px">
-<a class="wr-btn" href="#topo" data-act="open_pizza" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; box-shadow: 4px 4px 0 #4a4a4a">Ver detalhes</a>
-<a class="wr-btn" href="https://github.com/WolffsRoom/PizzaTowerSage2019Vita" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">Ver no GitHub</a>
 </div>
 </div>
 </section>
 </div>
-
 <div class="dc-if" data-if="on0">
+<section class="wr-slider" aria-label="Outros projetos" style="display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 12px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase">Outros projetos</h2>
+<div style="display: flex; gap: 12px">
+<button class="wr-btn wr-arrow" type="button" style="flex: none; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; padding: 0; border: 4px solid #8a8a8a; background: #060606; color: #ffffff; cursor: pointer" data-act="slidePrev" aria-label="Projetos anteriores"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 6 6" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="3" y="0" width="1" height="6"/><rect x="2" y="1" width="1" height="4"/><rect x="1" y="2" width="1" height="2"/></svg></button>
+<button class="wr-btn wr-arrow" type="button" style="flex: none; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; padding: 0; border: 4px solid #8a8a8a; background: #060606; color: #ffffff; cursor: pointer" data-act="slideNext" aria-label="Próximos projetos"><svg aria-hidden="true" width="24" height="24" viewBox="0 0 6 6" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="2" y="0" width="1" height="6"/><rect x="3" y="1" width="1" height="4"/><rect x="4" y="2" width="1" height="2"/></svg></button>
+</div>
+</div>
+<div class="wr-slider-track" tabindex="0" style="display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 12px">
+<a class="wr-slide wr-card" href="#topo" data-act="open_void" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/void_art.jpg" alt="Arte de Void Stranger — PS Vita Edition" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Port</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Void Stranger — PS Vita Edition</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_delta" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/delta.jpg" alt="Tela de título de Deltarune" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Port</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">DeltaruneVita</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_fm" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/fm.jpg" alt="Tela inicial do FMVita" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Ferramenta</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">FMVita</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_ystool" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/ystool_0.jpg" alt="Interface da Ys Origins Translation Tool" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Ferramenta</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Ys Origins Translation Tool</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_godot" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<div style="aspect-ratio: 16 / 9; background: #000000; display: flex; align-items: center; justify-content: center">
+<img src="assets/godotlogo.png" alt="Logo Godot4Vita" style="max-width: 70%; max-height: 70%; display: block">
+</div>
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Engine</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Godot 4 PSVita</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_idol" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/idol_art.jpg" alt="Arte de The Case of the Golden Idol" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Port</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">The Case of the Golden Idol</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_uty" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/uty_art.jpg" alt="Arte de Undertale Yellow Vita" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Port</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Undertale Yellow</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_horizon" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/horizon_cover.jpg" alt="Capa de Horizon Chase Turbo: Patch de Otimização" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Mod</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Horizon Chase Turbo: Patch de Otimização</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_dontstarve" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/dontstarve_cover.jpg" alt="Capa de Don&#x27;t Starve: Reign of Giants" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Don&#x27;t Starve: Reign of Giants</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_sonic" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/sonic_cover.jpg" alt="Capa de Sonic Mania Plus" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Sonic Mania Plus</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_wolf" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/wolf_cover.jpg" alt="Capa de The Wolf Among Us" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">The Wolf Among Us</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_wipeout" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/wipeout_cover.jpg" alt="Capa de WipEout 2048" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução e dublagem PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">WipEout 2048</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_twd2" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/twd2_cover.jpg" alt="Capa de The Walking Dead: Temporada 2" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">The Walking Dead: Temporada 2</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_alone" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/alone_cover.jpg" alt="Capa de Alone With You" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Alone With You</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_p4g" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/p4g_cover.jpg" alt="Capa de Persona 4 Golden" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Review</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Persona 4 Golden</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_ayesha" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/ayesha_cover.jpg" alt="Capa de Atelier Ayesha" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Atelier Ayesha: The Alchemist of Dusk</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_bastion" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/bastion_cover.jpg" alt="Capa de Bastion" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Bastion</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_undertale" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/undertale_cover.jpg" alt="Capa de Undertale: Melhorias na Tradução" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Undertale: Melhorias na Tradução</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_delta1" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/delta1_cover.jpg" alt="Capa de Deltarune: Capítulo 1" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Port + Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Deltarune: Capítulo 1</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_cave" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/cave_cover.jpg" alt="Capa de Cave Story" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Port + Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Cave Story</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_ys" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/ys_cover.jpg" alt="Capa de Ys Origin" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Ys Origin</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_darkest" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/darkest_cover.jpg" alt="Capa de Darkest Dungeon: Pilha Reforçada" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Mod</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Darkest Dungeon: Pilha Reforçada</strong>
+</div>
+</a>
+<a class="wr-slide wr-card" href="#topo" data-act="open_icono" style="flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/icono_cover.jpg" alt="Capa de Iconoclasts" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 6px; text-align: left">
+<span style="color: #a8a8a8; font-size: 15px; text-transform: uppercase">Tradução PT-BR</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Iconoclasts</strong>
+</div>
+</a>
+</div>
+</section>
 <nav class="wr-nav" aria-label="Categorias" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px">
-<button class="wr-btn wr-sh-s" type="button" data-act="pick1" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">Ports</button>
-<button class="wr-btn wr-sh-s" type="button" data-act="pick2" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">Ferramentas</button>
-<button class="wr-btn wr-sh-s" type="button" data-act="pick3" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">Traduções</button>
-<button class="wr-btn wr-sh-s" type="button" data-act="pick4" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">Reviews</button>
+<button class="wr-btn wr-sh-s wr-cat" type="button" data-act="pick1" data-b-aria-expanded="pk1" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">Ports</button>
+<button class="wr-btn wr-sh-s wr-cat" type="button" data-act="pick2" data-b-aria-expanded="pk2" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">Ferramentas</button>
+<button class="wr-btn wr-sh-s wr-cat" type="button" data-act="pick3" data-b-aria-expanded="pk3" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">Traduções</button>
+<button class="wr-btn wr-sh-s wr-cat" type="button" data-act="pick4" data-b-aria-expanded="pk4" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">Reviews</button>
 </nav>
 </div>
+<div class="dc-if" data-if="pk1">
+<section class="wr-peek" aria-label="Últimos em Ports" style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">Últimos em Ports</h2>
+<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_pizza" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Pizza Tower — SAGE 2019 Demo</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Port da demo da SAGE 2019 para o PS Vita.</span>
+<span style="font-weight: 700">Em andamento</span>
+</div>
+</a>
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_void" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/void_art.jpg" alt="Arte de Void Stranger — PS Vita Edition" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Port · C</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Void Stranger — PS Vita Edition</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Port nativo não oficial de Void Stranger para o PS Vita.</span>
+<span style="font-weight: 700">95% · Jogável</span>
+</div>
+</a>
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_delta" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/delta.jpg" alt="Tela de título de Deltarune" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Port · C</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">DeltaruneVita</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Deltarune, capítulos 1 a 5, no PS Vita.</span>
+<span style="font-weight: 700">81% · Jogável</span>
+</div>
+</a>
+</div>
+<button class="wr-btn" type="button" data-act="all1" style="align-self: center; min-height: 48px; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 #4a4a4a">Ver todos (5)</button>
+</section>
+</div>
+<div class="dc-if" data-if="pk2">
+<section class="wr-peek" aria-label="Últimos em Ferramentas" style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">Últimos em Ferramentas</h2>
+<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_fm" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/fm.jpg" alt="Tela inicial do FMVita" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Ferramenta · C</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">FMVita</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Gerenciador de arquivos com interface moderna e suporte a toque. Fork do VitaShell.</span>
+<span style="font-weight: 700">v0.5.0</span>
+</div>
+</a>
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_ystool" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/ystool_0.jpg" alt="Interface da Ys Origins Translation Tool" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Ferramenta · Python</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Ys Origins Translation Tool</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Editor visual para traduzir Ys Origins, com proteção contra estouro de caracteres.</span>
+<span style="font-weight: 700">Beta</span>
+</div>
+</a>
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_godot" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<div style="aspect-ratio: 16 / 9; background: #000000; display: flex; align-items: center; justify-content: center">
+<img src="assets/godotlogo.png" alt="Logo Godot4Vita" style="max-width: 70%; max-height: 70%; display: block">
+</div>
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Engine · C++</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Godot 4 PSVita</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Godot Engine 4.x portada para o PS Vita, com exportação direto do editor.</span>
+<span style="font-weight: 700">2D em GXM nativo · 3D experimental</span>
+</div>
+</a>
+</div>
+<button class="wr-btn" type="button" data-act="all2" style="align-self: center; min-height: 48px; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 #4a4a4a">Ver todos (5)</button>
+</section>
+</div>
+<div class="dc-if" data-if="pk3">
+<section class="wr-peek" aria-label="Últimos em Traduções" style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">Últimos em Traduções</h2>
+<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_dontstarve" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/dontstarve_cover.jpg" alt="Capa de Don&#x27;t Starve: Reign of Giants" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Tradução PT-BR · PS Vita</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Don&#x27;t Starve: Reign of Giants</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Tradução para o PS Vita em desenvolvimento.</span>
+<span style="font-weight: 700">58% · Em desenvolvimento</span>
+</div>
+</a>
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_sonic" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/sonic_cover.jpg" alt="Capa de Sonic Mania Plus" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Tradução PT-BR · PS Vita</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Sonic Mania Plus</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Plataforma 2D clássica com múltiplos caminhos, jogável com Sonic, Tails ou Knuckles.</span>
+<span style="font-weight: 700">58% · Em andamento</span>
+</div>
+</a>
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_wolf" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/wolf_cover.jpg" alt="Capa de The Wolf Among Us" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Tradução PT-BR · GameLab Traduções</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">The Wolf Among Us</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Tradução revisada pela GameLab e portada para o PS Vita.</span>
+<span style="font-weight: 700">100% · Disponível</span>
+</div>
+</a>
+</div>
+<button class="wr-btn" type="button" data-act="all3" style="align-self: center; min-height: 48px; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 #4a4a4a">Ver todos (13)</button>
+</section>
+</div>
+<div class="dc-if" data-if="pk4">
+<section class="wr-peek" aria-label="Últimos em Reviews" style="display: flex; flex-direction: column; gap: 24px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">Últimos em Reviews</h2>
+<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_p4g" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/p4g_cover.jpg" alt="Capa de Persona 4 Golden" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Review · PS Vita</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Persona 4 Golden</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Análise pessoal após zerar o jogo.</span>
+<span style="font-weight: 700">Nota 8.9/10</span>
+</div>
+</a>
+</div>
+<button class="wr-btn" type="button" data-act="all4" style="align-self: center; min-height: 48px; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer; box-shadow: 4px 4px 0 #4a4a4a">Ver todos (1)</button>
+</section>
+</div>
+
 
 <div class="dc-if" data-if="on1">
 <section aria-label="Ports" style="display: flex; flex-direction: column; gap: 44px">
@@ -2383,8 +2769,7 @@ dd{overflow-wrap:anywhere;min-width:0}
 <footer class="wr-foot" style="background: #111111; color: #a8a8a8; font-size: 16px">
 <div class="wr-foot-dither" aria-hidden="true"></div>
 <div class="wr-pad" style="max-width: 1180px; margin: 0 auto; box-sizing: border-box; padding: 40px 40px 48px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center">
-<img src="assets/paw4.png" alt="" style="width: 68px; height: 68px; display: block; image-rendering: pixelated">
-<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; color: #ffffff; text-transform: uppercase; text-shadow: 4px 4px 0 #2e2e2e">Wolff's Room</strong>
+<strong class="wr-foot-name" style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.4; font-weight: 400; color: #ffffff; text-transform: uppercase; text-shadow: 4px 4px 0 #3a3a3a, 8px 8px 0 #1a1a1a">Wolff's Room</strong>
 <p style="margin: 0; color: #c4c4c4; font-size: 18px">Traduções, ports e ferramentas para PlayStation Vita.</p>
 <nav aria-label="Redes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px">
 <a class="wr-btn wr-chip" style="min-height: 48px; box-sizing: border-box; padding: 12px 16px; border: 4px solid #5a5a5a; background: #060606; color: #ffffff; text-decoration: none; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; text-transform: uppercase" href="https://github.com/WolffsRoom">GitHub</a>
@@ -2415,9 +2800,10 @@ dd{overflow-wrap:anywhere;min-width:0}
 class Component extends DCLogic {
   componentDidMount() {
     var self = this;
-    this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, 1700);
+    this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, 2800);
+    this._fT = setTimeout(function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); }, 3000);
   }
-  componentWillUnmount() { clearTimeout(this._pbT); }
+  componentWillUnmount() { clearTimeout(this._pbT); clearTimeout(this._fT); }
   sndOn() {
     var st = this.state || {};
     if (st.snd !== undefined) return st.snd;
@@ -2438,6 +2824,7 @@ class Component extends DCLogic {
       var seqs = {
         open: [[988, 988, 0, 0.06, 'square'], [1319, 1319, 0.06, 0.16, 'square']],
         back: [[784, 523, 0, 0.09, 'square'], [392, 262, 0.08, 0.12, 'square']],
+        tick: [[1568, 1568, 0, 0.035, 'square']],
         on: [[523, 523, 0, 0.06, 'square'], [659, 659, 0.06, 0.06, 'square'], [784, 784, 0.12, 0.06, 'square'], [1047, 1568, 0.18, 0.14, 'square'], [131, 131, 0, 0.3, 'triangle']]
       };
       var t0 = ac.currentTime + 0.01;
@@ -2464,12 +2851,25 @@ class Component extends DCLogic {
     var post = st.post || null;
     var ids = ['ports', 'ferramentas', 'traducoes', 'reviews'];
     var view = st.view ? st.view : (this.props.telaInicial ?? 'inicio');
+    var home = !post && ids.indexOf(view) === -1;
+    var peek = st.peek || null;
     var self = this;
     var snd = this.sndOn();
+    var slide = function (dir) {
+      return function () {
+        self.beep('tick');
+        var t = document.querySelector('.wr-slider-track');
+        if (t) t.scrollBy({ left: dir * Math.max(264, Math.floor(t.clientWidth * 0.8 / 264) * 264), behavior: 'smooth' });
+      };
+    };
     var out = {
-      on0: !post && ids.indexOf(view) === -1,
-      goHome: function () { self.beep('back'); self.setState({ view: 'inicio', post: null }); },
+      on0: home,
+      goHome: function () { self.beep('back'); self.setState({ view: 'inicio', post: null, peek: null }); },
       rootCls: st.pbDone ? 'wr-pbdone' : '',
+      featCls: st.featLoaded ? 'wr-loaded' : '',
+      featLoad: function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); },
+      slidePrev: slide(-1),
+      slideNext: slide(1),
       sndOn: snd,
       sndOff: !snd,
       sndLabel: snd ? 'Desligar som' : 'Ligar som',
@@ -2483,7 +2883,13 @@ class Component extends DCLogic {
     ids.forEach(function (id, i) {
       var n = i + 1;
       out['on' + n] = !post && view === id;
-      out['pick' + n] = function () { self.beep('open'); self.setState({ view: id, post: null }); };
+      out['pk' + n] = home && peek === id;
+      out['pick' + n] = function () {
+        self.beep('open');
+        if (peek === id) self.setState({ view: id, post: null, peek: null });
+        else self.setState({ peek: id });
+      };
+      out['all' + n] = function () { self.beep('open'); self.setState({ view: id, post: null, peek: null }); };
     });
     Object.keys(cats).forEach(function (pid) {
       out['p_' + pid] = post === pid;
@@ -2511,14 +2917,19 @@ class Component extends DCLogic {
     rendering = true;
     vals = comp.renderVals();
     document.querySelectorAll('[data-if]').forEach(function (el) { el.hidden = !vals[el.getAttribute('data-if')]; });
-    ['aria-pressed', 'aria-label', 'title'].forEach(function (a) {
-      document.querySelectorAll('[data-b-' + a + ']').forEach(function (el) { el.setAttribute(a, String(vals[el.getAttribute('data-b-' + a)])); });
+    document.querySelectorAll('*').forEach(function (el) {
+      for (var i = 0; i < el.attributes.length; i++) {
+        var at = el.attributes[i];
+        if (at.name.indexOf('data-b-') === 0) el.setAttribute(at.name.slice(7), String(vals[at.value]));
+      }
     });
-    var root = document.querySelector('[data-bclass]');
-    if (root) root.className = 'wr-root ' + (vals[root.getAttribute('data-bclass')] || '');
+    document.querySelectorAll('[data-bclass]').forEach(function (el) {
+      el.className = (el.getAttribute('data-bbase') + ' ' + (vals[el.getAttribute('data-bclass')] || '')).trim();
+    });
     var h = hashFor(comp.state);
     if (mounted && ('#' + h) !== (location.hash || '#') && !(h === '' && !location.hash)) {
       history.pushState(null, '', h ? '#' + h : location.pathname + location.search);
+      if (window.__wrGoTop) window.scrollTo(0, 0);
     }
     rendering = false;
   }
@@ -2538,6 +2949,10 @@ class Component extends DCLogic {
     window.scrollTo(0, 0);
   });
   render();
+  document.querySelectorAll('img[data-onload]').forEach(function (img) {
+    var fire = function () { var f = vals[img.getAttribute('data-onload')]; if (typeof f === 'function') f(); };
+    if (img.complete && img.naturalWidth) fire(); else img.addEventListener('load', fire);
+  });
   Object.assign(comp.state, stateFromHash());
   render();
   mounted = true;
