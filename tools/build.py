@@ -287,9 +287,10 @@ def home_html(posts, order, feat, mosaic):
         '<div class="dc-if" data-if="on0">\n'
         '<section class="wr-home" aria-label="Projeto em andamento" style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">\n'
         '<div class="wr-feat-wrap" data-bbase="wr-feat-wrap" data-bclass="featCls" style="width: 100%; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 44px">\n'
-        '<div class="wr-tvbox">\n'
+        '<div class="wr-stage">\n<div class="wr-tvbox">\n'
         '<a class="wr-link wr-feat-art wr-sh" href="#topo" data-act="open_' + feat + '" aria-label="Abrir ' + e(p['title']) + '" style="position: relative; display: block; width: 100%; line-height: 0; background: #000000">\n'
-        + art + mos + '</a>\n</div>\n' + kicker +
+        + art + mos + '</a>\n</div>\n<div class="wr-kick">\n' + kicker + '</div>\n'
+        '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; Pressione start</span><small>Clique para começar, com som</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{e(p["tag"])} · {e(p["status"])}</span>\n'
         f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{e(p["title"])}</h1>\n'
@@ -327,7 +328,7 @@ def make_mosaic(p, out_dir):
         return []
     im = Image.open(os.path.join(ROOT, 'content', p['cover'])).convert('RGB')
     res = []
-    for w, t in ((30, 2.85), (60, 3.0), (120, 3.15), (240, 3.3)):
+    for w, t in ((30, 3.55), (60, 3.7), (120, 3.85), (240, 4.0)):
         h = max(1, round(im.height * w / im.width))
         name = f'destaque-m{w}.png'
         im.resize((w, h), Image.BOX).save(os.path.join(out_dir, name), optimize=True)
