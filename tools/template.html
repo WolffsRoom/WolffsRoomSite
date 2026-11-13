@@ -128,12 +128,17 @@ dd{overflow-wrap:anywhere;min-width:0}
 .wr-wait .wr-nav .wr-cat{animation-play-state:paused !important}
 @media (prefers-reduced-motion:reduce){.wr-nav .wr-cat{animation:none !important}}
 html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !important}
-.wr-musbtn{position:fixed;bottom:168px;right:16px;z-index:50;width:64px;height:64px;padding:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
-.wr-musbtn:hover{border-color:#ffffff}
-.wr-musbtn[aria-pressed="false"]{color:#5a5a5a}
-.wr-musbtn:active{transform:translate(4px,4px)}
-.wr-musbtn:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
-.wr-wait .wr-musbtn{visibility:hidden}
+.wr-sndmenu{position:fixed;bottom:16px;right:92px;z-index:50;display:flex;gap:12px;padding:8px;background:#060606;border:4px solid #5a5a5a;animation:wr-menu .16s steps(4,end) both}
+@keyframes wr-menu{0%{opacity:0;transform:translateX(16px)}100%{opacity:1;transform:none}}
+.wr-sm{width:72px;height:80px;padding:6px 0 4px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:space-between;background:#0b0b0b;color:#ffffff;border:4px solid #8a8a8a;cursor:pointer;font-family:'Pixelify Sans',monospace;font-size:14px;line-height:1;image-rendering:pixelated}
+.wr-sm:hover{border-color:#ffffff}
+.wr-sm:active{transform:translate(4px,4px)}
+.wr-sm:focus-visible{outline:4px solid #ffffff;outline-offset:2px}
+.wr-sm[aria-pressed="false"]{color:#5a5a5a;border-color:#2e2e2e}
+.wr-sm[aria-pressed="false"] .wr-sm-off{display:block}
+.wr-sm-ic{position:relative;width:40px;height:40px}
+.wr-sm-off{display:none;position:absolute;inset:0}
+.wr-snd[aria-expanded="true"]{border-color:#ffffff}
 .wr-langbtn{position:fixed;bottom:92px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;font-family:'Press Start 2P','Pixelify Sans',monospace;font-size:16px;line-height:1}
 .wr-langbtn:hover{border-color:#ffffff}
 .wr-langbtn:active{transform:translate(4px,4px)}
@@ -171,11 +176,14 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <span style="color: #8a8a8a"><span data-l="en">© 2026 Wolff's Room · Unofficial fan-made ports and translations.</span><span data-l="pt">© 2026 Wolff's Room · Ports e traduções não oficiais, feitos por fã.</span></span>
 </div>
 </footer>
-<button class="wr-musbtn" type="button" data-act="toggleMus" data-hover="hov" data-b-aria-pressed="musOn" data-b-aria-label="musLabel" data-b-title="musLabel"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="4" y="1" width="1" height="6"/><rect x="5" y="1" width="3" height="1"/><rect x="7" y="2" width="1" height="4"/><rect x="2" y="6" width="3" height="2"/><rect x="5" y="5" width="3" height="2"/><rect x="2" y="8" width="2" height="1"/></svg></button>
+<div class="wr-sndmenu dc-if" data-if="sndMenu" role="group" data-b-aria-label="sndMenuLabel">
+<button class="wr-sm" type="button" data-act="toggleMus" data-hover="hov" data-b-aria-pressed="musOn" data-b-aria-label="musLabel" data-b-title="musLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="5" y="1" width="1" height="6"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="2"/><rect x="3" y="6" width="2" height="1"/><rect x="2" y="7" width="4" height="2"/><rect x="3" y="9" width="2" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span><span data-l="en">Music</span><span data-l="pt">Música</span></button>
+<button class="wr-sm" type="button" data-act="toggleSfx" data-hover="hov" data-b-aria-pressed="sfxOn" data-b-aria-label="sfxLabel" data-b-title="sfxLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="4" y="0" width="2" height="3"/><rect x="4" y="7" width="2" height="3"/><rect x="0" y="4" width="3" height="2"/><rect x="7" y="4" width="3" height="2"/><rect x="3" y="3" width="4" height="4"/><rect x="1" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span><span data-l="en">Effects</span><span data-l="pt">Efeitos</span></button>
+</div>
 <button class="wr-langbtn" type="button" data-act="toggleLang" data-hover="hov" data-b-aria-label="langLabel" data-b-title="langLabel"><span data-l="en">EN</span><span data-l="pt">PT</span></button>
-<button class="wr-snd" type="button" data-act="toggleSnd" data-b-aria-pressed="sndOn" data-b-aria-label="sndLabel" data-b-title="sndLabel">
-<span class="dc-if" data-if="sndOn"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="4" width="1" height="4"/><rect x="9" y="2" width="1" height="2"/><rect x="10" y="4" width="1" height="4"/><rect x="9" y="8" width="1" height="2"/></svg></span>
-<span class="dc-if" data-if="sndOff"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="5" width="1" height="2"/><rect x="10" y="4" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/></svg></span>
+<button class="wr-snd" type="button" data-act="toggleSndMenu" data-hover="hov" data-b-aria-expanded="sndMenu" data-b-aria-pressed="volOn" data-b-aria-label="sndLabel" data-b-title="sndLabel">
+<span class="dc-if" data-if="volOn"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="4" width="1" height="4"/><rect x="9" y="2" width="1" height="2"/><rect x="10" y="4" width="1" height="4"/><rect x="9" y="8" width="1" height="2"/></svg></span>
+<span class="dc-if" data-if="volOff"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="5" width="1" height="2"/><rect x="10" y="4" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/></svg></span>
 </button>
 
 </div>
@@ -194,8 +202,10 @@ class Component extends DCLogic {
     var self = this;
     this._sfxT = [];
     this._fT = setTimeout(function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); }, 3000);
-    this._unlock = function () {
+    this._unlock = function (ev) {
       var ac = self.audio();
+      var t = ev && ev.target && ev.target.closest ? ev.target : null;
+      if (self.state.sndMenu && t && !t.closest('.wr-sndmenu') && !t.closest('.wr-snd')) self.setState({ sndMenu: false });
       if (!self.state.started) { self.start(); return; }
       if (ac && ac.state === 'suspended') ac.resume();
     };
@@ -205,7 +215,7 @@ class Component extends DCLogic {
     var atHome = !st.post && (!st.view || st.view === 'inicio');
     var ac = this.audio();
     // Sem som ligado, fora da página inicial ou com áudio já liberado: começa direto.
-    if (!atHome || !this.sndOn() || (ac && ac.state === 'running')) this.start(!atHome);
+    if (!atHome || (!this.sndOn() && !this.musOn()) || (ac && ac.state === 'running')) this.start(!atHome);
   }
   start(skipSfx) {
     if (this.state.started) return;
@@ -350,7 +360,7 @@ class Component extends DCLogic {
   }
   musicTick() {
     var ac = this._ac;
-    var want = this.musOn() && this.sndOn() && this.state.pbDone; // só depois da intro
+    var want = this.musOn() && this.state.pbDone; // só depois da intro
     if (!ac || ac.state !== 'running') return;
     if (!this._mg) {
       this._mg = ac.createGain();
@@ -420,18 +430,15 @@ class Component extends DCLogic {
       featLoad: function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); },
       slidePrev: slide(-1),
       slideNext: slide(1),
-      sndOn: snd,
-      sndOff: !snd,
-      sndLabel: en ? (snd ? 'Turn sound off' : 'Turn sound on') : (snd ? 'Desligar som' : 'Ligar som'),
-      musOn: this.musOn() && snd,
-      musLabel: en ? (this.musOn() ? 'Turn music off' : 'Turn music on') : (this.musOn() ? 'Desligar música' : 'Ligar música'),
-      toggleMus: function () {
-        var v = !self.musOn();
-        try { window.localStorage.setItem('wr-musica', v ? '1' : '0'); } catch (e) {}
-        if (v && !snd) { try { window.localStorage.setItem('wr-som', '1'); } catch (e) {} self.setState({ snd: true }); }
-        self.beep('tick', true);
-        self.setState({ mus: v });
-      },
+      sfxOn: snd,
+      volOn: snd || self.musOn(),
+      volOff: !snd && !self.musOn(),
+      sndMenu: !!st.sndMenu,
+      sndLabel: en ? 'Sound: music and effects' : 'Som: música e efeitos',
+      sndMenuLabel: en ? 'Sound' : 'Som',
+      musOn: self.musOn(),
+      musLabel: en ? (self.musOn() ? 'Music: on' : 'Music: off') : (self.musOn() ? 'Música: ligada' : 'Música: desligada'),
+      sfxLabel: en ? (snd ? 'Sound effects: on' : 'Sound effects: off') : (snd ? 'Efeitos sonoros: ligados' : 'Efeitos sonoros: desligados'),
       langLabel: en ? 'Language: English — switch to Portuguese' : 'Idioma: português — mudar para inglês',
       toggleLang: function () {
         var v = en ? 'pt' : 'en';
@@ -441,7 +448,17 @@ class Component extends DCLogic {
         self.beep('tick');
         self.setState({ lang: v });
       },
-      toggleSnd: function () {
+      toggleSndMenu: function () {
+        self.beep('tick', true);
+        self.setState({ sndMenu: !st.sndMenu });
+      },
+      toggleMus: function () {
+        var v = !self.musOn();
+        try { window.localStorage.setItem('wr-musica', v ? '1' : '0'); } catch (e) {}
+        self.beep('tick', true);
+        self.setState({ mus: v });
+      },
+      toggleSfx: function () {
         var v = !snd;
         try { window.localStorage.setItem('wr-som', v ? '1' : '0'); } catch (e) {}
         if (v) self.beep('on', true);
