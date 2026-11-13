@@ -142,6 +142,36 @@ body:
       placeholder: |
         Scripts | 90
         Gráficos | 40
+  - type: markdown
+    attributes:
+      value: "### Download no app Wolff's Store (opcional)\nPara o post ter botão de baixar/instalar no app do Vita. Mais de um arquivo: edite o post.md depois (ver COMO-POSTAR.md)."
+  - type: dropdown
+    id: download_tipo
+    attributes:
+      label: Tipo de download
+      options:
+        - Nenhum
+        - VPK (instala no Vita)
+        - Tradução (rePatch)
+        - Plugin (vai para ux0:Downloads)
+        - Arquivo (vai para ux0:Downloads)
+      default: 0
+  - type: input
+    id: download_origem
+    attributes:
+      label: Download - repositório ou link
+      description: 'Repositório do GitHub (ex.: WolffsRoom/PizzaTowerSage2019Vita) para usar a última release, ou o link direto do arquivo.'
+  - type: input
+    id: download_titleid
+    attributes:
+      label: Download - TitleID
+      description: 'Obrigatório para tradução (pasta do rePatch). Vários separados por vírgula: PCSE00584, PCSB00726'
+  - type: checkboxes
+    id: download_dados
+    attributes:
+      label: Dados do jogo
+      options:
+        - label: Este jogo precisa dos arquivos de dados do jogo (o app mostra o aviso e as instruções do GitHub)
   - type: checkboxes
     id: destaque
     attributes:

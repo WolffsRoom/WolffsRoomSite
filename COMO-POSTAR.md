@@ -110,6 +110,49 @@ Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junt
 | `titulo_barras:` | Título da caixa de barras (padrão: "Progresso"). |
 | `barras` com texto | `Nota final: 89 (192/216)` mostra a barra em 89% com o texto "192/216". |
 
+## Downloads no app Wolff's Store (PS Vita)
+
+O app do Vita lê o `store.json` que o site gera. Para um post ter botão de download no app, adicione
+`downloads:` no cabeçalho do `post.md`. Cada item é um arquivo:
+
+```yaml
+downloads:
+  - tipo: vpk                               # vpk | traducao | plugin | arquivo
+    repo: WolffsRoom/PizzaTowerSage2019Vita # pega o arquivo da última release do repo...
+    arquivo: "*.vpk"                        # ...que casa com este padrão (padrão: *.vpk)
+    titleid: PZTW00001                      # opcional: o app mostra "Atualizar" se já estiver instalado
+    precisa_dados: true                     # mostra o aviso de arquivos de dados do jogo
+    instrucoes: https://github.com/WolffsRoom/PizzaTowerSage2019Vita#instalação  # opcional
+  - tipo: traducao
+    url: https://exemplo.com/traducao.zip   # ou link direto, com a versão escrita à mão
+    versao: "1.2"
+    titleid: [PCSE00584, PCSB00726]         # obrigatório: pastas em ux0:rePatch/
+  - tipo: plugin
+    repo: WolffsRoom/MeuPlugin
+    arquivo: "*.suprx"
+```
+
+| Tipo | O que o app faz |
+|---|---|
+| `vpk` | Baixa em segundo plano e instala. Com `precisa_dados: true` mostra "Esse jogo precisa dos arquivos de dados do jogo, confira as instruções no GitHub" e um botão para as instruções. |
+| `traducao` | Baixa o `.zip` e extrai em `ux0:rePatch/<TITLEID>/` (para cada TitleID). Diz se o plugin rePatch não estiver instalado. O zip pode ter os arquivos soltos ou dentro de `rePatch/<TITLEID>/` ou `<TITLEID>/`. |
+| `plugin` | Baixa para `ux0:Downloads/` e mostra as instruções (link do GitHub do post, ou `instrucoes:`). |
+| `arquivo` | Baixa para `ux0:Downloads/`. |
+
+Campos: `repo:` + `arquivo:` (e `tag:` para uma release específica) **ou** `url:` (+ `versao:`);
+`nome:` muda o texto do botão; `instrucoes:` troca o link de instruções (padrão: link do GitHub do post).
+O site é gerado de novo a cada 6 horas e a cada release deste repo, então releases novas dos projetos
+aparecem no app sozinhas.
+
+### Atualização do próprio app
+
+O app procura releases deste repo com tag `store-v<versão>` e um arquivo `WolffsStore-*.vpk`. Ao abrir,
+se houver versão mais nova, ele baixa e se reinstala. Para lançar uma versão:
+
+```powershell
+gh release create store-v0.2 artifacts\current\WolffsStore-v0.2.vpk -R WolffsRoom/WolffsRoomSite -t "Wolff's Store v0.2" -n "O que mudou"
+```
+
 ## Pré-visualizar no computador
 
 ```powershell

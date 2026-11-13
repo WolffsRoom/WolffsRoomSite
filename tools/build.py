@@ -74,6 +74,44 @@ def parse_bars(raw):
     return bars
 
 
+TIPOS_DOWNLOAD = ('vpk', 'traducao', 'plugin', 'arquivo')
+
+
+def parse_downloads(raw):
+    """Campo `downloads:` do post (para o app Wolff's Store). Ver COMO-POSTAR.md."""
+    if not raw:
+        return []
+    if not isinstance(raw, list):
+        raise PostError('downloads: use uma lista (cada item começa com "- tipo: ...")')
+    out = []
+    for i, d in enumerate(raw, 1):
+        if not isinstance(d, dict):
+            raise PostError(f'downloads, item {i}: use campos como "tipo:" e "repo:" ou "url:"')
+        tipo = str(d.get('tipo') or 'vpk').strip().lower().replace('ç', 'c').replace('ã', 'a')
+        if tipo not in TIPOS_DOWNLOAD:
+            raise PostError(f'downloads, item {i}: tipo "{d.get("tipo")}" inválido; use: ' + ', '.join(TIPOS_DOWNLOAD))
+        if not d.get('url') and not d.get('repo'):
+            raise PostError(f'downloads, item {i}: informe "repo:" (release do GitHub) ou "url:" (link direto)')
+        if d.get('repo') and not re.fullmatch(r'[\w.-]+/[\w.-]+', str(d['repo'])):
+            raise PostError(f'downloads, item {i}: repo deve ser "Dono/Repositorio"')
+        tids = d.get('titleid') or []
+        if isinstance(tids, str):
+            tids = [t.strip() for t in re.split(r'[,\s]+', tids) if t.strip()]
+        for t in tids:
+            if not re.fullmatch(r'[A-Z]{4}\d{5}', str(t)):
+                raise PostError(f'downloads, item {i}: titleid "{t}" inválido (ex.: PCSE00584)')
+        if tipo == 'traducao' and not tids:
+            raise PostError(f'downloads, item {i}: tradução precisa de "titleid:" (pasta do rePatch)')
+        out.append({
+            'tipo': tipo, 'nome': d.get('nome'), 'url': d.get('url'), 'repo': d.get('repo'),
+            'arquivo': d.get('arquivo'), 'tag': d.get('tag'), 'versao': d.get('versao'),
+            'tamanho': d.get('tamanho'), 'titleids': [str(t) for t in tids],
+            'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': d.get('instrucoes'),
+            'plugin': d.get('plugin') or ('rePatch' if tipo == 'traducao' else None),
+        })
+    return out
+
+
 def load_post(slug):
     folder = os.path.join(CONTENT, slug)
     path = os.path.join(folder, 'post.md')
@@ -129,6 +167,7 @@ def load_post(slug):
         'feature': bool(meta.get('destaque')), 'feature_text': str(meta.get('chamada') or meta.get('resumo') or ''),
         'folder': folder,
     }
+    p['downloads'] = parse_downloads(meta.get('downloads'))
     p['video_label'] = str(meta.get('video_legenda') or '')
     p['bars_title'] = str(meta.get('titulo_barras') or '')
     p['en'] = load_english(folder, p)
@@ -464,6 +503,8 @@ def build():
     page = page.replace('<!--OGIMAGE-->', posts[feat]['cover'] or 'assets/favicon.png')
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
     open(os.path.join(OUT, '.nojekyll'), 'w').write('')
+    import store  # catálogo do app Wolff's Store (PS Vita)
+    store.write_store(posts, order, feat, GROUPS, OUT)
     en = sum(1 for p in posts.values() if p['en'])
     print(f'ok: {len(posts)} posts ({en} com inglês), destaque = {feat}, saída em {os.path.relpath(OUT, ROOT)}/')
 

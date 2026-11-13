@@ -24,6 +24,8 @@ FIELDS = {
     'Progresso (%)': 'progresso', 'Resumo': 'resumo', 'Texto do post': 'texto', 'Capa': 'capa',
     'Capturas de tela': 'capturas', 'Vídeo (opcional)': 'video', 'Links (opcional)': 'links',
     'Ficha (opcional)': 'ficha', 'Barras de progresso (opcional)': 'barras', 'Destaque': 'destaque',
+    'Tipo de download': 'download_tipo', 'Download - repositório ou link': 'download_origem',
+    'Download - TitleID': 'download_titleid', 'Dados do jogo': 'download_dados',
     'Título (inglês)': 'titulo_en', 'Resumo (inglês)': 'resumo_en', 'Status (inglês)': 'status_en', 'Texto do post (inglês)': 'texto_en',
 }
 MAX_W = 1600
@@ -127,6 +129,34 @@ def clear_feature():
             open(path, 'w', encoding='utf-8').write(new)
 
 
+def download_field(f):
+    """Campos "Download" do formulário -> item de `downloads:` do post (app Wolff's Store)."""
+    kind = (f.get('download_tipo') or '').lower()
+    if not kind or kind.startswith('nenhum'):
+        return None
+    tipo = 'vpk' if kind.startswith('vpk') else 'traducao' if kind.startswith('tradu') else \
+        'plugin' if kind.startswith('plugin') else 'arquivo'
+    src = (f.get('download_origem') or '').strip()
+    if not src:
+        raise Fail('download: informe o repositório (Dono/Repo) ou o link do arquivo')
+    d = {'tipo': tipo}
+    m = re.match(r'^(?:https?://github\.com/)?([\w.-]+/[\w.-]+?)(?:\.git)?/?$', src)
+    if m and not re.search(r'\.(vpk|zip|suprx|skprx|7z|rar)$', src, re.I):
+        d['repo'] = m.group(1)
+    elif src.startswith('http'):
+        d['url'] = src
+    else:
+        raise Fail('download: use "Dono/Repositorio" ou um link que comece com http')
+    tids = [t.strip().upper() for t in re.split(r'[,\s]+', f.get('download_titleid') or '') if t.strip()]
+    if tids:
+        d['titleid'] = tids if len(tids) > 1 else tids[0]
+    if tipo == 'traducao' and not tids:
+        raise Fail('download: tradução precisa do TitleID (pasta do rePatch)')
+    if '[x]' in (f.get('download_dados') or '').lower():
+        d['precisa_dados'] = True
+    return d
+
+
 def main():
     body = open(sys.argv[1], encoding='utf-8').read() if len(sys.argv) > 1 else os.environ.get('ISSUE_BODY', '')
     f = parse_issue(body)
@@ -184,6 +214,10 @@ def main():
     links = pairs(f.get('links'))
     if links:
         fm['links'] = links
+
+    dl = download_field(f)
+    if dl:
+        fm['downloads'] = [dl]
 
     text = (f.get('texto') or '').strip()
     # imagens coladas no texto viram capturas extras
