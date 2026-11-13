@@ -58,6 +58,8 @@ main section[aria-label]::after,main article::after,nav.wr-nav::after{content:""
 .wr-snd:hover{border-color:#ffffff}
 .wr-snd[aria-pressed="false"]{color:#5a5a5a}
 .wr-snd:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+
+dd{overflow-wrap:anywhere;min-width:0}
 .wr-card:hover{border-color:#ffffff !important}
 .wr-btn:hover{border-color:#ffffff !important}
 .wr-btn:focus-visible,.wr-card:focus-visible,.wr-link:focus-visible{outline:4px solid #ffffff;outline-offset:3px}
@@ -85,22 +87,18 @@ main section[aria-label]::after,main article::after,nav.wr-nav::after{content:""
 
 <div class="dc-if" data-if="on0">
 <section class="wr-sh" aria-label="Projeto em andamento mais recente" style="border: 4px solid #ffffff; background: #0e0e0e; display: flex; flex-direction: column">
-<a class="wr-link" href="#topo" data-act="open_void" style="display: block; line-height: 0; background: #000000">
-<img src="assets/void_art.jpg" alt="Arte de Void Stranger — PS Vita Edition" style="width: 100%; height: auto; display: block; image-rendering: pixelated">
+<a class="wr-link" href="#topo" data-act="open_pizza" style="display: block; line-height: 0; background: #000000">
+<img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" style="width: 100%; height: auto; display: block; image-rendering: pixelated">
 </a>
 <div style="padding: 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-end; justify-content: space-between; border-top: 4px solid #2e2e2e">
 <div style="flex: 999 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
-<h1 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">Void Stranger — PS Vita Edition</h1>
-<p style="margin: 0; color: #c4c4c4; max-width: 640px">Port nativo não oficial. Roda os dados originais do GameMaker (Steam) com controles nativos, troféus, vídeo de abertura e opções gráficas próprias do Vita.</p>
-<div style="display: flex; align-items: center; gap: 12px; margin-top: 6px">
-<div class="wr-pb" role="img" aria-label="Progresso: 95%" style="max-width: 420px"><div class="wr-pb-track"><div class="wr-pb-fill" style="width: 95%"></div></div></div>
-<span style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px">95%</span>
-<span style="color: #a8a8a8">· Jogável</span>
-</div>
+<h1 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">Pizza Tower — SAGE 2019 Demo</h1>
+<p style="margin: 0; color: #c4c4c4; max-width: 640px">Port não oficial da demo de Pizza Tower lançada na SAGE 2019, com Peppino e Snick, para o PS Vita. Usa os dados da demo gratuita do itch.io.</p>
+<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita · Em andamento</span>
 </div>
 <div style="flex: 1 1 220px; max-width: 300px; display: flex; flex-direction: column; gap: 14px">
-<a class="wr-btn" href="#topo" data-act="open_void" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; box-shadow: 4px 4px 0 #4a4a4a">Ver detalhes</a>
-<a class="wr-btn" href="https://github.com/WolffsRoom/VoidStrangerVita" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">Ver no GitHub</a>
+<a class="wr-btn" href="#topo" data-act="open_pizza" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; box-shadow: 4px 4px 0 #4a4a4a">Ver detalhes</a>
+<a class="wr-btn" href="https://github.com/WolffsRoom/PizzaTowerSage2019Vita" style="min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">Ver no GitHub</a>
 </div>
 </div>
 </section>
@@ -122,8 +120,20 @@ main section[aria-label]::after,main article::after,nav.wr-nav::after{content:""
 <button class="wr-btn" type="button" data-act="goHome" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">Voltar ao início</button>
 </div>
 <div style="display: flex; flex-direction: column; gap: 28px">
-<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">Em andamento <span style="color: #8a8a8a">(3)</span></h2>
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">Em andamento <span style="color: #8a8a8a">(4)</span></h2>
 <div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">
+
+<a class="wr-card wr-sh-s" href="#topo" data-act="open_pizza" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
+<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
+<img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">
+<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita</span>
+<strong style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400">Pizza Tower — SAGE 2019 Demo</strong>
+<span style="color: #c4c4c4; flex-grow: 1">Port da demo da SAGE 2019 para o PS Vita.</span>
+<span style="font-weight: 700">Em andamento</span>
+</div>
+</a>
 
 <a class="wr-card wr-sh-s" href="#topo" data-act="open_void" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">
 <div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">
@@ -2316,6 +2326,58 @@ main section[aria-label]::after,main article::after,nav.wr-nav::after{content:""
 </article>
 </div>
 
+<div class="dc-if" data-if="p_pizza">
+<article aria-label="Pizza Tower — SAGE 2019 Demo" style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center">
+<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">Port · PS Vita · Em andamento</span>
+<button class="wr-btn" type="button" data-act="back_pizza" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">Voltar</button>
+</div>
+<h1 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">Pizza Tower — SAGE 2019 Demo</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">
+<img src="assets/pizza_cover.png" alt="Tela de título de Pizza Tower SAGE 2019 Demo" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; image-rendering: pixelated">
+</div>
+<p style="margin: 0; color: #e0e0e0; font-size: 19px">Port não oficial da demo de Pizza Tower lançada na Sonic Amateur Games Expo (SAGE) de 2019 para o PS Vita. A demo é gratuita e feita em GameMaker; o port usa os dados dela, que cada jogador baixa no itch.io.</p>
+<section style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; border-bottom: 4px solid #2e2e2e; padding-bottom: 10px">Sobre a demo</h2>
+<ul style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; color: #d6d6d6; list-style: square">
+<li>Lançada durante a SAGE 2019, com fases novas, o modo Snick Challenge e bastante conteúdo não usado</li>
+<li>Snick the Porcupine é jogável só nesta demo</li>
+<li>Moedas de pizza caem dos blocos e servem para comprar a espingarda na Pizzamart</li>
+</ul>
+</section>
+<section style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; border-bottom: 4px solid #2e2e2e; padding-bottom: 10px">Requisitos</h2>
+<ul style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; color: #d6d6d6; list-style: square">
+<li>PS Vita desbloqueado</li>
+<li>Arquivo PizzaTowerSAGE2019_v14.zip, baixado na página oficial da demo no itch.io</li>
+</ul>
+</section>
+</div>
+<aside style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 36px">
+<div class="wr-sh-s" style="border: 4px solid #5a5a5a; background: #0e0e0e; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase">Ficha</h2>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="color: #a8a8a8">Status</dt><dd style="margin: 0; text-align: right; font-weight: 700">Em andamento</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="color: #a8a8a8">Jogo</dt><dd style="margin: 0; text-align: right; font-weight: 700">Pizza Tower — SAGE 2019 Demo</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="color: #a8a8a8">Criadores</dt><dd style="margin: 0; text-align: right; font-weight: 700">Tour de Pizza</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="color: #a8a8a8">Engine original</dt><dd style="margin: 0; text-align: right; font-weight: 700">GameMaker</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 16px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="color: #a8a8a8">Dados</dt><dd style="margin: 0; text-align: right; font-weight: 700">PizzaTowerSAGE2019_v14.zip (itch.io)</dd></div>
+</dl>
+</div>
+<div class="wr-sh-s" style="border: 4px solid #5a5a5a; background: #0e0e0e; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase">Links</h2>
+<a class="wr-btn" href="https://github.com/WolffsRoom/PizzaTowerSage2019Vita" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">Ver no GitHub</a>
+<a class="wr-btn" href="https://pizzatowerguy.itch.io/pizza-tower-demo" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">Baixar a demo (itch.io)</a>
+<a class="wr-btn" href="https://pizzatower.wiki/SAGE_2019_Demo" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">Pizza Tower Wiki</a>
+<a class="wr-btn" href="https://tcrf.net/Proto:Pizza_Tower/SAGE_2019_Demo" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a; text-decoration: none; text-align: center; font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 16px; line-height: 1.6; text-transform: uppercase">The Cutting Room Floor</a>
+</div>
+</aside>
+</div>
+</article>
+</div>
+
 </main>
 
 <footer class="wr-foot" style="background: #111111; color: #a8a8a8; font-size: 16px">
@@ -2398,7 +2460,7 @@ class Component extends DCLogic {
   }
   renderVals() {
     var st = this.state || {};
-    var cats = {'void': 'ports', 'delta': 'ports', 'godot': 'ferramentas', 'idol': 'ports', 'uty': 'ports', 'fm': 'ferramentas', 'darkest': 'ferramentas', 'horizon': 'ferramentas', 'sonic': 'traducoes', 'alone': 'traducoes', 'delta1': 'traducoes', 'cave': 'traducoes', 'icono': 'traducoes', 'p4g': 'reviews', 'wolf': 'traducoes', 'twd2': 'traducoes', 'wipeout': 'traducoes', 'dontstarve': 'traducoes', 'ayesha': 'traducoes', 'bastion': 'traducoes', 'undertale': 'traducoes', 'ys': 'traducoes', 'ystool': 'ferramentas'};
+    var cats = {'void': 'ports', 'delta': 'ports', 'godot': 'ferramentas', 'idol': 'ports', 'uty': 'ports', 'fm': 'ferramentas', 'darkest': 'ferramentas', 'horizon': 'ferramentas', 'sonic': 'traducoes', 'alone': 'traducoes', 'delta1': 'traducoes', 'cave': 'traducoes', 'icono': 'traducoes', 'p4g': 'reviews', 'wolf': 'traducoes', 'twd2': 'traducoes', 'wipeout': 'traducoes', 'dontstarve': 'traducoes', 'ayesha': 'traducoes', 'bastion': 'traducoes', 'undertale': 'traducoes', 'ys': 'traducoes', 'ystool': 'ferramentas', 'pizza': 'ports'};
     var post = st.post || null;
     var ids = ['ports', 'ferramentas', 'traducoes', 'reviews'];
     var view = st.view ? st.view : (this.props.telaInicial ?? 'inicio');
