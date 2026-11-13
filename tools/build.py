@@ -269,6 +269,21 @@ def lists_html(posts, order):
 KT = 'O que será que o Wolff está fazendo...?'
 
 
+def kicker_words():
+    """Letras com atraso próprio, agrupadas por palavra para a linha só quebrar entre palavras."""
+    out, i, words = [], 0, KT.split(' ')
+    for w, word in enumerate(words):
+        spans = ''
+        for ch in word:
+            spans += '<span class="wr-ch" aria-hidden="true" style="animation-delay: %.2fs">%s</span>' % (0.3 + i * 0.045, e(ch))
+            i += 1
+        if w == len(words) - 1:
+            spans += '<span class="wr-caret" aria-hidden="true"></span>'
+        out.append('<span class="wr-word">' + spans + '</span>')
+        i += 1  # o espaço também conta no tempo da digitação
+    return ' '.join(out)
+
+
 def home_html(posts, order, feat, mosaic):
     p = posts[feat]
     gh = next((u for l, u in p['links'] if 'github' in u.lower()), None)
@@ -276,8 +291,7 @@ def home_html(posts, order, feat, mosaic):
     px = '; image-rendering: pixelated' if p['pixel'] else ''
     mos = ''.join(f'<img class="wr-mos" src="{src}" alt="" aria-hidden="true" style="animation-delay: {t}s">\n' for src, t in reversed(mosaic))
     kicker = ('<p class="wr-type" aria-label="' + KT + '" style="margin: 0; ' + DF + ' font-size: 32px; line-height: 1.5; color: #ffffff; text-shadow: 4px 4px 0 #3a3a3a; text-align: center; max-width: 1100px">'
-              + ''.join(('<span class="wr-ch" aria-hidden="true" style="animation-delay: %.2fs">%s</span>' % (0.3 + i * 0.045, '&#160;' if ch == ' ' else e(ch))) for i, ch in enumerate(KT))
-              + '<span class="wr-caret" aria-hidden="true"></span></p>\n')
+              + kicker_words() + '</p>\n')
     art = (f'<img src="{p["cover"]}" alt="{e("Capa de " + p["title"])}" data-onload="featLoad" style="width: 100%; height: auto; display: block{px}">\n'
            if p['cover'] else f'<div style="aspect-ratio: 16 / 9; background: #161616"></div>\n')
     buttons = '<a class="wr-btn" href="#topo" data-act="open_' + feat + '" style="' + BTN + '; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">Ver detalhes</a>\n'
@@ -290,7 +304,7 @@ def home_html(posts, order, feat, mosaic):
         '<div class="wr-stage">\n<div class="wr-tvbox">\n'
         '<a class="wr-link wr-feat-art wr-sh" href="#topo" data-act="open_' + feat + '" aria-label="Abrir ' + e(p['title']) + '" style="position: relative; display: block; width: 100%; line-height: 0; background: #000000">\n'
         + art + mos + '</a>\n</div>\n<div class="wr-kick">\n' + kicker + '</div>\n'
-        '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; Pressione start</span><small>Clique para começar, com som</small></button>\n</div>\n' +
+        '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; Pressione start</span><small>Clique para começar</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{e(p["tag"])} · {e(p["status"])}</span>\n'
         f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{e(p["title"])}</h1>\n'
@@ -328,7 +342,9 @@ def make_mosaic(p, out_dir):
         return []
     im = Image.open(os.path.join(ROOT, 'content', p['cover'])).convert('RGB')
     res = []
-    for w, t in ((30, 3.55), (60, 3.7), (120, 3.85), (240, 4.0)):
+    widths = (12, 20, 32, 48, 72, 112, 176, 288)
+    for k, w in enumerate(widths):
+        t = round(3.18 + k * 0.13, 2)
         h = max(1, round(im.height * w / im.width))
         name = f'destaque-m{w}.png'
         im.resize((w, h), Image.BOX).save(os.path.join(out_dir, name), optimize=True)

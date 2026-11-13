@@ -67,8 +67,8 @@ dd{overflow-wrap:anywhere;min-width:0}
 .wr-tvbox .wr-sh::before{animation:wr-halo .48s steps(4,end) 3.3s both}
 @keyframes wr-halo{0%{opacity:0;inset:-4px}50%{opacity:1;inset:-40px}100%{opacity:1;inset:-28px}}
 @keyframes wr-tv{0%{clip-path:inset(50% 50% 50% 50%);filter:brightness(4)}40%{clip-path:inset(calc(50% - 2px) 0 calc(50% - 2px) 0);filter:brightness(4)}100%{clip-path:inset(0);filter:brightness(1)}}
-.wr-mos{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated;animation:wr-hide .01s step-end both}
-@keyframes wr-hide{to{visibility:hidden}}
+.wr-mos{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated;animation:wr-hide .02s linear both}
+@keyframes wr-hide{0%,99.9%{opacity:1}100%{opacity:0}}
 @keyframes wr-open{from{clip-path:inset(50% 0 50% 0)}to{clip-path:inset(0)}}
 .wr-feat-wrap:not(.wr-loaded) .wr-feat-info{visibility:hidden}
 .wr-loaded .wr-feat-info>*{animation:wr-pop .32s steps(4,end) both}
@@ -107,18 +107,25 @@ dd{overflow-wrap:anywhere;min-width:0}
 .dc-if{display:contents}
 [hidden]{display:none !important}
 .wr-stage{position:relative;width:100%}
-.wr-kick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;pointer-events:none;z-index:2;animation:wr-crtoff .3s steps(5,end) 2.6s both}
+.wr-kick{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding:8px 16px 16px;box-sizing:border-box;pointer-events:none;z-index:2;animation:wr-crtoff .3s steps(5,end) 2.6s both}
 @keyframes wr-crtoff{0%{transform:none;filter:brightness(1)}50%{transform:scale(1.04,.04);filter:brightness(3)}99%{transform:scale(0,.04);filter:brightness(3);visibility:visible}100%{transform:scale(0,0);visibility:hidden}}
 .wr-pbdone .wr-kick{display:none}
 @media (prefers-reduced-motion:reduce){.wr-kick{display:none}}
 .wr-wait .wr-ch,.wr-wait .wr-caret,.wr-wait .wr-tvbox,.wr-wait .wr-tvbox .wr-sh::before,.wr-wait .wr-mos,.wr-wait .wr-kick,.wr-wait .wr-feat-info>*{animation-play-state:paused !important}
 .wr-wait .wr-kick{visibility:hidden}
-.wr-start{display:none;position:absolute;inset:0;z-index:3;align-items:center;justify-content:center;flex-direction:column;gap:16px;border:0;background:transparent;color:#ffffff;cursor:pointer;font-family:'Press Start 2P','Pixelify Sans',monospace;font-size:32px;line-height:1.5;text-transform:uppercase;text-shadow:4px 4px 0 #3a3a3a}
+.wr-start{display:none;position:absolute;inset:0;z-index:3;align-items:center;justify-content:flex-start;padding:8px 16px 16px;flex-direction:column;gap:16px;border:0;background:transparent;color:#ffffff;cursor:pointer;font-family:'Press Start 2P','Pixelify Sans',monospace;font-size:32px;line-height:1.5;text-transform:uppercase;text-shadow:4px 4px 0 #3a3a3a}
 .wr-start small{font-size:16px;color:#a8a8a8;text-shadow:none;text-transform:none}
 .wr-start span{animation:wr-caret 1s step-end infinite}
 .wr-wait .wr-start{display:flex}
 .wr-start:focus-visible{outline:4px solid #ffffff;outline-offset:-12px}
 @media (max-width:720px){.wr-start{font-size:16px}}
+.wr-word{display:inline-block;white-space:nowrap}
+.wr-type{text-wrap:balance}
+.wr-wait .wr-nav{visibility:hidden}
+.wr-root:not(.wr-pbdone) .wr-nav .wr-cat{animation:wr-pop .32s steps(4,end) both}
+.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(1){animation-delay:4.7s}.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(2){animation-delay:4.8s}.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(3){animation-delay:4.9s}.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(4){animation-delay:5s}
+.wr-wait .wr-nav .wr-cat{animation-play-state:paused !important}
+@media (prefers-reduced-motion:reduce){.wr-nav .wr-cat{animation:none !important}}
 </style>
 </head>
 <body>
@@ -192,7 +199,8 @@ class Component extends DCLogic {
     this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, skipSfx ? 0 : 5400);
     if (skipSfx) return;
     var go = function () {
-      var plan = [[120, 'boot'], [2600, 'off'], [2900, 'tvon'], [3550, 'mos1'], [3700, 'mos2'], [3850, 'mos3'], [4000, 'mos4']];
+      var plan = [[120, 'boot'], [2600, 'off'], [2900, 'tvon']];
+      for (var m = 0; m < 8; m++) plan.push([3180 + m * 130, 'mos' + m]);
       var kt = 'O que será que o Wolff está fazendo...?';
       for (var i = 0; i < kt.length; i++) if (kt[i] !== ' ') plan.push([300 + i * 45, 'type']);
       plan.push([4200, 'ready']);
@@ -270,8 +278,11 @@ class Component extends DCLogic {
         type: [[r, r, 0, 0.028, 'p12', 0.6]],
         ready: [[E5, E5, 0, 0.08, 'p25', 1], [G5, G5, 0.08, 0.08, 'p25', 1], [C6, C6, 0.16, 0.08, 'p25', 1], [E6, E6, 0.24, 0.22, 'p25', 1], [165, 165, 0, 0.18, 'tri', 1.5], [131, 131, 0.24, 0.3, 'tri', 1.5], [0, 0, 0.24, 0.05, 'noise', 0.4]]
       };
-      var m = /^hovL(\d+)$/.exec(kind);
-      var seq = m ? [[scale[+m[1]], scale[+m[1]], 0, 0.05, 'p12', 0.55]] : (S[kind] || S.open);
+      var m = /^hovL(\d+)$/.exec(kind), mo = /^mos(\d)$/.exec(kind);
+      var MOS = [262, 330, 392, 440, 523, 587, 659, 784];
+      var seq = m ? [[scale[+m[1]], scale[+m[1]], 0, 0.05, 'p12', 0.55]]
+        : mo ? (+mo[1] === 7 ? [[784, 784, 0, 0.05, 'p25', 1], [1175, 1175, 0.05, 0.09, 'p25', 1]] : [[MOS[+mo[1]], MOS[+mo[1]], 0, 0.045, 'p25', 0.9]])
+        : (S[kind] || S.open);
       var t0 = ac.currentTime + 0.01;
       seq.forEach(function (n) {
         var st = t0 + n[2], g = ac.createGain(), src;
