@@ -1,0 +1,68 @@
+name: Novo post pela issue
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: write
+  issues: write
+  actions: write
+concurrency:
+  group: novo-post
+  cancel-in-progress: false
+jobs:
+  criar:
+    if: >-
+      startsWith(github.event.issue.title, '[Post]') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml pillow
+      - name: Criar o post a partir da issue
+        id: post
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          slug=$(python tools/issue_to_post.py)
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+      - name: Validar gerando o site
+        run: python tools/build.py
+      - name: Salvar no repositório
+        env:
+          SLUG: ${{ steps.post.outputs.slug }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/posts
+          git commit -m "Novo post: $SLUG (#$NUM)"
+          git push
+      - name: Publicar o site
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run pages.yml --ref main
+      - name: Responder na issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLUG: ${{ steps.post.outputs.slug }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          url="https://wolffsroom.github.io/WolffsRoomSite/#$SLUG"
+          gh issue comment "$NUM" --body "Post criado em \`content/posts/$SLUG/post.md\`. O site é publicado em cerca de 1 minuto: $url
+
+          Para corrigir algo, edite esse arquivo pelo GitHub."
+          gh issue close "$NUM"
+      - name: Avisar erro na issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          msg="$(cat _issue_error.txt 2>/dev/null || echo 'veja o log da execução em Actions')"
+          gh issue comment "$NUM" --body "Não consegui criar o post: $msg
+
+          Corrija e abra uma nova issue com o formulário, ou crie o post direto em \`content/posts/\`."

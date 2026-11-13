@@ -1,0 +1,127 @@
+name: Novo post
+description: Cadastra um novo post no site. Ao enviar, o post é criado e o site é publicado automaticamente.
+title: "[Post] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Preencha os campos e clique em **Submit new issue**. Em cerca de 1 minuto o post entra no site e esta issue é fechada com o link.
+        Para imagens, arraste os arquivos para dentro do campo (PNG, JPG ou GIF).
+  - type: input
+    id: titulo
+    attributes:
+      label: Título
+      placeholder: "Pizza Tower — SAGE 2019 Demo"
+    validations:
+      required: true
+  - type: dropdown
+    id: categoria
+    attributes:
+      label: Categoria
+      options:
+        - Ports
+        - Ferramentas
+        - Traduções
+        - Reviews
+    validations:
+      required: true
+  - type: dropdown
+    id: grupo
+    attributes:
+      label: Grupo
+      description: Em qual lista da categoria o post aparece.
+      options:
+        - Em andamento
+        - Finalizado
+        - Próximos
+        - Outras equipes
+    validations:
+      required: true
+  - type: input
+    id: tag
+    attributes:
+      label: Etiqueta
+      description: Linha pequena acima do título no card.
+      placeholder: "Port · PS Vita"
+  - type: input
+    id: status
+    attributes:
+      label: Status
+      placeholder: "Em andamento"
+  - type: input
+    id: progresso
+    attributes:
+      label: Progresso (%)
+      description: Opcional. Só o número, de 0 a 100.
+      placeholder: "60"
+  - type: input
+    id: resumo
+    attributes:
+      label: Resumo
+      description: Uma frase curta para o card.
+    validations:
+      required: true
+  - type: textarea
+    id: texto
+    attributes:
+      label: Texto do post
+      description: |
+        O primeiro parágrafo é a apresentação. Para seções, use "## Título" e itens com "- ".
+      value: |
+        Apresentação do projeto em um parágrafo.
+
+        ## Destaques
+        - Item
+
+        ## Instalação
+        - Passo 1
+    validations:
+      required: true
+  - type: textarea
+    id: capa
+    attributes:
+      label: Capa
+      description: Arraste UMA imagem (de preferência 16:9).
+    validations:
+      required: true
+  - type: textarea
+    id: capturas
+    attributes:
+      label: Capturas de tela
+      description: Arraste uma ou mais imagens.
+  - type: input
+    id: video
+    attributes:
+      label: Vídeo (opcional)
+      description: Link do YouTube.
+      placeholder: "https://www.youtube.com/watch?v=..."
+  - type: textarea
+    id: links
+    attributes:
+      label: Links (opcional)
+      description: Um por linha, no formato "Nome | URL". O primeiro vira o botão principal.
+      placeholder: |
+        Ver no GitHub | https://github.com/WolffsRoom/...
+        Google Drive | https://drive.google.com/...
+  - type: textarea
+    id: ficha
+    attributes:
+      label: Ficha (opcional)
+      description: Um por linha, no formato "Campo | Valor".
+      placeholder: |
+        Versão do jogo | PCSE00000
+        Senha do arquivo | wolffsroom
+  - type: textarea
+    id: barras
+    attributes:
+      label: Barras de progresso (opcional)
+      description: Uma por linha, no formato "Nome | %".
+      placeholder: |
+        Scripts | 90
+        Gráficos | 40
+  - type: checkboxes
+    id: destaque
+    attributes:
+      label: Destaque
+      options:
+        - label: Mostrar como projeto em destaque na página inicial (substitui o atual)

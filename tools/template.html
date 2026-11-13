@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wolff's Room</title>
+<meta name="description" content="Wolff's Room — traduções, ports e ferramentas para PlayStation Vita.">
+<meta property="og:title" content="Wolff's Room">
+<meta property="og:description" content="Wolff's Room — traduções, ports e ferramentas para PlayStation Vita.">
+<meta property="og:image" content="<!--OGIMAGE-->">
+<meta name="theme-color" content="#060606">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;700&family=Press+Start+2P&display=swap">
+<style>
+body{margin:0;background:#060606}
+a{color:#ffffff}a:hover{color:#bdbdbd}
+.wr-root{position:relative;-webkit-font-smoothing:none;font-smooth:never;text-rendering:optimizeSpeed}
+.wr-root::before{content:"";position:absolute;inset:0;background:url(assets/edgeL.png) left top / 480px 768px repeat-y,url(assets/edgeR.png) right top / 480px 768px repeat-y;image-rendering:pixelated;pointer-events:none}
+@media (max-width:1000px){.wr-root::before{background-size:240px 384px,240px 384px}}
+.wr-root>*{position:relative}
+.wr-div{width:640px;max-width:100%;height:20px;background:url(assets/divider.png) center / 640px 20px no-repeat;image-rendering:pixelated}
+.wr-sh,.wr-sh-s{position:relative}
+.wr-l{display:inline-block;padding-bottom:10px;margin-bottom:-10px;transition:transform .12s steps(2,end)}
+.wr-l:hover{transform:translateY(-10px)}
+@media (prefers-reduced-motion:reduce){.wr-l{transition:none}}
+.wr-sh::before{content:"";position:absolute;inset:-28px;border:24px solid transparent;border-image:url(assets/halo24.png) 24 round;image-rendering:pixelated;pointer-events:none}
+.wr-sh-s::before{content:"";position:absolute;inset:-16px;border:12px solid transparent;border-image:url(assets/halo12.png) 12 round;image-rendering:pixelated;pointer-events:none;opacity:.75}
+.wr-sh-s:hover::before{opacity:1}
+section.wr-sh{border:0 !important}
+.wr-card{text-align:center}
+.wr-grid{display:flex !important;flex-wrap:wrap;justify-content:center}
+.wr-grid>*{flex:0 1 calc((100% - 72px) / 3);min-width:260px;box-sizing:border-box}
+section.wr-sh>div:last-child{flex-direction:column !important;align-items:center !important;text-align:center}
+section.wr-sh>div:last-child>div{flex:0 1 auto !important;width:100%;max-width:100% !important;align-items:center}
+section.wr-sh>div:last-child>div:first-child>div{justify-content:center;width:100%}
+section.wr-sh>div:last-child>div:last-child{max-width:640px !important;flex-direction:row !important;flex-wrap:wrap;justify-content:center}
+section.wr-sh>div:last-child>div:last-child>a{flex:1 1 220px}
+section[aria-label]:not(.wr-sh)>div:first-child{flex-direction:column;justify-content:center !important;text-align:center}
+main section[aria-label],main article,nav.wr-nav{position:relative}
+main section[aria-label]:not(.wr-home)::after,main article::after,nav.wr-nav::after{content:"";position:absolute;inset:-32px;pointer-events:none;background-repeat:repeat;background-size:16px 16px;image-rendering:pixelated;animation:wr-wipe .5s step-end both}
+@keyframes wr-wipe{0%{background-color:#060606;background-image:none}20%{background-color:transparent;background-image:url(assets/w75.png)}45%{background-color:transparent;background-image:url(assets/w50.png)}70%{background-color:transparent;background-image:url(assets/w25.png)}100%{background-color:transparent;background-image:none}}
+.wr-pb{flex:1 1 auto;height:16px;margin:4px;padding:4px;background:#0b0b0b;box-shadow:0 -4px 0 #ffffff,0 4px 0 #ffffff,-4px 0 0 #ffffff,4px 0 0 #ffffff}
+.wr-pb-track{height:100%;overflow:hidden;background:repeating-linear-gradient(90deg,#242424 0,#242424 8px,transparent 8px,transparent 12px)}
+.wr-pb-fill{position:relative;height:100%;background:repeating-linear-gradient(90deg,#ffffff 0,#ffffff 8px,#0b0b0b 8px,#0b0b0b 12px);animation:wr-fill 1.1s steps(12,end) .35s both}
+@keyframes wr-fill{from{width:0}}
+@media (prefers-reduced-motion:reduce){main section[aria-label]:not(.wr-home)::after,main article::after,nav.wr-nav::after,.wr-pb-fill{animation:none}}
+.wr-pbdone .wr-pb-fill{animation:none}
+.wr-shot img,.wr-video img{image-rendering:auto}
+.wr-video:hover{border-color:#bdbdbd !important}
+@media (max-width:640px){.wr-shots{grid-template-columns:repeat(1,minmax(0,1fr)) !important}}
+.wr-title{display:flex;gap:2px;padding-top:12px;color:#ffffff;text-decoration:none}
+.wr-title:hover{color:#ffffff}
+
+.wr-foot-dither{height:48px;background:url(assets/w75.png) 0 0 / 16px 16px repeat-x,url(assets/w50.png) 0 16px / 16px 16px repeat-x,url(assets/w25.png) 0 32px / 16px 16px repeat-x;background-color:#111111;image-rendering:pixelated;box-shadow:inset 0 -4px 0 #2e2e2e}
+.wr-chip:hover{border-color:#ffffff !important;background:#ffffff !important;color:#0b0b0b !important}
+.wr-chip:active,.wr-btn:active{transform:translate(4px,4px)}
+.wr-snd{position:fixed;bottom:16px;right:16px;z-index:50;width:64px;height:64px;padding:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
+.wr-snd:hover{border-color:#ffffff}
+.wr-snd[aria-pressed="false"]{color:#5a5a5a}
+.wr-snd:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+
+dd{overflow-wrap:anywhere;min-width:0}
+
+@keyframes wr-typing{from{width:0}}
+@keyframes wr-caret{50%{opacity:0}}
+.wr-tvbox{width:100%;padding:32px;margin:-32px;box-sizing:content-box;animation:wr-tv .6s steps(8,end) 2.2s both}
+.wr-tvbox .wr-sh::before{animation:wr-halo .48s steps(4,end) 2.6s both}
+@keyframes wr-halo{0%{opacity:0;inset:-4px}50%{opacity:1;inset:-40px}100%{opacity:1;inset:-28px}}
+@keyframes wr-tv{0%{clip-path:inset(50% 50% 50% 50%);filter:brightness(4)}40%{clip-path:inset(calc(50% - 2px) 0 calc(50% - 2px) 0);filter:brightness(4)}100%{clip-path:inset(0);filter:brightness(1)}}
+.wr-mos{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated;animation:wr-hide .01s step-end both}
+@keyframes wr-hide{to{visibility:hidden}}
+@keyframes wr-open{from{clip-path:inset(50% 0 50% 0)}to{clip-path:inset(0)}}
+.wr-feat-wrap:not(.wr-loaded) .wr-feat-info{visibility:hidden}
+.wr-loaded .wr-feat-info>*{animation:wr-pop .32s steps(4,end) both}
+.wr-loaded .wr-feat-info>:nth-child(1){animation-delay:3.5s}.wr-loaded .wr-feat-info>:nth-child(2){animation-delay:3.62s}.wr-loaded .wr-feat-info>:nth-child(3){animation-delay:3.74s}.wr-loaded .wr-feat-info>:nth-child(4){animation-delay:3.86s}
+@keyframes wr-pop{from{transform:translateY(16px);opacity:0}}
+.wr-pbdone .wr-mos{display:none}
+.wr-pbdone .wr-tvbox,.wr-pbdone .wr-tvbox .wr-sh::before{animation:none !important}
+.wr-pbdone .wr-ch,.wr-pbdone .wr-caret,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
+.wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
+.wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
+.wr-slider-track{scrollbar-color:#5a5a5a #111111;scrollbar-width:thin}
+.wr-slider-track::-webkit-scrollbar{height:8px}.wr-slider-track::-webkit-scrollbar-track{background:#111111}.wr-slider-track::-webkit-scrollbar-thumb{background:#5a5a5a}
+.wr-slider-track:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.wr-slide{text-align:left !important}
+.wr-arrow:hover{border-color:#ffffff !important;background:#ffffff !important;color:#0b0b0b !important}
+@media (max-width:720px){.wr-type{font-size:16px !important}.wr-feat-wrap h1{font-size:16px !important}.wr-foot-name{font-size:16px !important}}
+.wr-feat-art .wr-mos{pointer-events:none}
+@media (prefers-reduced-motion:reduce){.wr-mos{display:none}.wr-tvbox,.wr-tvbox .wr-sh::before{animation:none !important}.wr-ch,.wr-caret,.wr-feat-art,.wr-loaded .wr-feat-info>*,.wr-peek .wr-card{animation:none !important}}
+.wr-ch{display:inline-block;animation:wr-chpop .12s steps(3,end) both}
+@keyframes wr-chpop{0%{visibility:hidden;transform:translateY(-8px)}1%{visibility:visible;transform:translateY(-8px)}100%{visibility:visible;transform:none}}
+@keyframes wr-show{from{visibility:hidden}}
+.wr-caret{display:inline-block;width:.5em;height:.75em;margin-left:.15em;background:#ffffff;vertical-align:-.05em;animation:wr-show .01s step-end 2.1s both,wr-caret .5s step-end 2.1s 4}
+.wr-feat-wrap .wr-type{margin-top:-8px !important}
+.wr-ico:hover{color:#ffffff !important;transform:translateY(-4px)}
+.wr-ico:active{transform:translate(4px,4px)}
+.wr-ico:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.wr-foot-name{justify-content:center}
+.wr-foot-name .wr-l{color:#ffffff}
+.wr-card:hover{border-color:#ffffff !important}
+.wr-btn:hover{border-color:#ffffff !important}
+.wr-btn:focus-visible,.wr-card:focus-visible,.wr-link:focus-visible{outline:4px solid #ffffff;outline-offset:3px}
+@media (max-width:640px){.wr-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
+@media (max-width:560px){main h1{font-size:16px !important}.wr-grid{grid-template-columns:repeat(1,minmax(0,1fr)) !important}.wr-nav{grid-template-columns:repeat(1,minmax(0,1fr)) !important}.wr-pad{padding-left:28px !important;padding-right:28px !important}.wr-logo{font-size:16px !important}}
+</style>
+<style>
+.dc-if{display:contents}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="wr-root" data-bbase="wr-root" data-bclass="rootCls" style="min-height: 100vh; overflow-x: hidden; background: #060606; color: #ffffff; font-family: '8bitoperator', '8-bit Operator+', 'Pixel Operator', 'Pixelify Sans', monospace; font-size: 18px; line-height: 1.45; display: flex; flex-direction: column">
+
+<header id="topo" class="wr-pad" style="padding: 48px 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<button class="wr-link" type="button" data-act="goHome" aria-label="Wolff's Room — início" style="border: 0; padding: 0; background: transparent; cursor: pointer; line-height: 0">
+<img src="assets/paw4.png" alt="" style="width: 68px; height: 68px; flex: none; display: block; image-rendering: pixelated">
+</button>
+<a class="wr-link wr-title wr-logo" href="#topo" data-act="goHome" aria-label="Wolff's Room — início" style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.2; text-transform: uppercase; text-shadow: 4px 4px 0 #4a4a4a, 8px 8px 0 #222222"><span class="wr-l" aria-hidden="true" data-hover="hovL0">W</span><span class="wr-l" aria-hidden="true" data-hover="hovL1">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL2">l</span><span class="wr-l" aria-hidden="true" data-hover="hovL3">f</span><span class="wr-l" aria-hidden="true" data-hover="hovL4">f</span><span class="wr-l" aria-hidden="true" data-hover="hovL5">'</span><span class="wr-l" aria-hidden="true" data-hover="hovL6">s</span><span style="width: 0.6em"></span><span class="wr-l" aria-hidden="true" data-hover="hovL7">R</span><span class="wr-l" aria-hidden="true" data-hover="hovL8">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL9">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL10">m</span></a>
+<p style="margin: 0; color: #a8a8a8; font-size: 18px">Traduções, ports e ferramentas para PlayStation Vita.</p>
+<div class="wr-div" aria-hidden="true" style="margin-top: 14px"></div>
+</header>
+
+<main class="wr-pad" style="flex-grow: 1; width: 100%; max-width: 1180px; margin: 0 auto; box-sizing: border-box; padding: 0 40px 72px; display: flex; flex-direction: column; gap: 48px">
+<!--MAIN-->
+</main>
+
+<footer class="wr-foot" style="background: #111111; color: #a8a8a8; font-size: 16px">
+<div class="wr-foot-dither" aria-hidden="true"></div>
+<div class="wr-pad" style="max-width: 1180px; margin: 0 auto; box-sizing: border-box; padding: 40px 40px 48px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center">
+<a class="wr-link wr-title wr-foot-name" href="#topo" data-act="goTop" aria-label="Wolff's Room — voltar ao topo" style="font-family: 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.4; color: #ffffff; text-transform: uppercase; text-shadow: 4px 4px 0 #3a3a3a, 8px 8px 0 #1a1a1a"><span class="wr-l" aria-hidden="true" data-hover="hovL11">W</span><span class="wr-l" aria-hidden="true" data-hover="hovL0">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL1">l</span><span class="wr-l" aria-hidden="true" data-hover="hovL2">f</span><span class="wr-l" aria-hidden="true" data-hover="hovL3">f</span><span class="wr-l" aria-hidden="true" data-hover="hovL4">'</span><span class="wr-l" aria-hidden="true" data-hover="hovL5">s</span><span style="width: 0.6em"></span><span class="wr-l" aria-hidden="true" data-hover="hovL6">R</span><span class="wr-l" aria-hidden="true" data-hover="hovL7">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL8">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL9">m</span></a>
+<p style="margin: 0; color: #c4c4c4; font-size: 18px">Traduções, ports e ferramentas para PlayStation Vita.</p>
+<nav aria-label="Redes" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 24px">
+<a class="wr-ico" data-hover="hov" href="https://github.com/WolffsRoom" aria-label="GitHub" title="GitHub" style="display: flex; width: 64px; height: 64px; align-items: center; justify-content: center; border: 0; background: transparent; color: #c4c4c4; box-sizing: border-box"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="7" y="2" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/></svg></a>
+<a class="wr-ico" data-hover="hov" href="https://www.youtube.com/@WolffsRoom" aria-label="YouTube" title="YouTube" style="display: flex; width: 64px; height: 64px; align-items: center; justify-content: center; border: 0; background: transparent; color: #c4c4c4; box-sizing: border-box"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="11" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="9" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="0" y="8" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="3" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="0" y="9" width="1" height="1"/><rect x="1" y="9" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="3" y="9" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="8" y="9" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="11" y="9" width="1" height="1"/><rect x="1" y="10" width="1" height="1"/><rect x="2" y="10" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="7" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/><rect x="9" y="10" width="1" height="1"/><rect x="10" y="10" width="1" height="1"/></svg></a>
+<a class="wr-ico" data-hover="hov" href="https://discord.com/invite/P47PNuP5aN" aria-label="Discord" title="Discord" style="display: flex; width: 64px; height: 64px; align-items: center; justify-content: center; border: 0; background: transparent; color: #c4c4c4; box-sizing: border-box"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="1" width="1" height="1"/><rect x="2" y="1" width="1" height="1"/><rect x="3" y="1" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="9" y="1" width="1" height="1"/><rect x="10" y="1" width="1" height="1"/><rect x="0" y="2" width="1" height="1"/><rect x="1" y="2" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="5" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="2" width="1" height="1"/><rect x="9" y="2" width="1" height="1"/><rect x="10" y="2" width="1" height="1"/><rect x="11" y="2" width="1" height="1"/><rect x="0" y="3" width="1" height="1"/><rect x="1" y="3" width="1" height="1"/><rect x="2" y="3" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="3" width="1" height="1"/><rect x="9" y="3" width="1" height="1"/><rect x="10" y="3" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="10" y="4" width="1" height="1"/><rect x="11" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="9" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="11" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="9" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="3" y="8" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="3" y="9" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="2" y="10" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/></svg></a>
+<a class="wr-ico" data-hover="hov" href="https://www.buymeacoffee.com/5rsrt7j4z8f" aria-label="Buy Me a Coffee" title="Buy Me a Coffee" style="display: flex; width: 64px; height: 64px; align-items: center; justify-content: center; border: 0; background: transparent; color: #c4c4c4; box-sizing: border-box"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="3" y="0" width="1" height="1"/><rect x="6" y="0" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="7" y="1" width="1" height="1"/><rect x="3" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="4" width="1" height="1"/><rect x="6" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="4" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="5" width="1" height="1"/><rect x="7" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="2" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="5" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="8" y="6" width="1" height="1"/><rect x="11" y="6" width="1" height="1"/><rect x="0" y="7" width="1" height="1"/><rect x="1" y="7" width="1" height="1"/><rect x="2" y="7" width="1" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="5" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="0" y="8" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="2" y="8" width="1" height="1"/><rect x="3" y="8" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="5" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="10" y="8" width="1" height="1"/><rect x="1" y="9" width="1" height="1"/><rect x="2" y="9" width="1" height="1"/><rect x="3" y="9" width="1" height="1"/><rect x="4" y="9" width="1" height="1"/><rect x="5" y="9" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="7" y="9" width="1" height="1"/><rect x="2" y="10" width="1" height="1"/><rect x="3" y="10" width="1" height="1"/><rect x="4" y="10" width="1" height="1"/><rect x="5" y="10" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="0" y="11" width="1" height="1"/><rect x="1" y="11" width="1" height="1"/><rect x="2" y="11" width="1" height="1"/><rect x="3" y="11" width="1" height="1"/><rect x="4" y="11" width="1" height="1"/><rect x="5" y="11" width="1" height="1"/><rect x="6" y="11" width="1" height="1"/><rect x="7" y="11" width="1" height="1"/><rect x="8" y="11" width="1" height="1"/><rect x="9" y="11" width="1" height="1"/><rect x="10" y="11" width="1" height="1"/><rect x="11" y="11" width="1" height="1"/></svg></a>
+</nav>
+<div aria-hidden="true" style="width: 100%; max-width: 640px; height: 4px; background: repeating-linear-gradient(90deg, #3a3a3a 0, #3a3a3a 8px, transparent 8px, transparent 16px)"></div>
+<span style="color: #8a8a8a">© 2026 Wolff's Room · Ports e traduções não oficiais, feitos por fã.</span>
+</div>
+</footer>
+<button class="wr-snd" type="button" data-act="toggleSnd" data-b-aria-pressed="sndOn" data-b-aria-label="sndLabel" data-b-title="sndLabel">
+<span class="dc-if" data-if="sndOn"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="4" width="1" height="4"/><rect x="9" y="2" width="1" height="2"/><rect x="10" y="4" width="1" height="4"/><rect x="9" y="8" width="1" height="2"/></svg></span>
+<span class="dc-if" data-if="sndOff"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="3" width="1" height="1"/><rect x="8" y="4" width="1" height="1"/><rect x="9" y="5" width="1" height="2"/><rect x="10" y="4" width="1" height="1"/><rect x="11" y="3" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/></svg></span>
+</button>
+
+</div>
+<script>
+
+(function () {
+  'use strict';
+  var rendering = false, mounted = false, comp, vals = {};
+  window.DCLogic = class {
+    constructor(props) { this.props = props || {}; this.state = {}; }
+    setState(p) { Object.assign(this.state, p); render(); }
+    forceUpdate() { render(); }
+  };
+class Component extends DCLogic {
+  componentDidMount() {
+    var self = this;
+    this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, 4600);
+    this._fT = setTimeout(function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); }, 3000);
+    this._unlock = function () { var ac = self.audio(); if (ac && ac.state === 'suspended') ac.resume(); };
+    try { document.addEventListener('pointerdown', this._unlock); } catch (e) {}
+    var st = this.state || {};
+    var atHome = !st.post && (!st.view || st.view === 'inicio');
+    this._sfxT = [];
+    if (atHome) {
+      var plan = [[120, 'boot'], [2200, 'tvon'], [2850, 'mos1'], [3000, 'mos2'], [3150, 'mos3'], [3300, 'mos4']];
+      var kt = 'O que será que o Wolff está fazendo...?';
+      for (var i = 0; i < kt.length; i++) if (kt[i] !== ' ') plan.push([300 + i * 45, 'type']);
+      plan.push([3500, 'ready']);
+      plan.forEach(function (p) { self._sfxT.push(setTimeout(function () { self.beep(p[1], false, true); }, p[0])); });
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this._pbT); clearTimeout(this._fT);
+    (this._sfxT || []).forEach(clearTimeout);
+    try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
+  }
+  audio() {
+    try {
+      var C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return null;
+      if (!this._ac) this._ac = new C();
+      return this._ac;
+    } catch (e) { return null; }
+  }
+  sndOn() {
+    var st = this.state || {};
+    if (st.snd !== undefined) return st.snd;
+    try { return window.localStorage.getItem('wr-som') !== '0'; } catch (e) { return true; }
+  }
+  beep(kind, force, intro) {
+    if (!force && !this.sndOn()) return;
+    var ac = this.audio();
+    if (!ac) return;
+    var self = this;
+    if (ac.state !== 'running') {
+      if (intro) return;
+      ac.resume().then(function () { self.play(ac, kind); }, function () {});
+      return;
+    }
+    this.play(ac, kind);
+  }
+  pulse(ac, duty) {
+    this._waves = this._waves || {};
+    if (this._waves[duty]) return this._waves[duty];
+    var n = 32, re = new Float32Array(n), im = new Float32Array(n);
+    for (var k = 1; k < n; k++) re[k] = (2 / (k * Math.PI)) * Math.sin(k * Math.PI * duty);
+    return (this._waves[duty] = ac.createPeriodicWave(re, im));
+  }
+  bus(ac) {
+    if (this._bus) return this._bus;
+    var out = ac.createGain(), dl = ac.createDelay(0.5), fb = ac.createGain(), wet = ac.createGain();
+    out.gain.value = 0.05; dl.delayTime.value = 0.11; fb.gain.value = 0.28; wet.gain.value = 0.35;
+    out.connect(ac.destination); out.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(ac.destination);
+    return (this._bus = out);
+  }
+  play(ac, kind) {
+    try {
+      var out = this.bus(ac), self = this;
+      var C5 = 523, D5 = 587, E5 = 659, G5 = 784, A5 = 880, C6 = 1047, E6 = 1319, G6 = 1568;
+      var scale = [C5, D5, E5, G5, A5, C6, 1175, E6, G6, 1760, 2093, 2349];
+      var r = [C5, D5, E5][Math.floor(Math.random() * 3)];
+      // [freqStart, freqEnd, start, dur, wave, vol]  wave: p12 | p25 | p50 | tri | noise
+      var S = {
+        hover: [[1760, 1760, 0, 0.018, 'p12', 0.35]],
+        open: [[988, 988, 0, 0.05, 'p25', 1], [1319, 1319, 0.05, 0.12, 'p25', 1]],
+        back: [[784, 523, 0, 0.08, 'p50', 0.9], [392, 262, 0.07, 0.1, 'p50', 0.9]],
+        tick: [[1568, 1568, 0, 0.03, 'p12', 0.8]],
+        peek: [[C5, C5, 0, 0.04, 'p25', 1], [E5, E5, 0.04, 0.04, 'p25', 1], [G5, G5, 0.08, 0.04, 'p25', 1], [C6, C6, 0.12, 0.1, 'p25', 1], [131, 131, 0, 0.22, 'tri', 1.4]],
+        confirm: [[C6, C6, 0, 0.06, 'p25', 1], [G6, G6, 0.06, 0.14, 'p25', 1], [0, 0, 0, 0.05, 'noise', 0.5], [196, 196, 0, 0.2, 'tri', 1.4]],
+        up: [[C5, G6, 0, 0.18, 'p25', 0.9], [131, 262, 0, 0.18, 'tri', 1.2]],
+        on: [[C5, C5, 0, 0.06, 'p25', 1], [E5, E5, 0.06, 0.06, 'p25', 1], [G5, G5, 0.12, 0.06, 'p25', 1], [C6, G6, 0.18, 0.14, 'p25', 1], [131, 131, 0, 0.3, 'tri', 1.6]],
+        boot: [[262, 262, 0, 0.06, 'tri', 1.6], [0, 0, 0, 0.03, 'noise', 0.35]],
+        tvon: [[0, 0, 0, 0.28, 'noise', 0.6], [60, 1200, 0, 0.36, 'p50', 0.8], [55, 55, 0, 0.45, 'tri', 1.5]],
+        mos1: [[330, 330, 0, 0.045, 'p25', 1]],
+        mos2: [[440, 440, 0, 0.045, 'p25', 1]],
+        mos3: [[587, 587, 0, 0.045, 'p25', 1]],
+        mos4: [[784, 784, 0, 0.045, 'p25', 1], [1175, 1175, 0.045, 0.08, 'p25', 1]],
+        type: [[r, r, 0, 0.028, 'p12', 0.6]],
+        ready: [[E5, E5, 0, 0.08, 'p25', 1], [G5, G5, 0.08, 0.08, 'p25', 1], [C6, C6, 0.16, 0.08, 'p25', 1], [E6, E6, 0.24, 0.22, 'p25', 1], [165, 165, 0, 0.18, 'tri', 1.5], [131, 131, 0.24, 0.3, 'tri', 1.5], [0, 0, 0.24, 0.05, 'noise', 0.4]]
+      };
+      var m = /^hovL(\d+)$/.exec(kind);
+      var seq = m ? [[scale[+m[1]], scale[+m[1]], 0, 0.05, 'p12', 0.55]] : (S[kind] || S.open);
+      var t0 = ac.currentTime + 0.01;
+      seq.forEach(function (n) {
+        var st = t0 + n[2], g = ac.createGain(), src;
+        if (n[4] === 'noise') {
+          var len = Math.max(1, Math.floor(ac.sampleRate * n[3]));
+          var buf = ac.createBuffer(1, len, ac.sampleRate), d = buf.getChannelData(0);
+          for (var k = 0; k < len; k++) d[k] = (Math.random() * 2 - 1) * (1 - k / len);
+          src = ac.createBufferSource(); src.buffer = buf;
+        } else {
+          src = ac.createOscillator();
+          if (n[4] === 'tri') src.type = 'triangle'; else src.setPeriodicWave(self.pulse(ac, n[4] === 'p12' ? 0.125 : n[4] === 'p25' ? 0.25 : 0.5));
+          src.frequency.setValueAtTime(n[0], st);
+          if (n[1] !== n[0]) src.frequency.exponentialRampToValueAtTime(n[1], st + n[3]);
+        }
+        g.gain.setValueAtTime(0.0001, st);
+        g.gain.linearRampToValueAtTime(n[5], st + 0.004);
+        g.gain.setValueAtTime(n[5], st + n[3] * 0.6);
+        g.gain.linearRampToValueAtTime(0.0001, st + n[3]);
+        src.connect(g); g.connect(out);
+        src.start(st); src.stop(st + n[3] + 0.02);
+      });
+    } catch (e) {}
+  }
+  renderVals() {
+    var st = this.state || {};
+    var cats = /*CATS*/{};
+    var post = st.post || null;
+    var ids = ['ports', 'ferramentas', 'traducoes', 'reviews'];
+    var view = st.view ? st.view : (this.props.telaInicial ?? 'inicio');
+    var home = !post && ids.indexOf(view) === -1;
+    var peek = st.peek || null;
+    var self = this;
+    var snd = this.sndOn();
+    var slide = function (dir) {
+      return function () {
+        self.beep('tick');
+        var t = document.querySelector('.wr-slider-track');
+        if (t) t.scrollBy({ left: dir * Math.max(264, Math.floor(t.clientWidth * 0.8 / 264) * 264), behavior: 'smooth' });
+      };
+    };
+    var out = {
+      on0: home,
+      goHome: function () { self.beep('back'); self.setState({ view: 'inicio', post: null, peek: null }); },
+      goTop: function () {
+        self.beep('up');
+        self.setState({ view: 'inicio', post: null, peek: null });
+        setTimeout(function () { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }, 30);
+      },
+      hov: function () { self.beep('hover', false, true); },
+      rootCls: st.pbDone ? 'wr-pbdone' : '',
+      featCls: st.featLoaded ? 'wr-loaded' : '',
+      featLoad: function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); },
+      slidePrev: slide(-1),
+      slideNext: slide(1),
+      sndOn: snd,
+      sndOff: !snd,
+      sndLabel: snd ? 'Desligar som' : 'Ligar som',
+      toggleSnd: function () {
+        var v = !snd;
+        try { window.localStorage.setItem('wr-som', v ? '1' : '0'); } catch (e) {}
+        if (v) self.beep('on', true);
+        self.setState({ snd: v });
+      }
+    };
+    ids.forEach(function (id, i) {
+      var n = i + 1;
+      out['on' + n] = !post && view === id;
+      out['pk' + n] = home && peek === id;
+      out['pick' + n] = function () {
+        self.beep(peek === id ? 'confirm' : 'peek');
+        if (peek === id) { self.setState({ view: id, post: null, peek: null }); return; }
+        self.setState({ peek: id });
+        setTimeout(function () {
+          var el = [].slice.call(document.querySelectorAll('.wr-peek')).filter(function (x) { return x.offsetParent !== null; })[0];
+          if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 24, behavior: 'smooth' });
+        }, 80);
+      };
+      out['all' + n] = function () { self.beep('confirm'); self.setState({ view: id, post: null, peek: null }); };
+    });
+    for (var h = 0; h < 12; h++) out['hovL' + h] = (function (k) { return function () { self.beep('hovL' + k, false, true); }; })(h);
+    Object.keys(cats).forEach(function (pid) {
+      out['p_' + pid] = post === pid;
+      out['open_' + pid] = function () { self.beep('open'); self.setState({ post: pid }); };
+      out['back_' + pid] = function () { self.beep('back'); self.setState({ post: null }); };
+    });
+    return out;
+  }
+}
+  var CATS = ['ports', 'ferramentas', 'traducoes', 'reviews'];
+  comp = new Component({ telaInicial: 'inicio' });
+  function hashFor(st) {
+    if (st.post) return st.post;
+    if (st.view && st.view !== 'inicio') return st.view;
+    return '';
+  }
+  function stateFromHash() {
+    var h = decodeURIComponent((location.hash || '').slice(1));
+    if (h && ('p_' + h) in vals) return { post: h };
+    if (CATS.indexOf(h) !== -1) return { view: h, post: null };
+    return { view: 'inicio', post: null };
+  }
+  function render() {
+    if (rendering) return;
+    rendering = true;
+    vals = comp.renderVals();
+    document.querySelectorAll('[data-if]').forEach(function (el) { el.hidden = !vals[el.getAttribute('data-if')]; });
+    document.querySelectorAll('*').forEach(function (el) {
+      for (var i = 0; i < el.attributes.length; i++) {
+        var at = el.attributes[i];
+        if (at.name.indexOf('data-b-') === 0) el.setAttribute(at.name.slice(7), String(vals[at.value]));
+      }
+    });
+    document.querySelectorAll('[data-bclass]').forEach(function (el) {
+      el.className = (el.getAttribute('data-bbase') + ' ' + (vals[el.getAttribute('data-bclass')] || '')).trim();
+    });
+    var h = hashFor(comp.state);
+    if (mounted && ('#' + h) !== (location.hash || '#') && !(h === '' && !location.hash)) {
+      history.pushState(null, '', h ? '#' + h : location.pathname + location.search);
+      if (window.__wrGoTop) window.scrollTo(0, 0);
+    }
+    rendering = false;
+  }
+  document.addEventListener('click', function (ev) {
+    var el = ev.target.closest('[data-act]');
+    if (!el) return;
+    var fn = vals[el.getAttribute('data-act')];
+    if (typeof fn !== 'function') return;
+    ev.preventDefault();
+    var before = hashFor(comp.state);
+    fn();
+    if (hashFor(comp.state) !== before) window.scrollTo(0, 0);
+  });
+  document.addEventListener('mouseover', function (ev) {
+    var el = ev.target.closest('[data-hover]');
+    if (!el || (ev.relatedTarget && el.contains(ev.relatedTarget))) return;
+    var fn = vals[el.getAttribute('data-hover')];
+    if (typeof fn === 'function') fn();
+  });
+  window.addEventListener('popstate', function () {
+    Object.assign(comp.state, stateFromHash());
+    render();
+    window.scrollTo(0, 0);
+  });
+  render();
+  document.querySelectorAll('img[data-onload]').forEach(function (img) {
+    var fire = function () { var f = vals[img.getAttribute('data-onload')]; if (typeof f === 'function') f(); };
+    if (img.complete && img.naturalWidth) fire(); else img.addEventListener('load', fire);
+  });
+  Object.assign(comp.state, stateFromHash());
+  render();
+  mounted = true;
+  if (comp.componentDidMount) comp.componentDidMount();
+})();
+
+</script>
+</body>
+</html>
