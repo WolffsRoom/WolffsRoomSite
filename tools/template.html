@@ -113,7 +113,7 @@ dd{overflow-wrap:anywhere;min-width:0}
 .wr-pbdone .wr-kick{display:none}
 @media (prefers-reduced-motion:reduce){.wr-kick{display:none}}
 .wr-wait .wr-ch,.wr-wait .wr-caret,.wr-wait .wr-tvbox,.wr-wait .wr-tvbox .wr-sh::before,.wr-wait .wr-mos,.wr-wait .wr-kick,.wr-wait .wr-feat-info>*{animation-play-state:paused !important}
-.wr-wait .wr-kick{visibility:hidden}
+.wr-wait .wr-kick{display:none}
 .wr-start{display:none;position:absolute;inset:0;z-index:3;align-items:center;justify-content:flex-start;padding:8px 16px 16px;flex-direction:column;gap:16px;border:0;background:transparent;color:#ffffff;cursor:pointer;font-family:'Press Start 2P','Pixelify Sans',monospace;font-size:32px;line-height:1.5;text-transform:uppercase;text-shadow:4px 4px 0 #3a3a3a}
 .wr-start small{font-size:16px;color:#a8a8a8;text-shadow:none;text-transform:none}
 .wr-start span{animation:wr-caret 1s step-end infinite}
@@ -128,6 +128,12 @@ dd{overflow-wrap:anywhere;min-width:0}
 .wr-wait .wr-nav .wr-cat{animation-play-state:paused !important}
 @media (prefers-reduced-motion:reduce){.wr-nav .wr-cat{animation:none !important}}
 html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !important}
+.wr-musbtn{position:fixed;bottom:168px;right:16px;z-index:50;width:64px;height:64px;padding:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
+.wr-musbtn:hover{border-color:#ffffff}
+.wr-musbtn[aria-pressed="false"]{color:#5a5a5a}
+.wr-musbtn:active{transform:translate(4px,4px)}
+.wr-musbtn:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.wr-wait .wr-musbtn{visibility:hidden}
 .wr-langbtn{position:fixed;bottom:92px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;font-family:'Press Start 2P','Pixelify Sans',monospace;font-size:16px;line-height:1}
 .wr-langbtn:hover{border-color:#ffffff}
 .wr-langbtn:active{transform:translate(4px,4px)}
@@ -135,7 +141,7 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 </style>
 </head>
 <body>
-<div class="wr-root" data-bbase="wr-root" data-bclass="rootCls" style="min-height: 100vh; overflow-x: hidden; background: #060606; color: #ffffff; font-family: '8bitoperator', '8-bit Operator+', 'Pixel Operator', 'Pixelify Sans', monospace; font-size: 18px; line-height: 1.45; display: flex; flex-direction: column">
+<div class="wr-root wr-wait" data-bbase="wr-root" data-bclass="rootCls" style="min-height: 100vh; overflow-x: hidden; background: #060606; color: #ffffff; font-family: '8bitoperator', '8-bit Operator+', 'Pixel Operator', 'Pixelify Sans', monospace; font-size: 18px; line-height: 1.45; display: flex; flex-direction: column">
 
 <header id="topo" class="wr-pad" style="padding: 48px 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
 <button class="wr-link" type="button" data-act="goHome" aria-label="Wolff's Room — início" style="border: 0; padding: 0; background: transparent; cursor: pointer; line-height: 0">
@@ -165,6 +171,7 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <span style="color: #8a8a8a"><span data-l="en">© 2026 Wolff's Room · Unofficial fan-made ports and translations.</span><span data-l="pt">© 2026 Wolff's Room · Ports e traduções não oficiais, feitos por fã.</span></span>
 </div>
 </footer>
+<button class="wr-musbtn" type="button" data-act="toggleMus" data-hover="hov" data-b-aria-pressed="musOn" data-b-aria-label="musLabel" data-b-title="musLabel"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="4" y="1" width="1" height="6"/><rect x="5" y="1" width="3" height="1"/><rect x="7" y="2" width="1" height="4"/><rect x="2" y="6" width="3" height="2"/><rect x="5" y="5" width="3" height="2"/><rect x="2" y="8" width="2" height="1"/></svg></button>
 <button class="wr-langbtn" type="button" data-act="toggleLang" data-hover="hov" data-b-aria-label="langLabel" data-b-title="langLabel"><span data-l="en">EN</span><span data-l="pt">PT</span></button>
 <button class="wr-snd" type="button" data-act="toggleSnd" data-b-aria-pressed="sndOn" data-b-aria-label="sndLabel" data-b-title="sndLabel">
 <span class="dc-if" data-if="sndOn"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="4" width="1" height="4"/><rect x="9" y="2" width="1" height="2"/><rect x="10" y="4" width="1" height="4"/><rect x="9" y="8" width="1" height="2"/></svg></span>
@@ -193,6 +200,7 @@ class Component extends DCLogic {
       if (ac && ac.state === 'suspended') ac.resume();
     };
     try { document.addEventListener('pointerdown', this._unlock); } catch (e) {}
+    this._mT = setInterval(function () { try { self.musicTick(); } catch (e) {} }, 150);
     var st = this.state || {};
     var atHome = !st.post && (!st.view || st.view === 'inicio');
     var ac = this.audio();
@@ -216,7 +224,7 @@ class Component extends DCLogic {
     if (ac && ac.state !== 'running') ac.resume().then(go, go); else go();
   }
   componentWillUnmount() {
-    clearTimeout(this._pbT); clearTimeout(this._fT);
+    clearTimeout(this._pbT); clearTimeout(this._fT); clearInterval(this._mT);
     (this._sfxT || []).forEach(clearTimeout);
     try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
   }
@@ -313,6 +321,72 @@ class Component extends DCLogic {
       });
     } catch (e) {}
   }
+  // Música de fundo: a mesma do app do Vita (lá menor, 72 BPM, 16 compassos, loop sem emenda).
+  musOn() {
+    var st = this.state || {};
+    if (st.mus !== undefined) return st.mus;
+    try { return window.localStorage.getItem('wr-musica') !== '0'; } catch (e) { return true; }
+  }
+  musicEvents() {
+    if (this._mev) return this._mev;
+    var ev = [], bass = [33, 29, 38, 40, 33, 34, 38, 40];
+    var chord = [[57, 60, 64], [53, 57, 60], [50, 53, 57], [52, 56, 59], [57, 60, 64], [53, 58, 62], [50, 53, 57], [52, 56, 59]];
+    var mel = [[0, 0, 72, 6], [0, 6, 71, 2], [0, 8, 69, 8], [1, 0, 69, 4], [1, 4, 72, 4], [1, 8, 77, 8], [2, 0, 76, 6], [2, 6, 74, 2], [2, 8, 72, 8],
+      [3, 0, 71, 8], [3, 8, 68, 8], [4, 0, 69, 12], [4, 12, 64, 4], [5, 0, 70, 6], [5, 6, 69, 2], [5, 8, 65, 8], [6, 0, 65, 4], [6, 4, 69, 4], [6, 8, 74, 8],
+      [7, 0, 71, 4], [7, 4, 72, 4], [7, 8, 71, 4], [7, 12, 68, 4]];
+    var arp = [0, 1, 2, 1, 0, 1, 2, 1];
+    for (var rep = 0; rep < 2; rep++) for (var b = 0; b < 8; b++) {
+      var base = (rep * 8 + b) * 16;
+      ev.push([base, bass[b], 15, 'tri', 0.7], [base + 12, bass[b] + 12, 3, 'tri', 0.22]);
+      for (var s2 = 0; s2 < 8; s2++) ev.push([base + s2 * 2, chord[b][arp[s2]], 2, 'p12', 0.07]);
+    }
+    for (rep = 0; rep < 2; rep++) mel.forEach(function (m) {
+      if (rep === 1 && m[0] < 4) return; // respiro na segunda volta
+      ev.push([(rep * 8 + m[0]) * 16 + m[1], m[2], m[3], 'tri', 0.42]);
+    });
+    var byStep = {};
+    ev.forEach(function (e) { (byStep[e[0]] = byStep[e[0]] || []).push(e); });
+    return (this._mev = byStep);
+  }
+  musicTick() {
+    var ac = this._ac;
+    var want = this.musOn() && this.sndOn() && this.state.pbDone; // só depois da intro
+    if (!ac || ac.state !== 'running') return;
+    if (!this._mg) {
+      this._mg = ac.createGain();
+      this._mg.gain.value = 0.0001;
+      this._mg.connect(this.bus(ac));
+    }
+    var g = this._mg.gain, now = ac.currentTime;
+    if (!want) {
+      if (this._mPlaying) { g.cancelScheduledValues(now); g.setValueAtTime(g.value, now); g.linearRampToValueAtTime(0.0001, now + 0.6); }
+      this._mPlaying = false;
+      return;
+    }
+    if (!this._mPlaying) { // entra devagar
+      this._mPlaying = true;
+      g.cancelScheduledValues(now); g.setValueAtTime(0.0001, now); g.linearRampToValueAtTime(0.55, now + 2.5);
+      if (!this._mNext || this._mNext < now) { this._mNext = now + 0.1; }
+    }
+    var step = 60 / 72 / 4, ev = this.musicEvents(), self = this;
+    while (this._mNext < now + 0.6) { // agenda 0,6 s à frente; o passo dá a volta em 256 sem emenda
+      var s = this._mStep || 0;
+      (ev[s] || []).forEach(function (e) {
+        var f = 440 * Math.pow(2, (e[1] - 69) / 12), st = self._mNext, dur = e[2] * step - step / 4;
+        var o = ac.createOscillator(), gg = ac.createGain();
+        if (e[3] === 'tri') o.type = 'triangle'; else o.setPeriodicWave(self.pulse(ac, 0.125));
+        o.frequency.setValueAtTime(f, st);
+        gg.gain.setValueAtTime(0.0001, st);
+        gg.gain.linearRampToValueAtTime(e[4], st + 0.004);
+        gg.gain.setValueAtTime(e[4], st + dur * 0.6);
+        gg.gain.linearRampToValueAtTime(0.0001, st + dur);
+        o.connect(gg); gg.connect(self._mg);
+        o.start(st); o.stop(st + dur + 0.02);
+      });
+      this._mStep = (s + 1) % 256;
+      this._mNext += step;
+    }
+  }
   renderVals() {
     var st = this.state || {};
     var cats = /*CATS*/{};
@@ -349,6 +423,15 @@ class Component extends DCLogic {
       sndOn: snd,
       sndOff: !snd,
       sndLabel: en ? (snd ? 'Turn sound off' : 'Turn sound on') : (snd ? 'Desligar som' : 'Ligar som'),
+      musOn: this.musOn() && snd,
+      musLabel: en ? (this.musOn() ? 'Turn music off' : 'Turn music on') : (this.musOn() ? 'Desligar música' : 'Ligar música'),
+      toggleMus: function () {
+        var v = !self.musOn();
+        try { window.localStorage.setItem('wr-musica', v ? '1' : '0'); } catch (e) {}
+        if (v && !snd) { try { window.localStorage.setItem('wr-som', '1'); } catch (e) {} self.setState({ snd: true }); }
+        self.beep('tick', true);
+        self.setState({ mus: v });
+      },
       langLabel: en ? 'Language: English — switch to Portuguese' : 'Idioma: português — mudar para inglês',
       toggleLang: function () {
         var v = en ? 'pt' : 'en';
