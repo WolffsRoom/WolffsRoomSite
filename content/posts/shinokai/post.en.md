@@ -3,6 +3,7 @@ tag: Entertainment · Anime
 status: Available · Brazil
 resumo: Free entertainment app for anime fans, available only in Brazil.
 ficha:
+  Developer: MeninoSung
   Platform: PS Vita / PSTV
   Availability: Brazil only
   Version: v0.2
@@ -12,7 +13,7 @@ links:
   MediaFire mirror: https://www.mediafire.com/file/w6kzbmi3uhmo2f6/ShinokaiVita.vpk/
 ---
 
-ShinoKaiVita is a free entertainment app aimed at anime fans. Its proposal resembles streaming services such as Crunchyroll, with free access to the content offered by the application.
+**ShinoKaiVita**, developed by **MeninoSung**, is a free entertainment app aimed at anime fans. Its proposal resembles streaming services such as Crunchyroll, with free access to the content offered by the application.
 
 ## Availability
 - Works only in Brazil

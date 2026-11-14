@@ -90,6 +90,24 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-pbdone .wr-mos{display:none}
 .wr-pbdone .wr-tvbox,.wr-pbdone .wr-tvbox .wr-sh::before{animation:none !important}
 .wr-pbdone .wr-ch,.wr-pbdone .wr-caret,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
+/* Replay a shorter version of the entry animation when returning Home. */
+@keyframes wr-home-return{from{opacity:0;transform:translateY(24px);clip-path:inset(16% 0 0 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+.wr-root.wr-home-returning .wr-stage{animation:wr-home-return .48s steps(6,end) both !important}
+.wr-root.wr-home-returning .wr-feat-info>:not(.wr-feat-actions){animation:wr-pop .32s steps(4,end) both !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:.35s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:.47s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:.59s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(4){animation-delay:.71s !important}
+.wr-root.wr-home-returning .wr-feat-info>.wr-feat-actions{opacity:0 !important;visibility:hidden !important;pointer-events:none !important;animation:none !important;transition:none !important}
+.wr-root.wr-home-returning.wr-feat-actions-ready .wr-feat-info>.wr-feat-actions{opacity:1 !important;visibility:visible !important;pointer-events:auto !important;animation:wr-pop .30s steps(4,end) both !important}
+.wr-root.wr-home-returning .wr-latest{animation:wr-pop .30s steps(4,end) .75s both !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat{animation:wr-pop .30s steps(4,end) both !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:.82s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:.9s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:.98s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:1.06s !important}
+@media(prefers-reduced-motion:reduce){.wr-root.wr-home-returning .wr-stage,.wr-root.wr-home-returning .wr-feat-info>*,
+.wr-root.wr-home-returning .wr-nav .wr-cat,.wr-root.wr-home-returning .wr-latest{animation:none !important}}
 .wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
 .wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
 .wr-slider-track{scrollbar-color:#5a5a5a #111111;scrollbar-width:thin}
@@ -297,8 +315,25 @@ class Component extends DCLogic {
     };
     if (ac && ac.state !== 'running') ac.resume().then(go, go); else go();
   }
+  returnHome() {
+    var self = this;
+    clearTimeout(this._returnHomeT);
+    clearTimeout(this._returnButtonsT);
+    // First clear the prior replay class; reflow forces CSS keyframes to restart.
+    this.setState({ view: 'inicio', post: null, peek: null,
+                    returningHome: false, returnActionsReady: false });
+    var home = document.querySelector('.wr-home');
+    if (home) void home.offsetWidth;
+    this.setState({ returningHome: true });
+    this._returnButtonsT = setTimeout(function () {
+      self.setState({ returnActionsReady: true });
+    }, 1110);
+    this._returnHomeT = setTimeout(function () {
+      self.setState({ returningHome: false, returnActionsReady: true });
+    }, 1580);
+  }
   componentWillUnmount() {
-    clearTimeout(this._pbT); clearTimeout(this._buttonsT); clearTimeout(this._fT); clearInterval(this._mT);
+    clearTimeout(this._pbT); clearTimeout(this._buttonsT); clearTimeout(this._returnHomeT); clearTimeout(this._returnButtonsT); clearTimeout(this._fT); clearInterval(this._mT);
     (this._sfxT || []).forEach(clearTimeout);
     try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
     document.removeEventListener('mousedown', this._unlock);
@@ -485,14 +520,14 @@ class Component extends DCLogic {
     };
     var out = {
       on0: home,
-      goHome: function () { self.beep('back'); self.setState({ view: 'inicio', post: null, peek: null }); },
+      goHome: function () { self.beep('back'); self.returnHome(); },
       goTop: function () {
         self.beep('up');
-        self.setState({ view: 'inicio', post: null, peek: null });
+        self.returnHome();
         setTimeout(function () { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }, 30);
       },
       hov: function () { self.beep('hover', false, true); },
-      rootCls: (st.pbDone ? 'wr-pbdone' : '') + (st.started ? '' : ' wr-wait') + ((st.actionsReady || st.pbDone) ? ' wr-feat-actions-ready' : ''),
+      rootCls: (st.pbDone ? 'wr-pbdone' : '') + (st.started ? '' : ' wr-wait') + (st.returningHome ? ' wr-home-returning' : '') + (((st.actionsReady || st.pbDone) && !st.returningHome || st.returnActionsReady) ? ' wr-feat-actions-ready' : ''),
       startIntro: function () { self.start(); },
       featCls: st.featLoaded ? 'wr-loaded' : '',
       featLoad: function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); },
@@ -559,7 +594,7 @@ class Component extends DCLogic {
     Object.keys(cats).forEach(function (pid) {
       out['p_' + pid] = post === pid;
       out['open_' + pid] = function () { self.beep('open'); self.setState({ post: pid }); };
-      out['back_' + pid] = function () { self.beep('back'); self.setState({ post: null }); };
+      out['back_' + pid] = function () { self.beep('back'); if (view === 'inicio') self.returnHome(); else self.setState({ post: null }); };
     });
     return out;
   }
@@ -632,8 +667,14 @@ class Component extends DCLogic {
     setTimeout(function () { bub.remove(); paw.classList.remove('wr-barking'); }, 950);
   });
   window.addEventListener('popstate', function () {
-    Object.assign(comp.state, stateFromHash());
-    render();
+    var old = comp.state.post || comp.state.view || 'inicio';
+    var next = stateFromHash();
+    if ((!next.view || next.view === 'inicio') && !next.post && old !== 'inicio') {
+      comp.returnHome();
+    } else {
+      Object.assign(comp.state, next);
+      render();
+    }
     window.scrollTo(0, 0);
   });
   render();

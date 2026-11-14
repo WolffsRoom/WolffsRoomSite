@@ -1,5 +1,6 @@
 ---
 titulo: ShinoKaiVita
+autor: MeninoSung
 categoria: ferramentas
 grupo: Outras equipes
 data: 2026-11-14 12:00
@@ -8,6 +9,7 @@ status: Disponível · Brasil
 resumo: App gratuito de entretenimento voltado a fãs de anime, disponível somente no Brasil.
 capa: capa.webp
 ficha:
+  Desenvolvedor: MeninoSung
   Plataforma: PS Vita / PSTV
   Disponibilidade: Somente Brasil
   Versão: v0.2
@@ -23,7 +25,7 @@ downloads:
     titleid: SHNK00001
 ---
 
-ShinoKaiVita é um app gratuito de entretenimento voltado a fãs de anime. A proposta lembra serviços de streaming como o Crunchyroll, com acesso gratuito ao conteúdo oferecido pelo aplicativo.
+**ShinoKaiVita**, desenvolvido por **MeninoSung**, é um app gratuito de entretenimento voltado a fãs de anime. A proposta lembra serviços de streaming como o Crunchyroll, com acesso gratuito ao conteúdo oferecido pelo aplicativo.
 
 ## Disponibilidade
 

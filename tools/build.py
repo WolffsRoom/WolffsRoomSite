@@ -600,7 +600,16 @@ def kicker_words(text):
 
 def home_html(posts, order, feat, mosaic):
     p = posts[feat]
-    gh = next((u for l, u in p['links'] + p.get('sources', []) if 'github' in u.lower()), None)
+    # The featured GitHub button opens the project repository, never an
+    # asset download URL. Prioritize the post's GitHub source over its VPK.
+    gh = next((u for label, u in p.get('sources', [])
+               if 'github' in label.lower() and
+               u.startswith('https://github.com/') and
+               '/releases/download/' not in u), None)
+    if not gh:
+        gh = next((u for label, u in p['links']
+                   if u.startswith('https://github.com/') and
+                   '/releases/' not in u), None)
     BTN = f'min-height: 48px; box-sizing: border-box; padding: 12px 20px; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase'
     px = '; image-rendering: pixelated' if p['pixel'] else ''
     mos = ''.join(f'<img class="wr-mos" src="{src}" alt="" aria-hidden="true" style="animation-delay: {t}s">\n' for src, t in reversed(mosaic))
