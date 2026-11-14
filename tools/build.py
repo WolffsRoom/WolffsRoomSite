@@ -32,7 +32,7 @@ CATS = [('ports', 'Ports'), ('ferramentas', 'Ferramentas'), ('traducoes', 'Tradu
 CAT_NAMES = dict(CATS)
 GROUPS = ['Em andamento', 'Finalizado', 'Próximos', 'Outras equipes']
 SLUG_RE = re.compile(r'^[a-z0-9][a-z0-9-]*$')
-VITA_GITHUB = 'https://wolffsroom.github.io/WolffsStore'
+WEB_GITHUB = 'https://github.com/WolffsRoom?tab=repositories'
 
 
 class PostError(Exception):
@@ -40,14 +40,8 @@ class PostError(Exception):
 
 
 def vita_github_url(url):
-    """Troca páginas do GitHub pelo espelho leve; assets continuam diretos."""
-    url = str(url)
-    m = re.match(r'^https://github\.com/WolffsRoom/([^/?#]+)(/[^?#]*)?(?:[?#].*)?$', url, re.I)
-    if not m or '/releases/download/' in url:
-        return url
-    repo, path = m.group(1), (m.group(2) or '')
-    suffix = '/releases/' if path.rstrip('/').startswith('/releases') else '/'
-    return f'{VITA_GITHUB}/WolffsRoom/{repo}{suffix}'
+    """The website always opens GitHub proper; only the Vita app remaps links."""
+    return str(url)
 
 
 # ---------------------------------------------------------------- leitura
@@ -572,7 +566,7 @@ def lists_html(posts, order):
                 body += f'<p style="margin: 0; text-align: center; color: #8a8a8a">{U("nothing")}</p>\n'
             body += '</div>\n'
         if cid in ('ports', 'ferramentas'):
-            body += (f'<a class="wr-btn" href="{VITA_GITHUB}/" target="_blank" rel="noopener" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
+            body += (f'<a class="wr-btn" href="{WEB_GITHUB}" target="_blank" rel="noopener" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
         title = T(e(UI['pt']['cats'][cid]), e(UI['en']['cats'][cid]))
         out += ('\n<div class="dc-if" data-if="on' + str(n) + '">\n'
                 f'<section aria-label="{e(UI["en"]["cats"][cid])}" style="display: flex; flex-direction: column; gap: 44px">\n'
