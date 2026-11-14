@@ -211,6 +211,8 @@ def write_store(posts, order, feat, groups, out_dir):
             'video_arquivo': drive_direct(p['video_file']) if str(p.get('video_file') or '').startswith('http')
                              else (SITE_URL + p['video_file'] if p.get('video_file') else ''),
             'trofeus': bool(p.get('trophies')),
+            'autor': latin(p.get('author') or ''),
+            'autor_url': p.get('author_url') or '',
             'downloads': [],
         }
         if p['cover']:

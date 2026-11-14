@@ -109,6 +109,8 @@ Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junt
 | `fontes:` | Caixa **Source** (abaixo de Downloads): links de código, wiki etc., no mesmo formato de `links:`. |
 | `clock:` | Caixa **Clock recomendado**, ex.: `CPU / GPU: 500 MHz / 222 MHz` e `Desempenho: 60 FPS estáveis`. |
 | `video_arquivo:` | Um `.mp4` na pasta do post (ex.: `trailer.mp4`) ou um link. Toca no próprio site e dentro do app do Vita (use H.264 + AAC, até 960×544). Tem prioridade sobre `video:` (YouTube). |
+- Para ports de terceiros, use `autor: NomeDoDev` e `autor_url: https://github.com/NomeDoDev` no cabeçalho do post. Isso gera a etiqueta `by: NomeDoDev` no site e na Wolff's Store. Posts antigos ficam sem etiqueta.
+
 | `trofeus: true` | O jogo tem troféus nativos (NoTrpDrm): mostra o troféu em pixel art no card e no post. |
 | `titulo_barras:` | Título da caixa de barras (padrão: "Progresso"). |
 | `barras` com texto | `Nota final: 89 (192/216)` mostra a barra em 89% com o texto "192/216". |
