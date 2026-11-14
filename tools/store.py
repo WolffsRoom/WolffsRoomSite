@@ -25,6 +25,7 @@ APP_TAG_PREFIX = 'store-v'
 APP_ASSET = 'WolffsStore-*.vpk'
 COVER = (512, 288)
 SHOT = (480, 270)
+SITE_URL = 'https://wolffsroom.github.io/WolffsRoomSite/'
 DEFAULT_ASSET = {'vpk': '*.vpk', 'traducao': '*.zip', 'plugin': '*.*', 'arquivo': '*.*', 'dados': '*.zip'}
 DEFAULT_NAME = {'vpk': 'download.vpk', 'traducao': 'traducao.zip', 'plugin': 'plugin.suprx', 'arquivo': 'download.bin', 'dados': 'dados.zip'}
 
@@ -201,7 +202,9 @@ def write_store(posts, order, feat, groups, out_dir):
             'progresso': p['progress'] if p['progress'] is not None else -1,
             'pt': _texts(p), 'en': _texts(en), 'capturas': [],
             'video': f'https://youtu.be/{p["video"]}' if p['video'] else '',
-            'video_arquivo': drive_direct(p.get('video_file') or ''),
+            'video_arquivo': drive_direct(p['video_file']) if str(p.get('video_file') or '').startswith('http')
+                             else (SITE_URL + p['video_file'] if p.get('video_file') else ''),
+            'trofeus': bool(p.get('trophies')),
             'downloads': [],
         }
         if p['cover']:

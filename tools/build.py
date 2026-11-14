@@ -171,7 +171,10 @@ def load_post(slug):
         'links': [(str(k), str(v)) for k, v in (meta.get('links') or {}).items()],
         'sources': [(str(k), str(v)) for k, v in (meta.get('fontes') or {}).items()],
         'clock': [(str(k), str(v)) for k, v in (meta.get('clock') or {}).items()],
-        'video_file': str(meta.get('video_arquivo') or ''),
+        # vídeo próprio (.mp4 na pasta do post ou link): toca no site e dentro do app
+        'video_file': (str(meta['video_arquivo']) if str(meta.get('video_arquivo') or '').startswith('http')
+                       else (img(str(meta['video_arquivo'])) if meta.get('video_arquivo') else '')),
+        'trophies': bool(meta.get('trofeus')),
         'cover': img(meta.get('capa')), 'cover_style': str(meta.get('capa_estilo') or 'cobrir'),
         'pixel': bool(meta.get('pixelado')), 'shots': [img(s) for s in (meta.get('capturas') or [])],
         'video': vid,
@@ -243,7 +246,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Ferramentas', 'traducoes': 'Traduções', 'reviews': 'Reviews'},
         'groups': {g: g for g in GROUPS}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas três novidades...', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas três novidades...', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
         'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -253,7 +256,7 @@ UI = {
         'groups': {'Em andamento': 'In progress', 'Finalizado': 'Finished', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest three updates...', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest three updates...', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -297,7 +300,8 @@ def pic(p, lang='en'):
 
 def card(p):
     return ('<a class="wr-card wr-sh-s" href="#' + p['slug'] + '" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
-            '<div style="border-bottom: 4px solid #2e2e2e; background: #0b0b0b">\n' + pic(p) + '\n</div>\n'
+            '<div style="position: relative; border-bottom: 4px solid #2e2e2e; background: #0b0b0b">\n' + pic(p) +
+            ('<span style="position: absolute; top: 8px; right: 8px" title="Troféus nativos / Native trophies (NoTrpDrm)">' + trophy_badge('pt', 2, False) + '</span>' if p.get('trophies') else '') + '\n</div>\n'
             '<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">\n'
             f'<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")}</span>\n'
             f'<strong style="{DF} font-size: 16px; line-height: 1.5; font-weight: 400">{F(p, "title")}</strong>\n'
@@ -320,6 +324,24 @@ PLAY = ('<svg aria-hidden="true" width="64" height="64" viewBox="0 0 16 16" shap
         '<rect x="5" y="4" width="2" height="8" fill="#ffffff"/><rect x="7" y="5" width="2" height="6" fill="#ffffff"/><rect x="9" y="6" width="2" height="4" fill="#ffffff"/><rect x="11" y="7" width="1" height="2" fill="#ffffff"/></svg>')
 
 
+# troféu em pixel art (10x10): o jogo tem troféus nativos (com o plugin NoTrpDrm)
+_TROPHY_ROWS = ['.########.', '##.####.##', '#..####..#', '##.####.##', '..######..', '...####...', '....##....', '....##....', '..######..', '..######..']
+
+
+def trophy_svg(px=3):
+    rects = ''.join(f'<rect x="{x}" y="{y}" width="1" height="1"/>' for y, r in enumerate(_TROPHY_ROWS) for x, c in enumerate(r) if c == '#')
+    shine = '<rect x="2" y="1" width="1" height="3" fill="#fff6c8"/>'
+    return (f'<svg aria-hidden="true" width="{10 * px}" height="{10 * px}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block">'
+            f'<g fill="#f4c430">{rects}</g>{shine}</svg>')
+
+
+def trophy_badge(lang, px=3, label=True):
+    t = UI[lang]['trophies']
+    txt = f'<span style="color: #f4c430; text-transform: uppercase; letter-spacing: 1px">{e(t)}</span>' if label else ''
+    return (f'<span class="wr-trophy" title="{e(t)} (NoTrpDrm)" style="display: inline-flex; align-items: center; gap: 10px; padding: 4px 8px; border: 4px solid #f4c430; background: #0b0b0b">'
+            f'{trophy_svg(px)}{txt}</span>')
+
+
 def section(title, inner):
     return (f'<section style="display: flex; flex-direction: column; gap: 12px">\n<h2 style="{H2}; border-bottom: 4px solid #2e2e2e; padding-bottom: 10px">{e(title)}</h2>\n'
             + inner + '</section>\n')
@@ -337,7 +359,14 @@ def article(p0, lang):
     if p['shots']:
         imgs = '\n'.join(f'<div class="wr-shot" style="border: 4px solid #5a5a5a; background: #000000; line-height: 0"><img src="{s}" alt="{e(ui["shot_of"] + " " + p["title"])}" loading="lazy" style="width: 100%; height: auto; display: block"></div>' for s in p['shots'])
         secs += section(ui['shots'], f'<div class="wr-shots" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">\n{imgs}\n</div>\n')
-    if p['video']:
+    if p.get('video_file'):
+        label = p['video_label'] or ui['video_default']
+        poster = f' poster="{p["cover"]}"' if p['cover'] else ''
+        secs += section(ui['video'],
+                        f'<video class="wr-sh-s" controls preload="none" playsinline{poster} style="width: 100%; aspect-ratio: 16 / 9; display: block; border: 4px solid #ffffff; background: #000000; box-sizing: border-box">'
+                        f'<source src="{e(drive_direct(p["video_file"]))}" type="video/mp4"></video>\n'
+                        f'<span style="color: #a8a8a8">{e(label)}</span>\n')
+    elif p['video']:
         label = p['video_label'] or ui['video_default']
         bg = (f'<img src="{p["cover"]}" alt="" loading="lazy" style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; display: block; opacity: 0.45">'
               if p['cover'] and p['cover_style'] != 'logo' else '<div style="aspect-ratio: 16 / 9; background: #161616"></div>')
@@ -372,6 +401,7 @@ def article(p0, lang):
             '<button class="wr-btn" type="button" data-act="back_' + p['slug'] + '" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + e(ui['back']) + '</button>\n'
             '</div>\n'
             f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">{e(p["title"])}</h1>\n'
+            + (f'<div style="display: flex; justify-content: center">{trophy_badge(lang)}</div>\n' if p.get('trophies') else '') +
             '<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">\n'
             '<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">\n'
             + hero + about + secs +

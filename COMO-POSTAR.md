@@ -108,7 +108,8 @@ Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junt
 | `capa_estilo: logo` | Mostra a capa inteira centralizada em fundo preto (para logos). |
 | `fontes:` | Caixa **Source** (abaixo de Downloads): links de código, wiki etc., no mesmo formato de `links:`. |
 | `clock:` | Caixa **Clock recomendado**, ex.: `CPU / GPU: 500 MHz / 222 MHz` e `Desempenho: 60 FPS estáveis`. |
-| `video_arquivo:` | Link de um `.mp4` (H.264, até 960×544) que o app do Vita toca dentro dele. Sem isso, o vídeo do YouTube abre no navegador do Vita. |
+| `video_arquivo:` | Um `.mp4` na pasta do post (ex.: `trailer.mp4`) ou um link. Toca no próprio site e dentro do app do Vita (use H.264 + AAC, até 960×544). Tem prioridade sobre `video:` (YouTube). |
+| `trofeus: true` | O jogo tem troféus nativos (NoTrpDrm): mostra o troféu em pixel art no card e no post. |
 | `titulo_barras:` | Título da caixa de barras (padrão: "Progresso"). |
 | `barras` com texto | `Nota final: 89 (192/216)` mostra a barra em 89% com o texto "192/216". |
 

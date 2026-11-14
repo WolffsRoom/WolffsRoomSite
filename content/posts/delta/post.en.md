@@ -14,7 +14,11 @@ ficha:
   Source: Steam v0.0.253
   Runtime: Butterscotch + VitaGL + OpenAL
   Build: Deltarune-v0.81.vpk
+  Trophies: Yes (NoTrpDrm)
+video_legenda: DeltaruneVita trailer
 links:
+  Download VPK (v0.81): https://github.com/WolffsRoom/DeltaruneVita/releases/download/v0.81/Deltarune-v0.81.vpk
+fontes:
   View on GitHub: https://github.com/WolffsRoom/DeltaruneVita
   Releases: https://github.com/WolffsRoom/DeltaruneVita/releases
 ---
@@ -43,6 +47,8 @@ Unofficial port of DELTARUNE, chapters 1 to 5. It runs the official GameMaker da
 - FdFix (fd_fix.skprx), unless you use rePatch
 - libshacccg.suprx installed on the Vita
 - Official, unmodified DELTARUNE install from Steam (v0.0.253)
+- CapUnlocker, to improve performance
+- NoTrpDrm, for trophies (optional)
 
 ## Installation
 - Build the Vita data with one of the patchers

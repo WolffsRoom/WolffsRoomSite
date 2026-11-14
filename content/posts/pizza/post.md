@@ -22,7 +22,7 @@ capturas:
   - captura-4.png
   - captura-5.png
   - captura-6.png
-video: https://www.youtube.com/watch?v=k1IOdEtrl6s
+video_arquivo: trailer.mp4
 video_legenda: Trailer oficial
 links:
   Baixar VPK: https://drive.google.com/file/d/1EgVvq6LYAK5bxLwH1CLnedn7eMGqDFZ9/view?usp=sharing
