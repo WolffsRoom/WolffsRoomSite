@@ -343,6 +343,84 @@ def trophy_badge(lang, px=3, label=True):
             f'{trophy_svg(px)}{txt}</span>')
 
 
+# ---------------------------------------------------------------- Wolff's Store (modal do PS Vita)
+
+# Link do VPK do app (o QR Code aponta para ele). Ajustar quando a release estiver publicada.
+STORE_VPK_URL = 'https://github.com/WolffsRoom/WolffsRoomSite/releases/latest'
+
+
+def vita_svg(width, anim=True):
+    """PS Vita em pixel art (40x18). Com anim, a patinha na tela pisca e os botões acendem."""
+    R = []
+
+    def r(x, y, w, h, c, cls=''):
+        R.append(f'<rect{" class=" + chr(34) + cls + chr(34) if cls else ""} x="{x}" y="{y}" width="{w}" height="{h}" fill="{c}"/>')
+    # corpo: preto brilhante com contorno claro e cantos arredondados
+    r(4, 1, 32, 1, '#8a8a8a'); r(4, 17, 32, 1, '#8a8a8a')
+    r(2, 2, 2, 1, '#8a8a8a'); r(36, 2, 2, 1, '#8a8a8a'); r(2, 16, 2, 1, '#8a8a8a'); r(36, 16, 2, 1, '#8a8a8a')
+    r(1, 3, 1, 13, '#8a8a8a'); r(38, 3, 1, 13, '#8a8a8a')
+    r(4, 2, 32, 15, '#1e1e1e'); r(2, 3, 36, 13, '#1e1e1e')
+    r(4, 2, 32, 1, '#3a3a3a')  # brilho em cima
+    # tela
+    r(9, 3, 22, 13, '#000000'); r(10, 4, 20, 11, '#0b0b0b', 'wr-vs')
+    # patinha na tela
+    paw = ['..##.##..', '..##.##..', '##.....##', '##.....##', '...###...', '..#####..', '.#######.', '.##...##.']
+    g = ''.join(f'<rect x="{15 + x}" y="{4 + y}" width="1" height="1"/>' for y, row in enumerate(paw) for x, c in enumerate(row) if c == '#')
+    R.append(f'<g class="wr-vpaw" fill="#ffffff">{g}</g>')
+        # direcional e analógico esquerdo
+    r(5, 5, 1, 3, '#c4c4c4'); r(4, 6, 3, 1, '#c4c4c4')
+    r(4, 11, 2, 2, '#5a5a5a'); r(4, 11, 1, 1, '#8a8a8a')
+    # botões ▲ ○ ✕ □ e analógico direito
+    r(34, 4, 1, 1, '#ffffff', 'wr-vb1'); r(36, 6, 1, 1, '#ffffff', 'wr-vb2'); r(34, 8, 1, 1, '#ffffff', 'wr-vb3'); r(32, 6, 1, 1, '#ffffff', 'wr-vb4')
+    r(34, 11, 2, 2, '#5a5a5a'); r(34, 11, 1, 1, '#8a8a8a')
+    # PS / start / select
+    r(6, 15, 1, 1, '#5a5a5a'); r(33, 15, 1, 1, '#5a5a5a'); r(35, 15, 1, 1, '#5a5a5a')
+    cls = ' class="wr-vanim"' if anim else ''
+    return (f'<svg{cls} aria-hidden="true" width="{width}" height="{round(width * 19 / 40)}" viewBox="0 0 40 19" shape-rendering="crispEdges" style="display: block">'
+            + ''.join(R) + '</svg>')
+
+
+def qr_svg(url):
+    try:
+        import segno
+    except ImportError:
+        return ''
+    q = segno.make(url, error='m')
+    return q.svg_inline(scale=6, border=2, dark='#000000', light='#ffffff')
+
+
+def vita_modal():
+    T2 = lambda pt, en: T(pt, en)
+    star = lambda x, y, d: f'<span class="wr-vstar" style="left: {x}%; top: {y}%; animation-delay: {d}s"></span>'
+    stars = star(6, 18, 0) + star(90, 12, .4) + star(14, 70, .8) + star(84, 64, .2) + star(50, 4, .6)
+    qr = qr_svg(STORE_VPK_URL)
+    btn = 'min-height: 48px; box-sizing: border-box; padding: 12px 18px; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer'
+    return (
+        '<div class="wr-vmodal dc-if" data-if="vitaOpen" role="dialog" aria-modal="true" aria-labelledby="wr-vm-t">\n'
+        '<div class="wr-vm-back" data-act="closeVita"></div>\n'
+        '<div class="wr-vm-box">\n'
+        '<button class="wr-vm-x" type="button" data-act="closeVita" data-hover="hov" data-b-aria-label="closeLabel" data-b-title="closeLabel">'
+        '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 6 6" shape-rendering="crispEdges" fill="currentColor"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="2" height="2"/><rect x="4" y="1" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="1" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/></svg></button>\n'
+        f'<div class="wr-vm-stage">{stars}<div class="wr-vm-vita">{vita_svg(320)}</div></div>\n'
+        f'<h2 id="wr-vm-t" style="margin: 0; {DF} font-size: 16px; line-height: 1.8; font-weight: 400; text-align: center; text-transform: uppercase">'
+        + T2('Experimente também a <span style="color: #ffffff; text-shadow: 3px 3px 0 #3a3a3a">Wolff&#39;s Store</span> diretamente do seu PS Vita',
+             'Also try <span style="color: #ffffff; text-shadow: 3px 3px 0 #3a3a3a">Wolff&#39;s Store</span> right on your PS Vita') + '</h2>\n'
+        '<p style="margin: 0; color: #a8a8a8; text-align: center">'
+        + T2('O app leva o site para o Vita: baixa e instala ports, traduções e plugins, e se atualiza sozinho.',
+             'The app brings the site to your Vita: it downloads and installs ports, translations and plugins, and updates itself.') + '</p>\n'
+        '<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px">\n'
+        f'<a class="wr-btn" href="{e(STORE_VPK_URL)}" target="_blank" rel="noopener" style="{btn}; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">'
+        + T2('Baixar VPK', 'Download VPK') + '</a>\n'
+        + (f'<button class="wr-btn" type="button" data-act="toggleQr" data-hover="hov" data-b-aria-expanded="qrOpen" style="{btn}; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff">QR Code</button>\n' if qr else '')
+        + '</div>\n'
+        + ('<div class="wr-vm-qr dc-if" data-if="qrOpen">\n'
+           f'<div class="wr-vm-qrimg">{qr}</div>\n'
+           '<p style="margin: 0; color: #a8a8a8; text-align: center; max-width: 360px">'
+           + T2('No Vita, abra o VitaShell, aperte START e escolha "QR code" para baixar direto no console.',
+                'On the Vita, open VitaShell, press START and pick "QR code" to download straight to the console.') + '</p>\n</div>\n' if qr else '')
+        + '</div>\n</div>\n')
+
+
 def section(title, inner):
     return (f'<section style="display: flex; flex-direction: column; gap: 12px">\n<h2 style="{H2}; border-bottom: 4px solid #2e2e2e; padding-bottom: 10px">{e(title)}</h2>\n'
             + inner + '</section>\n')
@@ -556,6 +634,7 @@ def build():
     cats = '{' + ', '.join(f"'{k}': '{posts[k]['cat']}'" for k in order) + '}'
     page = open(TEMPLATE, encoding='utf-8').read()
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
+    page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_svg(56, anim=False))
     page = page.replace('<!--OGIMAGE-->', posts[feat]['cover'] or 'assets/favicon.png')
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
     open(os.path.join(OUT, '.nojekyll'), 'w').write('')

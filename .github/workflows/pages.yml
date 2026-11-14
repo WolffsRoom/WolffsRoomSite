@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install pyyaml pillow
+      - run: pip install pyyaml pillow segno
       - name: Gerar o site (e o store.json do app do Vita)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

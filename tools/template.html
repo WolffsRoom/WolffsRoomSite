@@ -150,6 +150,40 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 .wr-sm-ic{position:relative;width:40px;height:40px}
 .wr-sm-off{display:none;position:absolute;inset:0}
 .wr-snd[aria-expanded="true"]{border-color:#ffffff}
+/* botão do PS Vita (acima do idioma) e modal da Wolff's Store */
+.wr-vitabtn{position:fixed;bottom:168px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
+.wr-vitabtn:hover{border-color:#ffffff}
+.wr-vitabtn:active{transform:translate(4px,4px)}
+.wr-vitabtn:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.wr-vitabtn svg{animation:wr-vbtn 2.4s steps(1,end) infinite}
+@keyframes wr-vbtn{0%,88%{transform:none}90%{transform:translateY(-3px)}94%{transform:none}96%{transform:translateY(-2px)}}
+.wr-vmodal{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px}
+.wr-vm-back{position:absolute;inset:0;background:rgba(0,0,0,.82);background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 2px,transparent 2px,transparent 4px);animation:wr-vfade .2s steps(4,end) both;cursor:pointer}
+.wr-vm-box{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 32px);overflow:auto;box-sizing:border-box;padding:28px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:20px;background:#0e0e0e;border:4px solid #ffffff;box-shadow:8px 8px 0 #3a3a3a;animation:wr-vpop .32s steps(4,end) both}
+.wr-vm-x{position:absolute;top:8px;right:8px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;padding:0;border:4px solid #5a5a5a;background:#0b0b0b;color:#ffffff;cursor:pointer}
+.wr-vm-x:hover{border-color:#ffffff}
+.wr-vm-stage{position:relative;width:100%;display:flex;justify-content:center;padding:12px 0}
+.wr-vm-vita{animation:wr-vfloat 1.6s steps(2,end) infinite;filter:drop-shadow(8px 8px 0 #2a2a2a)}
+.wr-vm-vita svg{width:min(320px,80vw);height:auto;image-rendering:pixelated}
+.wr-vanim .wr-vpaw{animation:wr-vpaw 1.2s steps(1,end) infinite}
+.wr-vanim .wr-vs{animation:wr-vscr 2.4s steps(1,end) infinite}
+.wr-vanim .wr-vb1{animation:wr-vbl 1.6s steps(1,end) infinite}
+.wr-vanim .wr-vb2{animation:wr-vbl 1.6s steps(1,end) .4s infinite}
+.wr-vanim .wr-vb3{animation:wr-vbl 1.6s steps(1,end) .8s infinite}
+.wr-vanim .wr-vb4{animation:wr-vbl 1.6s steps(1,end) 1.2s infinite}
+.wr-vstar{position:absolute;width:8px;height:8px;background:#ffffff;box-shadow:8px 0 0 #ffffff,-8px 0 0 #ffffff,0 8px 0 #ffffff,0 -8px 0 #ffffff;animation:wr-vstar 1.6s steps(1,end) infinite;opacity:0}
+.wr-vm-qr{display:flex;flex-direction:column;align-items:center;gap:12px;animation:wr-vpop .32s steps(4,end) both}
+.wr-vm-qrimg{padding:8px;background:#ffffff;border:4px solid #8a8a8a;line-height:0}
+.wr-vm-qrimg svg{display:block;width:200px;height:200px;image-rendering:pixelated}
+@keyframes wr-vfade{from{opacity:0}}
+@keyframes wr-vpop{0%{opacity:0;transform:translateY(24px) scale(.9)}100%{opacity:1;transform:none}}
+@keyframes wr-vfloat{0%{transform:translateY(0)}100%{transform:translateY(-8px)}}
+@keyframes wr-vpaw{0%,60%{opacity:1;transform:none}70%{opacity:1;transform:translateY(-1px)}80%{opacity:0}90%{opacity:1}}
+@keyframes wr-vscr{0%,90%{fill:#0b0b0b}92%{fill:#1a1a1a}96%{fill:#0b0b0b}}
+@keyframes wr-vbl{0%,70%{fill:#5a5a5a}75%{fill:#ffffff}90%{fill:#5a5a5a}}
+@keyframes wr-vstar{0%,40%{opacity:0}45%{opacity:1}70%{opacity:.4}80%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.wr-vitabtn svg,.wr-vm-back,.wr-vm-box,.wr-vm-vita,.wr-vanim *,.wr-vstar,.wr-vm-qr{animation:none !important}.wr-vstar{opacity:1}}
+@media (max-width:560px){.wr-vm-box{padding:24px 16px 16px}}
 .wr-langbtn{position:fixed;bottom:92px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;font-family:'WR Start 2P','Press Start 2P','Pixelify Sans',monospace;font-size:16px;line-height:1}
 .wr-langbtn:hover{border-color:#ffffff}
 .wr-langbtn:active{transform:translate(4px,4px)}
@@ -189,6 +223,8 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <button class="wr-sm" type="button" data-act="toggleMus" data-hover="hov" data-b-aria-pressed="musOn" data-b-aria-label="musLabel" data-b-title="musLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="5" y="1" width="1" height="6"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="2"/><rect x="3" y="6" width="2" height="1"/><rect x="2" y="7" width="4" height="2"/><rect x="3" y="9" width="2" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span></button>
 <button class="wr-sm" type="button" data-act="toggleSfx" data-hover="hov" data-b-aria-pressed="sfxOn" data-b-aria-label="sfxLabel" data-b-title="sfxLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="4" y="0" width="2" height="3"/><rect x="4" y="7" width="2" height="3"/><rect x="0" y="4" width="3" height="2"/><rect x="7" y="4" width="3" height="2"/><rect x="3" y="3" width="4" height="4"/><rect x="1" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span></button>
 </div>
+<button class="wr-vitabtn" type="button" data-act="openVita" data-hover="hov" data-b-aria-label="vitaLabel" data-b-title="vitaLabel"><!--VITAICON--></button>
+<!--VITAMODAL-->
 <button class="wr-langbtn" type="button" data-act="toggleLang" data-hover="hov" data-b-aria-label="langLabel" data-b-title="langLabel"><span data-l="en">EN</span><span data-l="pt">PT</span></button>
 <button class="wr-snd" type="button" data-act="toggleSndMenu" data-hover="hov" data-b-aria-expanded="sndMenu" data-b-aria-pressed="volOn" data-b-aria-label="sndLabel" data-b-title="sndLabel">
 <span class="dc-if" data-if="volOn"><svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="1" y="4" width="2" height="4"/><rect x="3" y="3" width="1" height="6"/><rect x="4" y="2" width="1" height="8"/><rect x="5" y="1" width="1" height="10"/><rect x="7" y="4" width="1" height="4"/><rect x="9" y="2" width="1" height="2"/><rect x="10" y="4" width="1" height="4"/><rect x="9" y="8" width="1" height="2"/></svg></span>
@@ -219,6 +255,11 @@ class Component extends DCLogic {
       if (ac && ac.state === 'suspended') ac.resume();
     };
     try { document.addEventListener('pointerdown', this._unlock); } catch (e) {}
+    try {
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape' && self.state.vitaOpen) { self.beep('back'); self.setState({ vitaOpen: false, qrOpen: false }); }
+      });
+    } catch (e) {}
     this._mT = setInterval(function () { try { self.musicTick(); } catch (e) {} }, 150);
     var st = this.state || {};
     var atHome = !st.post && (!st.view || st.view === 'inicio');
@@ -463,6 +504,13 @@ class Component extends DCLogic {
         self.beep('tick');
         self.setState({ lang: v });
       },
+      vitaOpen: !!st.vitaOpen,
+      qrOpen: !!st.qrOpen,
+      vitaLabel: en ? "Wolff's Store for PS Vita" : "Wolff's Store para PS Vita",
+      closeLabel: en ? 'Close' : 'Fechar',
+      openVita: function () { self.beep('open'); self.setState({ vitaOpen: true, qrOpen: false, sndMenu: false }); },
+      closeVita: function () { self.beep('back'); self.setState({ vitaOpen: false, qrOpen: false }); },
+      toggleQr: function () { self.beep('tick', true); self.setState({ qrOpen: !st.qrOpen }); },
       toggleSndMenu: function () {
         self.beep('tick', true);
         self.setState({ sndMenu: !st.sndMenu });
