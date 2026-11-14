@@ -222,10 +222,8 @@ class Component extends DCLogic {
     var atHome = !st.post && (!st.view || st.view === 'inicio');
     var ac = this.audio();
     // Sem som ligado, fora da página inicial ou com áudio já liberado: começa direto.
-    var seen = false;
-    try { seen = Date.now() - (+localStorage.getItem('wr-intro') || 0) < 30 * 60 * 1000; } catch (e) {}
-    // Fora da página inicial ou intro vista há pouco (outra guia): entra direto, sem repetir a intro.
-    if (!atHome || seen) { this.start(true); return; }
+    // Post aberto direto (link ou nova guia): entra sem a intro. Na página inicial (inclusive ao recarregar) a intro toca.
+    if (!atHome) { this.start(true); return; }
     // Sem som ligado ou com áudio já liberado: começa direto.
     if ((!this.sndOn() && !this.musOn()) || (ac && ac.state === 'running')) this.start(false);
   }
@@ -233,7 +231,6 @@ class Component extends DCLogic {
     if (this.state.started) return;
     var self = this, ac = this.audio();
     this.setState({ started: true });
-    try { localStorage.setItem('wr-intro', String(Date.now())); } catch (e) {}
     this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, skipSfx ? 0 : 5400);
     if (skipSfx) return;
     var go = function () {

@@ -18,6 +18,9 @@ import sys
 
 import yaml
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from store import drive_direct  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTENT = os.path.join(ROOT, 'content', 'posts')
 OUT = os.path.join(ROOT, '_site')
@@ -59,7 +62,7 @@ def parse_markdown(body):
 def inline(text):
     """Escapa o texto e converte [texto](url) e **negrito**."""
     out = e(text)
-    out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', r'<a href="\2" target="_blank" rel="noopener">\1</a>', out)
+    out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', lambda m: f'<a href="{drive_direct(html.unescape(m.group(2))).replace("&", "&amp;")}" target="_blank" rel="noopener">{m.group(1)}</a>', out)
     out = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', out)
     return out
 
@@ -74,7 +77,7 @@ def parse_bars(raw):
     return bars
 
 
-TIPOS_DOWNLOAD = ('vpk', 'traducao', 'plugin', 'arquivo')
+TIPOS_DOWNLOAD = ('vpk', 'traducao', 'plugin', 'arquivo', 'dados')
 
 
 def parse_downloads(raw):
@@ -167,6 +170,8 @@ def load_post(slug):
         'meta': [(str(k), str(v)) for k, v in (meta.get('ficha') or {}).items()],
         'links': [(str(k), str(v)) for k, v in (meta.get('links') or {}).items()],
         'sources': [(str(k), str(v)) for k, v in (meta.get('fontes') or {}).items()],
+        'clock': [(str(k), str(v)) for k, v in (meta.get('clock') or {}).items()],
+        'video_file': str(meta.get('video_arquivo') or ''),
         'cover': img(meta.get('capa')), 'cover_style': str(meta.get('capa_estilo') or 'cobrir'),
         'pixel': bool(meta.get('pixelado')), 'shots': [img(s) for s in (meta.get('capturas') or [])],
         'video': vid,
@@ -202,6 +207,8 @@ def load_english(folder, p):
         en['meta'] = [(str(k), str(v)) for k, v in meta['ficha'].items()]
     if meta.get('links'):
         en['links'] = [(str(k), str(v)) for k, v in meta['links'].items()]
+    if meta.get('clock'):
+        en['clock'] = [(str(k), str(v)) for k, v in meta['clock'].items()]
     if meta.get('fontes'):
         en['sources'] = [(str(k), str(v)) for k, v in meta['fontes'].items()]
     if not en['about']:
@@ -236,7 +243,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Ferramentas', 'traducoes': 'Traduções', 'reviews': 'Reviews'},
         'groups': {g: g for g in GROUPS}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'total': 'Total', 'progress': 'Progresso',
         'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -246,7 +253,7 @@ UI = {
         'groups': {'Em andamento': 'In progress', 'Finalizado': 'Finished', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -352,8 +359,11 @@ def article(p0, lang):
         links = ''
         for i, (lab, url) in enumerate(items):
             st = 'background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff' if i == 0 and key == 'links' else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a'
-            links += f'<a class="wr-btn" href="{e(url)}" target="_blank" rel="noopener" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n'
+            links += f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n'
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui[key])}</h2>\n{links}</div>\n'
+    if p.get('clock'):
+        rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['clock'])
+        side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["clock"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
     hero = (f'<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">\n{pic(p0, lang)}\n</div>\n' if p['cover'] else '')
     about = f'<p style="margin: 0; color: #e0e0e0; font-size: 19px">{inline(p["about"])}</p>\n' if p['about'] else ''
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'

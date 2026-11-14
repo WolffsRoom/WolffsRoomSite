@@ -106,6 +106,9 @@ Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junt
 | `chamada:` | Texto do destaque na página inicial (se faltar, usa o `resumo`). O destaque é sempre o post mais recente (`data`). |
 | `pixelado: true` | Mantém a capa nítida, sem suavização (bom para pixel art). |
 | `capa_estilo: logo` | Mostra a capa inteira centralizada em fundo preto (para logos). |
+| `fontes:` | Caixa **Source** (abaixo de Downloads): links de código, wiki etc., no mesmo formato de `links:`. |
+| `clock:` | Caixa **Clock recomendado**, ex.: `CPU / GPU: 500 MHz / 222 MHz` e `Desempenho: 60 FPS estáveis`. |
+| `video_arquivo:` | Link de um `.mp4` (H.264, até 960×544) que o app do Vita toca dentro dele. Sem isso, o vídeo do YouTube abre no navegador do Vita. |
 | `titulo_barras:` | Título da caixa de barras (padrão: "Progresso"). |
 | `barras` com texto | `Nota final: 89 (192/216)` mostra a barra em 89% com o texto "192/216". |
 
@@ -137,6 +140,9 @@ downloads:
 | `traducao` | Baixa o `.zip` e extrai em `ux0:rePatch/<TITLEID>/` (para cada TitleID). Diz se o plugin rePatch não estiver instalado. O zip pode ter os arquivos soltos ou dentro de `rePatch/<TITLEID>/` ou `<TITLEID>/`. |
 | `plugin` | Baixa para `ux0:Downloads/` e mostra as instruções (link do GitHub do post, ou `instrucoes:`). |
 | `arquivo` | Baixa para `ux0:Downloads/`. |
+| `dados` | Baixa o `.zip` e extrai em `ux0:data/` (dados do jogo). |
+
+Links de arquivo do Google Drive (`drive.google.com/file/d/...`) viram download direto, no site e no app.
 
 Campos: `repo:` + `arquivo:` (e `tag:` para uma release específica) **ou** `url:` (+ `versao:`);
 `nome:` muda o texto do botão; `instrucoes:` troca o link de instruções (padrão: link do GitHub do post).

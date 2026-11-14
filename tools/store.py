@@ -24,7 +24,18 @@ APP_TAG_PREFIX = 'store-v'
 APP_ASSET = 'WolffsStore-*.vpk'
 COVER = (512, 288)
 SHOT = (480, 270)
-DEFAULT_ASSET = {'vpk': '*.vpk', 'traducao': '*.zip', 'plugin': '*.*', 'arquivo': '*.*'}
+DEFAULT_ASSET = {'vpk': '*.vpk', 'traducao': '*.zip', 'plugin': '*.*', 'arquivo': '*.*', 'dados': '*.zip'}
+DEFAULT_NAME = {'vpk': 'download.vpk', 'traducao': 'traducao.zip', 'plugin': 'plugin.suprx', 'arquivo': 'download.bin', 'dados': 'dados.zip'}
+
+_DRIVE = re.compile(r'https?://drive\.google\.com/(?:file/d/([\w-]{20,})|(?:open|uc)\?(?:[^#]*&)?id=([\w-]{20,}))')
+
+
+def drive_direct(url):
+    """Link de arquivo do Google Drive -> link que baixa direto (sem abrir a página do Drive)."""
+    m = _DRIVE.match(url or '')
+    if not m:
+        return url
+    return f'https://drive.usercontent.google.com/download?id={m.group(1) or m.group(2)}&export=download&confirm=t'
 
 LATIN = {'—': '-', '–': '-', '“': '"', '”': '"', '‘': "'", '’': "'", '…': '...', '→': '>', '←': '<',
          '•': '·', '×': 'x', ' ': ' ', '™': '(TM)', '®': '(R)'}
@@ -86,10 +97,10 @@ def resolve_download(d, post_links):
     out = {'tipo': tipo, 'nome': latin(d.get('nome') or ''), 'precisa_dados': bool(d.get('precisa_dados')),
            'titleids': d.get('titleids') or [], 'plugin': latin(d.get('plugin') or '')}
     if d.get('url'):
-        out['url'] = d['url']
+        out['url'] = drive_direct(d['url'])
         out['versao'] = latin(d.get('versao') or '')
         out['tamanho'] = int(d.get('tamanho') or 0)
-        out['arquivo'] = os.path.basename(d['url'].split('?')[0])
+        out['arquivo'] = d.get('arquivo') or ('' if out['url'] != d['url'] else os.path.basename(d['url'].split('?')[0])) or DEFAULT_NAME[tipo]
     else:
         repo = d['repo']
         rel = _api(f'/repos/{repo}/releases/tags/{d["tag"]}') if d.get('tag') else _api(f'/repos/{repo}/releases/latest')
@@ -170,7 +181,9 @@ def _texts(src):
         'titulo_barras': latin(src.get('bars_title')), 'sobre': latin(src.get('about')), 'blocos': blocks,
         'barras': [[latin(a), int(b), latin(c or '')] for a, b, c in src.get('bars') or []],
         'ficha': [[latin(k), latin(v)] for k, v in src.get('meta') or []],
-        'links': [[latin(k), v] for k, v in (src.get('links') or []) + (src.get('sources') or [])],
+        'links': [[latin(k), drive_direct(v)] for k, v in src.get('links') or []],
+        'fontes': [[latin(k), v] for k, v in src.get('sources') or []],
+        'clock': [[latin(k), latin(v)] for k, v in src.get('clock') or []],
     }
 
 
@@ -186,6 +199,7 @@ def write_store(posts, order, feat, groups, out_dir):
             'progresso': p['progress'] if p['progress'] is not None else -1,
             'pt': _texts(p), 'en': _texts(en), 'capturas': [],
             'video': f'https://youtu.be/{p["video"]}' if p['video'] else '',
+            'video_arquivo': drive_direct(p.get('video_file') or ''),
             'downloads': [],
         }
         if p['cover']:

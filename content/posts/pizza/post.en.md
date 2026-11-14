@@ -16,6 +16,9 @@ links:
 fontes:
   View on GitHub: https://github.com/WolffsRoom/PizzaTowerSage2019Vita
   Pizza Tower Wiki: https://pizzatower.wiki/SAGE_2019_Demo
+clock:
+  CPU / GPU: 500 MHz / 222 MHz
+  Performance: Stable 60 FPS
 ---
 
 Unofficial PS Vita port of the Pizza Tower demo released at the 2019 Sonic Amateur Games Expo (SAGE). The demo is free and made in GameMaker.
@@ -32,3 +35,6 @@ Unofficial PS Vita port of the Pizza Tower demo released at the 2019 Sonic Amate
 
 ## Requirements
 - Hacked PS Vita
+- kubridge.suprx plugin
+- libshacccg.suprx
+- game-data folder in ux0:data/ (from the Download data button)

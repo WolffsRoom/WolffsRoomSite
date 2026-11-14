@@ -30,6 +30,16 @@ links:
 fontes:
   Ver no GitHub: https://github.com/WolffsRoom/PizzaTowerSage2019Vita
   Pizza Tower Wiki: https://pizzatower.wiki/SAGE_2019_Demo
+clock:
+  CPU / GPU: 500 MHz / 222 MHz
+  Desempenho: 60 FPS estáveis
+downloads:
+  - tipo: vpk
+    nome: Pizza Tower SAGE 2019 (VPK)
+    url: https://drive.google.com/file/d/1EgVvq6LYAK5bxLwH1CLnedn7eMGqDFZ9/view?usp=sharing
+  - tipo: dados
+    nome: Dados do jogo (game-data)
+    url: https://drive.google.com/file/d/1CBof60EExpF4IrZMhyix6CvRicqSONRA/view?usp=sharing
 ---
 
 Port não oficial da demo de Pizza Tower lançada na Sonic Amateur Games Expo (SAGE) de 2019 para o PS Vita. A demo é gratuita e feita em GameMaker.
@@ -49,3 +59,6 @@ Port não oficial da demo de Pizza Tower lançada na Sonic Amateur Games Expo (S
 ## Requisitos
 
 - PS Vita desbloqueado
+- Plugin kubridge.suprx
+- libshacccg.suprx
+- Pasta game-data em ux0:data/ (baixada no botão Baixar dados)
