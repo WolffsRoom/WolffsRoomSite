@@ -5,6 +5,7 @@ grupo: Em andamento
 data: 2026-11-13 23:30
 tag: Engine · C++
 status: v0.3 lançada
+novidade: Release
 resumo: Nova versão da Godot 4 para PS Vita, agora com editor para Windows, Linux e macOS.
 capa: capa.png
 ficha:

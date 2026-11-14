@@ -5,6 +5,7 @@ grupo: Finalizado
 data: 2026-11-14 11:45
 tag: Ferramenta · Arquivos
 status: v0.6.2
+novidade: Update
 resumo: Gerenciador de arquivos com interface moderna e suporte a toque. Fork do VitaShell.
 capa: capa.webp
 capturas:

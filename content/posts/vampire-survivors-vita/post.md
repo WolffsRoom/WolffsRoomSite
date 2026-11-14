@@ -5,6 +5,7 @@ grupo: Outras equipes
 data: 2026-11-14 15:31
 tag: Port · Native · PS Vita
 status: v1.2.1 · Jogável
+novidade: Update
 versao: v1.2.1
 autor: RazorGaToR
 autor_url: https://github.com/Federicoilgrandebardo

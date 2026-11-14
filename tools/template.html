@@ -90,24 +90,44 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-pbdone .wr-mos{display:none}
 .wr-pbdone .wr-tvbox,.wr-pbdone .wr-tvbox .wr-sh::before{animation:none !important}
 .wr-pbdone .wr-ch,.wr-pbdone .wr-caret,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
-/* Replay a shorter version of the entry animation when returning Home. */
-@keyframes wr-home-return{from{opacity:0;transform:translateY(24px);clip-path:inset(16% 0 0 0)}to{opacity:1;transform:none;clip-path:inset(0)}}
+/* Home return: pixel art paw, scanline mosaics, CRT reveal, and staggered UI. */
+@keyframes wr-home-return{0%{opacity:0;transform:translateY(24px);clip-path:inset(30% 0 30% 0)}45%{opacity:1;clip-path:inset(49% 0 49% 0)}100%{opacity:1;transform:none;clip-path:inset(0)}}
+@keyframes wr-return-cover{0%,45%{opacity:1;visibility:visible}70%{opacity:.7;visibility:visible}100%{opacity:0;visibility:hidden}}
+@keyframes wr-return-paw{0%{transform:translateY(34px) scale(.35);opacity:0}32%{transform:translateY(-14px) scale(1.23);opacity:1}57%{transform:translateY(8px) scale(.94)}75%{transform:translateY(-4px) scale(1.06)}100%{transform:none;opacity:1}}
+@keyframes wr-return-dither{0%{background-image:url(assets/w75.png);opacity:1}40%{background-image:url(assets/w50.png);opacity:1}80%{background-image:url(assets/w25.png);opacity:.65}100%{background-image:none;opacity:0}}
+.wr-return-splash{display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:4;pointer-events:none;background:#050505;overflow:hidden}
+.wr-return-splash::before{content:"";position:absolute;inset:0;opacity:.7;background:url(assets/w75.png) 0 0 / 16px 16px repeat;image-rendering:pixelated}
+.wr-return-paw{position:relative;z-index:1;image-rendering:pixelated;width:108px;height:108px;object-fit:contain;filter:drop-shadow(8px 8px 0 #303030)}
+.wr-root.wr-home-returning .wr-return-splash{display:flex;animation:wr-return-cover 1.03s steps(7,end) both!important}
+.wr-root.wr-home-returning .wr-return-splash::before{animation:wr-return-dither .86s steps(4,end) both!important}
+.wr-root.wr-home-returning .wr-return-paw{animation:wr-return-paw .75s steps(7,end) .06s both!important}
+.wr-root.wr-home-returning .wr-tvbox{animation:wr-tv .58s steps(8,end) .34s both!important}
+.wr-root.wr-home-returning .wr-mos{display:block!important;animation:wr-hide .05s linear both!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(2){animation-delay:.43s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(3){animation-delay:.52s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(4){animation-delay:.61s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(5){animation-delay:.70s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(6){animation-delay:.79s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(7){animation-delay:.88s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(8){animation-delay:.97s!important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(9){animation-delay:1.06s!important}
+
 .wr-root.wr-home-returning .wr-stage{animation:wr-home-return .48s steps(6,end) both !important}
 .wr-root.wr-home-returning .wr-feat-info>:not(.wr-feat-actions){animation:wr-pop .32s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:.35s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:.47s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:.59s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(4){animation-delay:.71s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:.86s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:1.02s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:1.18s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(4){animation-delay:1.34s !important}
 .wr-root.wr-home-returning .wr-feat-info>.wr-feat-actions{opacity:0 !important;visibility:hidden !important;pointer-events:none !important;animation:none !important;transition:none !important}
 .wr-root.wr-home-returning.wr-feat-actions-ready .wr-feat-info>.wr-feat-actions{opacity:1 !important;visibility:visible !important;pointer-events:auto !important;animation:wr-pop .30s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-latest{animation:wr-pop .30s steps(4,end) .75s both !important}
+.wr-root.wr-home-returning .wr-latest{animation:wr-pop .30s steps(4,end) 1.45s both !important}
 .wr-root.wr-home-returning .wr-nav .wr-cat{animation:wr-pop .30s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:.82s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:.9s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:.98s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:1.06s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:1.52s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:1.61s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:1.70s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:1.79s !important}
 @media(prefers-reduced-motion:reduce){.wr-root.wr-home-returning .wr-stage,.wr-root.wr-home-returning .wr-feat-info>*,
-.wr-root.wr-home-returning .wr-nav .wr-cat,.wr-root.wr-home-returning .wr-latest{animation:none !important}}
+.wr-root.wr-home-returning .wr-nav .wr-cat,.wr-root.wr-home-returning .wr-latest,.wr-root.wr-home-returning .wr-return-splash,.wr-root.wr-home-returning .wr-return-paw,.wr-root.wr-home-returning .wr-mos{animation:none !important}}
 .wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
 .wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
 .wr-slider-track{scrollbar-color:#5a5a5a #111111;scrollbar-width:thin}
@@ -128,6 +148,12 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-ico:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
 .wr-foot-name{justify-content:center}
 .wr-foot-name .wr-l{color:#ffffff}
+/* A single slanted yellow pixel word: no badge frame or filled background. */
+.wr-news-flag{display:inline-block;position:relative;color:#ffd83c;font-family:'WR Start 2P','Press Start 2P','Pixelify Sans',monospace;font-size:13px;font-weight:400;line-height:1.5;text-transform:uppercase;white-space:nowrap;transform:rotate(-9deg);transform-origin:center;image-rendering:pixelated;text-shadow:2px 2px 0 #5a3900}
+.wr-news-over-cover{position:absolute;left:16px;bottom:15px;z-index:2;pointer-events:none}
+.wr-card .wr-news-flag{font-size:12px}
+.wr-feat-info h1 .wr-news-flag{font-size:14px;vertical-align:middle;margin-left:12px}
+@media(max-width:560px){.wr-feat-info h1 .wr-news-flag{font-size:10px}}
 .wr-card:hover{border-color:#ffffff !important}
 .wr-btn:hover{border-color:#ffffff !important}
 .wr-btn:focus-visible,.wr-card:focus-visible,.wr-link:focus-visible{outline:4px solid #ffffff;outline-offset:3px}
@@ -319,6 +345,9 @@ class Component extends DCLogic {
     var self = this;
     clearTimeout(this._returnHomeT);
     clearTimeout(this._returnButtonsT);
+    (this._returnSfxT || []).forEach(clearTimeout);
+    this._returnSfxT = [];
+    // Replay the opening's paw, CRT and pixel mosaic without reloading or restarting music.
     // First clear the prior replay class; reflow forces CSS keyframes to restart.
     this.setState({ view: 'inicio', post: null, peek: null,
                     returningHome: false, returnActionsReady: false });
@@ -327,13 +356,19 @@ class Component extends DCLogic {
     this.setState({ returningHome: true });
     this._returnButtonsT = setTimeout(function () {
       self.setState({ returnActionsReady: true });
-    }, 1110);
+    }, 1790);
     this._returnHomeT = setTimeout(function () {
       self.setState({ returningHome: false, returnActionsReady: true });
-    }, 1580);
+    }, 2300);
+    // Short original chiptune cues, respecting the user's effects preference.
+    var cues = [[60,'boot'],[260,'tvon'],[450,'mos0'],[570,'mos1'],
+                [690,'mos2'],[810,'mos3'],[970,'tick'],[1190,'peek'],[1790,'ready']];
+    cues.forEach(function (cue) {
+      self._returnSfxT.push(setTimeout(function () { self.beep(cue[1], false, true); }, cue[0]));
+    });
   }
   componentWillUnmount() {
-    clearTimeout(this._pbT); clearTimeout(this._buttonsT); clearTimeout(this._returnHomeT); clearTimeout(this._returnButtonsT); clearTimeout(this._fT); clearInterval(this._mT);
+    clearTimeout(this._pbT); clearTimeout(this._buttonsT); clearTimeout(this._returnHomeT); clearTimeout(this._returnButtonsT); (this._returnSfxT || []).forEach(clearTimeout); clearTimeout(this._fT); clearInterval(this._mT);
     (this._sfxT || []).forEach(clearTimeout);
     try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
     document.removeEventListener('mousedown', this._unlock);

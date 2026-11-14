@@ -220,6 +220,7 @@ def write_store(posts, order, feat, groups, out_dir):
             'trofeus': bool(p.get('trophies')),
             'autor': latin(p.get('author') or ''),
             'autor_url': p.get('author_url') or '',
+            'novidade': p.get('news_kind') or '',
             'downloads': [],
         }
         if p['cover']:

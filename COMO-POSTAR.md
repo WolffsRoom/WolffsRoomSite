@@ -170,3 +170,7 @@ python -m http.server -d _site
 ```
 
 Depois abra http://localhost:8000. Se algum `post.md` tiver erro, o `build.py` diz qual arquivo e o que corrigir.
+
+### Tipo de noticia (etiqueta amarela)
+
+No cabecalho do post.md use novidade: Release para o primeiro lancamento publico de um projeto, ou novidade: Update para uma atualizacao. A etiqueta pixelada e inclinada aparece no site e no VPK. Omita o campo para posts sem lancamento.
