@@ -15,6 +15,7 @@ import io
 import json
 import os
 import re
+import unicodedata
 import urllib.request
 
 from PIL import Image
@@ -51,8 +52,9 @@ def latin(s):
         try:
             ch.encode('latin-1')
             out.append(ch)
-        except UnicodeEncodeError:
-            out.append('?')
+        except UnicodeEncodeError:  # ō -> o, ł -> l...: tira o acento que não existe em Latin-1
+            base = unicodedata.normalize('NFKD', ch).encode('latin-1', 'ignore').decode('latin-1')
+            out.append(base or '?')
     return ''.join(out).replace('\t', ' ').replace('\n', ' ').strip()
 
 
