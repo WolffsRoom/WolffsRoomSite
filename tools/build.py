@@ -349,54 +349,71 @@ def trophy_badge(lang, px=3, label=True):
 STORE_VPK_URL = 'https://github.com/WolffsRoom/WolffsRoomSite/releases/latest'
 
 
-def vita_svg(width, anim=True):
-    """PS Vita em pixel art (40x18). Com anim, a patinha na tela pisca e os botões acendem."""
-    R = []
+# PS Vita em pixel art, a partir da arte assets/Vita.png da Wolff's Store (40x18)
+_VITA = ['.....##############################.....',
+         '...##################################...',
+         '..########....................########..',
+         '.#########....................#########.',
+         '####..####....................####..####',
+         '####..####....................####..####',
+         '##......##....................##..##..##',
+         '##......##....................##..##..##',
+         '####..####....................####..####',
+         '####..####....................####..####',
+         '##########....................##########',
+         '##########....................##########',
+         '####..####....................####..####',
+         '####..####....................####..####',
+         '.#########....................#########.',
+         '..########....................########..',
+         '...##################################...',
+         '.....##############################.....']
+# patinha do site (assets/paw4.png, 17x17), desenhada na tela em meio pixel
+_PAW = ['.....##...##.....', '....####.####....', '....####.####....', '.#..####.####..#.', '###.####.####.###',
+        '###.####.####.###', '###..##...##..###', '###...........###', '.#....#####....#.', '.....#######.....',
+        '....#########....', '...###########...', '..#############..', '..#############..', '..#############..',
+        '..###.#####.###..', '...#...###...#...']
 
-    def r(x, y, w, h, c, cls=''):
-        R.append(f'<rect{" class=" + chr(34) + cls + chr(34) if cls else ""} x="{x}" y="{y}" width="{w}" height="{h}" fill="{c}"/>')
-    # corpo: preto brilhante com contorno claro e cantos arredondados
-    r(4, 1, 32, 1, '#8a8a8a'); r(4, 17, 32, 1, '#8a8a8a')
-    r(2, 2, 2, 1, '#8a8a8a'); r(36, 2, 2, 1, '#8a8a8a'); r(2, 16, 2, 1, '#8a8a8a'); r(36, 16, 2, 1, '#8a8a8a')
-    r(1, 3, 1, 13, '#8a8a8a'); r(38, 3, 1, 13, '#8a8a8a')
-    r(4, 2, 32, 15, '#1e1e1e'); r(2, 3, 36, 13, '#1e1e1e')
-    r(4, 2, 32, 1, '#3a3a3a')  # brilho em cima
-    # tela
-    r(9, 3, 22, 13, '#000000'); r(10, 4, 20, 11, '#0b0b0b', 'wr-vs')
-    # patinha na tela
-    paw = ['..##.##..', '..##.##..', '##.....##', '##.....##', '...###...', '..#####..', '.#######.', '.##...##.']
-    g = ''.join(f'<rect x="{15 + x}" y="{4 + y}" width="1" height="1"/>' for y, row in enumerate(paw) for x, c in enumerate(row) if c == '#')
-    R.append(f'<g class="wr-vpaw" fill="#ffffff">{g}</g>')
-        # direcional e analógico esquerdo
-    r(5, 5, 1, 3, '#c4c4c4'); r(4, 6, 3, 1, '#c4c4c4')
-    r(4, 11, 2, 2, '#5a5a5a'); r(4, 11, 1, 1, '#8a8a8a')
-    # botões ▲ ○ ✕ □ e analógico direito
-    r(34, 4, 1, 1, '#ffffff', 'wr-vb1'); r(36, 6, 1, 1, '#ffffff', 'wr-vb2'); r(34, 8, 1, 1, '#ffffff', 'wr-vb3'); r(32, 6, 1, 1, '#ffffff', 'wr-vb4')
-    r(34, 11, 2, 2, '#5a5a5a'); r(34, 11, 1, 1, '#8a8a8a')
-    # PS / start / select
-    r(6, 15, 1, 1, '#5a5a5a'); r(33, 15, 1, 1, '#5a5a5a'); r(35, 15, 1, 1, '#5a5a5a')
+
+def _runs(rows, fill, dx=0, dy=0, k=1):
+    out = []
+    for y, row in enumerate(rows):
+        x = 0
+        while x < len(row):
+            if row[x] == '#':
+                x0 = x
+                while x < len(row) and row[x] == '#':
+                    x += 1
+                out.append(f'<rect x="{dx + x0 * k:g}" y="{dy + y * k:g}" width="{(x - x0) * k:g}" height="{k:g}"/>')
+            else:
+                x += 1
+    return f'<g fill="{fill}">' + ''.join(out) + '</g>'
+
+
+def vita_svg(width, anim=True):
+    """O Vita grande da modal: corpo branco, a patinha na tela e os botões acendendo."""
+    lit = lambda x, y, w, h, cls: f'<rect class="{cls}" x="{x}" y="{y}" width="{w}" height="{h}" fill="#2a2a2a"/>'
+    parts = [
+        '<rect class="wr-vs" x="10" y="2" width="20" height="14" fill="#000000"/>',
+        _runs(_VITA, '#ffffff'),
+        # botões e analógicos (os recortes acendem em sequência)
+        lit(4, 4, 2, 6, 'wr-vb0'), lit(2, 6, 6, 2, 'wr-vb0'), lit(4, 12, 2, 2, 'wr-vb5'),
+        lit(34, 4, 2, 2, 'wr-vb1'), lit(36, 6, 2, 2, 'wr-vb2'), lit(34, 8, 2, 2, 'wr-vb3'), lit(32, 6, 2, 2, 'wr-vb4'),
+        lit(34, 12, 2, 2, 'wr-vb5'),
+        '<g class="wr-vpaw">' + _runs(_PAW, '#ffffff', dx=20 - 17 * .25, dy=9 - 17 * .25, k=.5) + '</g>',
+    ]
     cls = ' class="wr-vanim"' if anim else ''
-    return (f'<svg{cls} aria-hidden="true" width="{width}" height="{round(width * 19 / 40)}" viewBox="0 0 40 19" shape-rendering="crispEdges" style="display: block">'
-            + ''.join(R) + '</svg>')
+    return (f'<svg{cls} aria-hidden="true" width="{width}" height="{round(width * 18 / 40)}" viewBox="0 0 40 18" shape-rendering="crispEdges" style="display: block">'
+            + ''.join(parts) + '</svg>')
 
 
 def vita_icon():
-    """Ícone 12x12 no mesmo padrão dos outros botões flutuantes (pixels de 4 px, cor do texto)."""
-    rows = ['............',
-            '............',
-            '............',
-            '.##########.',
-            '###......###',
-            '#.#......#.#',
-            '###......###',
-            '###......#.#',
-            '.##########.',
-            '............',
-            '............',
-            '............']
-    rects = ''.join(f'<rect x="{x}" y="{y}" width="1" height="1"/>' for y, r in enumerate(rows) for x, c in enumerate(r) if c == '#')
-    return ('<svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block">'
-            + rects + '</svg>')
+    """Ícone do botão flutuante: o mesmo Vita reduzido (20x9), na cor do texto."""
+    small = ['..################..', '.####..........####.', '##.##..........##.##', '#...#..........#.#.#',
+             '##.##..........##.##', '#####..........#####', '##.##..........##.##', '.####..........####.',
+             '..################..']
+    return ('<svg aria-hidden="true" width="50" height="23" viewBox="0 0 20 9" shape-rendering="crispEdges" style="display: block">'
+            + _runs(small, 'currentColor') + '</svg>')
 
 
 def qr_svg(url):
