@@ -124,7 +124,14 @@ def resolve_download(d, post_links):
 
 def app_release():
     rels = _api(f'/repos/{APP_REPO}/releases?per_page=30') or []
-    for r in rels:
+    # GitHub can return releases out of semantic-version order when tags are
+    # created/published close together. Always announce the highest v* tag.
+    def order(release):
+        tag = str(release.get('tag_name', ''))
+        version = _version_from_tag(tag, APP_TAG_PREFIX)
+        parts = [int(n) for n in re.findall(r'\d+', version)[:4]]
+        return tuple((parts + [0, 0, 0, 0])[:4])
+    for r in sorted(rels, key=order, reverse=True):
         if r.get('draft') or not str(r.get('tag_name', '')).startswith(APP_TAG_PREFIX):
             continue
         a = _pick_asset(r, APP_ASSET)
