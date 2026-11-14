@@ -562,8 +562,16 @@ class Component extends DCLogic {
       on0: home,
       goHome: function () { self.beep('back'); self.returnHome(); },
       pawHome: function () {
-        // Unlike route navigation, clicking the header paw on Home must
-        // replay its entrance. Always scroll to the animated section first.
+        // On another page, go to Home even if a deep-link opened without
+        // running the intro. On Home, the same paw REPLAYS the intro.
+        var onHome = !self.state.post &&
+                     (!self.state.view || self.state.view === 'inicio');
+        if (!onHome) {
+          if (!self.state.started) self.start(true);
+          self.beep('back');
+          self.returnHome();
+          return;
+        }
         if (!self.state.started) { self.start(); return; }
         self.beep('tick');
         if (!self.state.pbDone && !self.state.returningHome) {
