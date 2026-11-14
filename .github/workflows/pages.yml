@@ -2,8 +2,6 @@ name: Publicar no GitHub Pages
 on:
   push:
     branches: [main]
-  release:
-    types: [published, edited, deleted]   # nova versão do Wolff's Store (tags store-v*)
   schedule:
     - cron: '17 */6 * * *'                # pega releases novas dos repos dos projetos
   workflow_dispatch:

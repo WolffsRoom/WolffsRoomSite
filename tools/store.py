@@ -7,7 +7,7 @@ do arquivo para o app saber quando baixar de novo.
 Downloads de cada post (campo `downloads:` no post.md) são resolvidos aqui:
   - `url:` link direto (versão em `versao:`), ou
   - `repo:` + `arquivo:` asset da última release do repo (ou da `tag:`), versão = tag.
-A versão do próprio app vem das releases deste repo com tag `store-v*`.
+A versão do próprio app vem das releases de WolffsRoom/WolffsStore com tag `v*`.
 """
 import fnmatch
 import hashlib
@@ -20,9 +20,9 @@ import urllib.request
 
 from PIL import Image
 
-APP_REPO = 'WolffsRoom/WolffsRoomSite'
-APP_TAG_PREFIX = 'store-v'
-APP_ASSET = 'WolffsStore-*.vpk'
+APP_REPO = 'WolffsRoom/WolffsStore'
+APP_TAG_PREFIX = 'v'
+APP_ASSET = 'WolffsStore.vpk'
 COVER = (512, 288)
 SHOT = (480, 270)
 SITE_URL = 'https://wolffsroom.github.io/WolffsRoomSite/'
@@ -129,7 +129,13 @@ def app_release():
             continue
         a = _pick_asset(r, APP_ASSET)
         if a:
-            return {'versao': _version_from_tag(r['tag_name'], APP_TAG_PREFIX), 'url': a['browser_download_url'],
+            version = _version_from_tag(r['tag_name'], APP_TAG_PREFIX)
+            # Compatibilidade com a v0.41: ela compara componentes literalmente,
+            # então 0.5 precisa ser anunciado como 0.50 no store.json. A v0.5
+            # normaliza as duas formas como equivalentes.
+            if re.fullmatch(r'\d+\.\d', version):
+                version += '0'
+            return {'versao': version, 'url': a['browser_download_url'],
                     'tamanho': int(a.get('size') or 0), 'notas': latin((r.get('body') or '')[:400])}
     return None
 
