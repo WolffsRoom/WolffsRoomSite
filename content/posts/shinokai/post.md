@@ -6,7 +6,6 @@ grupo: Outras equipes
 data: 2026-11-14 12:00
 tag: Entretenimento · Anime
 status: Disponível · Brasil
-novidade: Release
 resumo: App gratuito de entretenimento voltado a fãs de anime, disponível somente no Brasil.
 capa: capa.webp
 ficha:

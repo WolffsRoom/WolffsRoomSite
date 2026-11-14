@@ -5,7 +5,7 @@ grupo: Finalizado
 data: 2026-11-14 17:59
 tag: Port · GameMaker · PS Vita
 status: v0.55 · Jogável
-novidade: Release
+novidade: Update
 versao: v0.55
 resumo: "Novo lançamento v0.55 do port de Pizza Tower SAGE 2019 Demo (v14) para PS Vita."
 chamada: Pizza Tower SAGE 2019 chegou ao PS Vita! Demo v14 jogável em 60 FPS com Pizzascape, Oregano Desert e Snick Challenge.

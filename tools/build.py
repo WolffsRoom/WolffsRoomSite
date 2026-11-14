@@ -322,7 +322,7 @@ def card(p):
     return ('<a class="wr-card wr-sh-s" href="#' + p['slug'] + '" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
             '<div style="position: relative; border-bottom: 4px solid #2e2e2e; background: #0b0b0b">\n' + pic(p) +
             ('<span style="position: absolute; top: 8px; right: 8px" title="Native trophies (NoTrpDrm)">' + trophy_badge('pt', 2, False) + '</span>' if p.get('trophies') else '') +
-            (f'<span class="wr-news-over-cover">{news_flag(p)}</span>' if p.get('news_kind') else '') + '\n</div>\n'
+            '\n</div>\n'
             '<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">\n'
             f'<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")}</span>\n'
             + f'<strong style="{DF} font-size: 16px; line-height: 1.5; font-weight: 400">{F(p, "title")}</strong>\n'
@@ -544,7 +544,6 @@ def article(p0, lang):
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'
             '<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center">\n'
             f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{e(p["tag"])} · {e(p["status"])}</span>\n'
-            + news_flag(p) +
             '<button class="wr-btn" type="button" data-act="back_' + p['slug'] + '" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + e(ui['back']) + '</button>\n'
             '</div>\n'
             f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">{e(p["title"])}</h1>\n'
@@ -633,7 +632,7 @@ def home_html(posts, order, feat, mosaic):
         '<div class="wr-feat-wrap" data-bbase="wr-feat-wrap" data-bclass="featCls" style="width: 100%; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 44px">\n'
         '<div class="wr-stage">\n<div class="wr-tvbox">\n'
         '<a class="wr-link wr-feat-art wr-sh" href="#' + feat + '" data-act="open_' + feat + '" aria-label="' + e(UI['en']['open']) + ' ' + e(V(p, 'en')['title']) + '" style="position: relative; display: block; width: 100%; line-height: 0; background: #000000">\n'
-        + art + mos + '</a>\n</div>\n<div class="wr-kick">\n' + kicker + '</div>\n' + '<div class="wr-return-splash" aria-hidden="true"><img class="wr-return-paw" src="assets/paw4.png" alt=""></div>\n'
+        + art + mos + '</a>\n</div>\n<div class="wr-kick">\n' + kicker + '</div>\n'
         '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; ' + U('start') + '</span><small>' + U('click') + '</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")} · {F(p, "status")}</span>\n'

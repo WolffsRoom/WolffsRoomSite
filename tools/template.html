@@ -90,44 +90,42 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-pbdone .wr-mos{display:none}
 .wr-pbdone .wr-tvbox,.wr-pbdone .wr-tvbox .wr-sh::before{animation:none !important}
 .wr-pbdone .wr-ch,.wr-pbdone .wr-caret,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
-/* Home return: pixel art paw, scanline mosaics, CRT reveal, and staggered UI. */
-@keyframes wr-home-return{0%{opacity:0;transform:translateY(24px);clip-path:inset(30% 0 30% 0)}45%{opacity:1;clip-path:inset(49% 0 49% 0)}100%{opacity:1;transform:none;clip-path:inset(0)}}
-@keyframes wr-return-cover{0%,45%{opacity:1;visibility:visible}70%{opacity:.7;visibility:visible}100%{opacity:0;visibility:hidden}}
-@keyframes wr-return-paw{0%{transform:translateY(34px) scale(.35);opacity:0}32%{transform:translateY(-14px) scale(1.23);opacity:1}57%{transform:translateY(8px) scale(.94)}75%{transform:translateY(-4px) scale(1.06)}100%{transform:none;opacity:1}}
-@keyframes wr-return-dither{0%{background-image:url(assets/w75.png);opacity:1}40%{background-image:url(assets/w50.png);opacity:1}80%{background-image:url(assets/w25.png);opacity:.65}100%{background-image:none;opacity:0}}
-.wr-return-splash{display:none;position:absolute;inset:0;align-items:center;justify-content:center;z-index:4;pointer-events:none;background:#050505;overflow:hidden}
-.wr-return-splash::before{content:"";position:absolute;inset:0;opacity:.7;background:url(assets/w75.png) 0 0 / 16px 16px repeat;image-rendering:pixelated}
-.wr-return-paw{position:relative;z-index:1;image-rendering:pixelated;width:108px;height:108px;object-fit:contain;filter:drop-shadow(8px 8px 0 #303030)}
-.wr-root.wr-home-returning .wr-return-splash{display:flex;animation:wr-return-cover 1.03s steps(7,end) both!important}
-.wr-root.wr-home-returning .wr-return-splash::before{animation:wr-return-dither .86s steps(4,end) both!important}
-.wr-root.wr-home-returning .wr-return-paw{animation:wr-return-paw .75s steps(7,end) .06s both!important}
-.wr-root.wr-home-returning .wr-tvbox{animation:wr-tv .58s steps(8,end) .34s both!important}
-.wr-root.wr-home-returning .wr-mos{display:block!important;animation:wr-hide .05s linear both!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(2){animation-delay:.43s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(3){animation-delay:.52s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(4){animation-delay:.61s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(5){animation-delay:.70s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(6){animation-delay:.79s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(7){animation-delay:.88s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(8){animation-delay:.97s!important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(9){animation-delay:1.06s!important}
-
-.wr-root.wr-home-returning .wr-stage{animation:wr-home-return .48s steps(6,end) both !important}
+/* Returning Home replays the regular title typing, CRT and mosaic effects.
+   No center-screen paw or additional splash/overlay. */
+@keyframes wr-home-return{0%{opacity:0;transform:translateY(22px);clip-path:inset(45% 0 45% 0)}
+  48%{opacity:1;transform:none;clip-path:inset(48% 0 48% 0)}
+  100%{opacity:1;transform:none;clip-path:inset(0)}}
+.wr-root.wr-home-returning .wr-stage{animation:wr-home-return .85s steps(8,end) both !important}
+.wr-root.wr-home-returning .wr-tvbox{animation:wr-tv .8s steps(8,end) .25s both !important}
+.wr-root.wr-home-returning .wr-feat-art{animation:wr-pop .38s steps(4,end) .52s both !important}
+.wr-root.wr-home-returning .wr-mos{display:block !important;animation:wr-hide .05s steps(1,end) both !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(2){animation-delay:.61s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(3){animation-delay:.74s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(4){animation-delay:.87s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(5){animation-delay:1s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(6){animation-delay:1.13s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(7){animation-delay:1.26s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(8){animation-delay:1.39s !important}
+.wr-root.wr-home-returning .wr-mos:nth-of-type(9){animation-delay:1.52s !important}
+.wr-root.wr-home-returning .wr-kick{display:flex !important;justify-content:center;flex-wrap:wrap}
+.wr-root.wr-home-returning .wr-kick .wr-ch{animation:wr-chpop .12s steps(3,end) both !important}
+.wr-root.wr-home-returning .wr-kick .wr-caret{animation:wr-show .01s step-end 1.68s both,wr-caret .25s step-end 1.68s 4 !important}
 .wr-root.wr-home-returning .wr-feat-info>:not(.wr-feat-actions){animation:wr-pop .32s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:.86s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:1.02s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:1.18s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(4){animation-delay:1.34s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:1.52s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:1.68s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:1.84s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(4){animation-delay:2s !important}
 .wr-root.wr-home-returning .wr-feat-info>.wr-feat-actions{opacity:0 !important;visibility:hidden !important;pointer-events:none !important;animation:none !important;transition:none !important}
 .wr-root.wr-home-returning.wr-feat-actions-ready .wr-feat-info>.wr-feat-actions{opacity:1 !important;visibility:visible !important;pointer-events:auto !important;animation:wr-pop .30s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-latest{animation:wr-pop .30s steps(4,end) 1.45s both !important}
+.wr-root.wr-home-returning .wr-latest{animation:wr-pop .30s steps(4,end) 2.08s both !important}
 .wr-root.wr-home-returning .wr-nav .wr-cat{animation:wr-pop .30s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:1.52s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:1.61s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:1.70s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:1.79s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:2.14s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:2.23s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:2.32s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:2.41s !important}
 @media(prefers-reduced-motion:reduce){.wr-root.wr-home-returning .wr-stage,.wr-root.wr-home-returning .wr-feat-info>*,
-.wr-root.wr-home-returning .wr-nav .wr-cat,.wr-root.wr-home-returning .wr-latest,.wr-root.wr-home-returning .wr-return-splash,.wr-root.wr-home-returning .wr-return-paw,.wr-root.wr-home-returning .wr-mos{animation:none !important}}
+.wr-root.wr-home-returning .wr-nav .wr-cat,.wr-root.wr-home-returning .wr-latest,.wr-root.wr-home-returning .wr-feat-art,
+.wr-root.wr-home-returning .wr-mos,.wr-root.wr-home-returning .wr-kick .wr-ch{animation:none !important}}
 .wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
 .wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
 .wr-slider-track{scrollbar-color:#5a5a5a #111111;scrollbar-width:thin}
@@ -245,7 +243,7 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <div class="wr-root wr-wait" data-bbase="wr-root" data-bclass="rootCls" style="min-height: 100vh; overflow-x: hidden; background: #060606; color: #ffffff; font-family: '8bitoperator', '8-bit Operator+', 'Pixel Operator', 'Pixelify Sans', monospace; font-size: 18px; line-height: 1.45; display: flex; flex-direction: column">
 
 <header id="topo" class="wr-pad" style="padding: 48px 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
-<button class="wr-link" type="button" data-act="goHome" aria-label="Wolff's Room — início" style="border: 0; padding: 0; background: transparent; cursor: pointer; line-height: 0">
+<button class="wr-link" type="button" data-act="pawHome" aria-label="Wolff's Room — início" style="border: 0; padding: 0; background: transparent; cursor: pointer; line-height: 0">
 <img class="wr-paw" src="assets/paw4.png" alt="" title="Au!" style="width: 68px; height: 68px; flex: none; display: block; image-rendering: pixelated">
 </button>
 <a class="wr-link wr-title wr-logo" href="#topo" data-act="goHome" aria-label="Wolff's Room — início" style="font-family: 'WR Start 2P', 'Press Start 2P', 'Pixelify Sans', monospace; font-size: 32px; line-height: 1.2; text-transform: uppercase; text-shadow: 4px 4px 0 #4a4a4a, 8px 8px 0 #222222"><span class="wr-l" aria-hidden="true" data-hover="hovL0">W</span><span class="wr-l" aria-hidden="true" data-hover="hovL1">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL2">l</span><span class="wr-l" aria-hidden="true" data-hover="hovL3">f</span><span class="wr-l" aria-hidden="true" data-hover="hovL4">f</span><span class="wr-l" aria-hidden="true" data-hover="hovL5">'</span><span class="wr-l" aria-hidden="true" data-hover="hovL6">s</span><span style="width: 0.6em"></span><span class="wr-l" aria-hidden="true" data-hover="hovL7">R</span><span class="wr-l" aria-hidden="true" data-hover="hovL8">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL9">o</span><span class="wr-l" aria-hidden="true" data-hover="hovL10">m</span></a>
@@ -343,26 +341,33 @@ class Component extends DCLogic {
   }
   returnHome() {
     var self = this;
+    // When already on Home, the route hash does not change, so the generic
+    // click handler does NOT scroll. Without this, the animation is offscreen.
+    try { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }
+    catch (e) { window.scrollTo(0, 0); }
     clearTimeout(this._returnHomeT);
     clearTimeout(this._returnButtonsT);
     (this._returnSfxT || []).forEach(clearTimeout);
     this._returnSfxT = [];
-    // Replay the opening's paw, CRT and pixel mosaic without reloading or restarting music.
-    // First clear the prior replay class; reflow forces CSS keyframes to restart.
+    // Replay the original opening: CRT, typewriter, mosaic and chiptune,
+    // no extra paw in the center; the header paw stays in the header.
+    // Force a style/layout flush between class removal and re-adding so
+    // repeated clicks while already on Home restart every CSS keyframe.
     this.setState({ view: 'inicio', post: null, peek: null,
                     returningHome: false, returnActionsReady: false });
-    var home = document.querySelector('.wr-home');
-    if (home) void home.offsetWidth;
+    var root = document.querySelector('.wr-root');
+    if (root) { void root.offsetHeight; }
     this.setState({ returningHome: true });
     this._returnButtonsT = setTimeout(function () {
       self.setState({ returnActionsReady: true });
-    }, 1790);
+    }, 2490);
     this._returnHomeT = setTimeout(function () {
       self.setState({ returningHome: false, returnActionsReady: true });
-    }, 2300);
+    }, 3000);
     // Short original chiptune cues, respecting the user's effects preference.
-    var cues = [[60,'boot'],[260,'tvon'],[450,'mos0'],[570,'mos1'],
-                [690,'mos2'],[810,'mos3'],[970,'tick'],[1190,'peek'],[1790,'ready']];
+    var cues = [[60,'boot'],[360,'off'],[650,'tvon'],[820,'mos0'],
+                [990,'mos1'],[1160,'mos2'],[1330,'mos3'],[1490,'type'],
+                [1760,'tick'],[2050,'peek'],[2490,'ready']];
     cues.forEach(function (cue) {
       self._returnSfxT.push(setTimeout(function () { self.beep(cue[1], false, true); }, cue[0]));
     });
@@ -556,6 +561,17 @@ class Component extends DCLogic {
     var out = {
       on0: home,
       goHome: function () { self.beep('back'); self.returnHome(); },
+      pawHome: function () {
+        // Unlike route navigation, clicking the header paw on Home must
+        // replay its entrance. Always scroll to the animated section first.
+        if (!self.state.started) { self.start(); return; }
+        self.beep('tick');
+        if (!self.state.pbDone && !self.state.returningHome) {
+          window.scrollTo(0, 0);
+          return; // Never interrupt the first page-entry animation.
+        }
+        self.returnHome();
+      },
       goTop: function () {
         self.beep('up');
         self.returnHome();
