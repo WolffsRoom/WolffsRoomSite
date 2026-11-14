@@ -380,6 +380,25 @@ def vita_svg(width, anim=True):
             + ''.join(R) + '</svg>')
 
 
+def vita_icon():
+    """Ícone 12x12 no mesmo padrão dos outros botões flutuantes (pixels de 4 px, cor do texto)."""
+    rows = ['............',
+            '............',
+            '............',
+            '.##########.',
+            '###......###',
+            '#.#......#.#',
+            '###......###',
+            '###......#.#',
+            '.##########.',
+            '............',
+            '............',
+            '............']
+    rects = ''.join(f'<rect x="{x}" y="{y}" width="1" height="1"/>' for y, r in enumerate(rows) for x, c in enumerate(r) if c == '#')
+    return ('<svg aria-hidden="true" width="48" height="48" viewBox="0 0 12 12" shape-rendering="crispEdges" fill="currentColor" style="display: block">'
+            + rects + '</svg>')
+
+
 def qr_svg(url):
     try:
         import segno
@@ -634,7 +653,7 @@ def build():
     cats = '{' + ', '.join(f"'{k}': '{posts[k]['cat']}'" for k in order) + '}'
     page = open(TEMPLATE, encoding='utf-8').read()
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
-    page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_svg(56, anim=False))
+    page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_icon())
     page = page.replace('<!--OGIMAGE-->', posts[feat]['cover'] or 'assets/favicon.png')
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
     open(os.path.join(OUT, '.nojekyll'), 'w').write('')
