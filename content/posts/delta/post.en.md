@@ -19,8 +19,8 @@ video_legenda: DeltaruneVita trailer
 links:
   Download VPK (v0.81): https://github.com/WolffsRoom/DeltaruneVita/releases/download/v0.81/Deltarune-v0.81.vpk
 fontes:
-  View on GitHub: https://github.com/WolffsRoom/DeltaruneVita
-  Releases: https://github.com/WolffsRoom/DeltaruneVita/releases
+  View on GitHub (PS Vita): https://wolffsroom.github.io/WolffsStore/WolffsRoom/DeltaruneVita/
+  Releases (PS Vita): https://wolffsroom.github.io/WolffsStore/WolffsRoom/DeltaruneVita/releases/
 ---
 
 Unofficial port of DELTARUNE, chapters 1 to 5. It runs the official GameMaker data (Windows/Steam) on a Vita-focused Butterscotch implementation, with VitaGL for graphics and OpenAL for audio. The repository and releases do not include the commercial game data.

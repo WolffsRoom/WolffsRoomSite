@@ -37,8 +37,8 @@ ficha:
 links:
   Baixar VPK (v0.81): https://github.com/WolffsRoom/DeltaruneVita/releases/download/v0.81/Deltarune-v0.81.vpk
 fontes:
-  Ver no GitHub: https://github.com/WolffsRoom/DeltaruneVita
-  Releases: https://github.com/WolffsRoom/DeltaruneVita/releases
+  Ver no GitHub (PS Vita): https://wolffsroom.github.io/WolffsStore/WolffsRoom/DeltaruneVita/
+  Releases (PS Vita): https://wolffsroom.github.io/WolffsStore/WolffsRoom/DeltaruneVita/releases/
 downloads:
   - tipo: vpk
     nome: DeltaruneVita v0.81 (VPK)
@@ -46,7 +46,7 @@ downloads:
     versao: "0.81"
     titleid: DELT00001
     precisa_dados: true
-    instrucoes: https://github.com/WolffsRoom/DeltaruneVita#installation-guide
+    instrucoes: https://wolffsroom.github.io/WolffsStore/WolffsRoom/DeltaruneVita/
 ---
 
 Port não oficial de DELTARUNE, capítulos 1 a 5. Executa os dados oficiais do GameMaker (Windows/Steam) em uma implementação do Butterscotch voltada ao Vita, com VitaGL nos gráficos e OpenAL no áudio. O repositório e os releases não incluem os dados comerciais do jogo.
