@@ -179,6 +179,7 @@ def load_post(slug):
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
         'author': str(meta.get('autor') or '').strip(),
         'author_url': str(meta.get('autor_url') or '').strip(),
+        'version_label': str(meta.get('versao') or '').strip(),
         'desc': str(meta.get('resumo') or ''), 'about': about, 'secs': secs,
         'progress': progress, 'bars': parse_bars(meta.get('barras')),
         'meta': [(str(k), str(v)) for k, v in (meta.get('ficha') or {}).items()],
@@ -313,16 +314,19 @@ def pic(p, lang='en'):
 
 
 def card(p):
+    by = (f'<span class="wr-by" style="display:block; color:#c2c2c2; font:14px Arial,Helvetica,sans-serif; text-align:left">by: {e(p["author"])}</span>\n'
+          if p.get("author") else "")
     return ('<a class="wr-card wr-sh-s" href="#' + p['slug'] + '" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
             '<div style="position: relative; border-bottom: 4px solid #2e2e2e; background: #0b0b0b">\n' + pic(p) +
-            ('<span style="position: absolute; top: 8px; right: 8px" title="Troféus nativos / Native trophies (NoTrpDrm)">' + trophy_badge('pt', 2, False) + '</span>' if p.get('trophies') else '') + '\n</div>\n'
+            ('<span style="position: absolute; top: 8px; right: 8px" title="Native trophies (NoTrpDrm)">' + trophy_badge('pt', 2, False) + '</span>' if p.get('trophies') else '') + '\n</div>\n'
             '<div style="padding: 16px; display: flex; flex-direction: column; gap: 10px; flex-grow: 1">\n'
             f'<span style="color: #a8a8a8; font-size: 15px; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")}</span>\n'
-            + (f'<span class="wr-by" style="align-self:center; display:inline-block; padding:6px 9px; border:2px solid #8a8a8a; background:#171717; color:white; font-size:14px">by: {e(p["author"])}</span>\n' if p.get("author") else '')
             + f'<strong style="{DF} font-size: 16px; line-height: 1.5; font-weight: 400">{F(p, "title")}</strong>\n'
+            + by +
             f'<span style="color: #c4c4c4; flex-grow: 1">{F(p, "desc")}</span>\n'
             f'<span style="font-weight: 700">{F(p, "status")}</span>\n'
             '</div>\n</a>')
+
 
 
 def bar(label, pct, text=None):
@@ -361,7 +365,7 @@ def trophy_badge(lang, px=3, label=True):
 # ---------------------------------------------------------------- Wolff's Store (modal do PS Vita)
 
 # Link do VPK do app (o QR Code aponta para ele). Ajustar quando a release estiver publicada.
-STORE_VPK_URL = 'https://github.com/WolffsRoom/WolffsRoomSite/releases/latest'
+STORE_VPK_URL = 'https://github.com/WolffsRoom/WolffsStore/releases/latest/download/WolffsStore.vpk'
 
 
 # PS Vita em pixel art, a partir da arte assets/Vita.png da Wolff's Store (40x18)
@@ -527,17 +531,18 @@ def article(p0, lang):
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["clock"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
     hero = (f'<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">\n{pic(p0, lang)}\n</div>\n' if p['cover'] else '')
     about = f'<p style="margin: 0; color: #e0e0e0; font-size: 19px">{inline(p["about"])}</p>\n' if p['about'] else ''
-    author_label = (f'<span class="wr-by" style="display:inline-block; align-self:center; background:#171717; color:white; border:2px solid #8a8a8a; padding:8px 12px">by: <a href="{e(p["author_url"])}" target="_blank" rel="noopener" style="color:white; text-decoration:underline">{e(p["author"])}</a></span>\n' if p.get("author") else '')
+    author_label = (f'<div class="wr-by" style="text-align:center; color:#c2c2c2; font:17px Arial,Helvetica,sans-serif">by: <a href="{e(p["author_url"])}" target="_blank" rel="noopener" style="color:white; text-decoration:none">{e(p["author"])}</a></div>\n' if p.get("author") else "")
+    version_label = (f'<div style="text-align:center; color:#e0e0e0; font:16px Arial,Helvetica,sans-serif">Version: {e(p["version_label"])}</div>\n' if p.get("version_label") else "")
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'
             '<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center">\n'
             f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{e(p["tag"])} · {e(p["status"])}</span>\n'
             '<button class="wr-btn" type="button" data-act="back_' + p['slug'] + '" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + e(ui['back']) + '</button>\n'
             '</div>\n'
             f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">{e(p["title"])}</h1>\n'
-            +
-            '<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">\n'
+             + author_label + version_label +
+             '<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">\n'
             '<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">\n'
-            + hero + author_label + about + secs +
+            + hero + about + secs +
             '</div>\n'
             '<aside style="flex: 1 1 280px; min-width: 0; display: flex; flex-direction: column; gap: 36px">\n' + side + '</aside>\n'
             '</div>\n</article>\n')
@@ -603,7 +608,7 @@ def home_html(posts, order, feat, mosaic):
     buttons = '<a class="wr-btn" href="#' + feat + '" data-act="open_' + feat + '" style="' + BTN + '; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">' + U('details') + '</a>\n'
     if gh:
         buttons += f'<a class="wr-btn" href="{e(gh)}" target="_blank" rel="noopener" style="{BTN}; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff">{U("github")}</a>\n'
-    feat_author = (f'<span class="wr-by" style="background:#171717; border:2px solid #8a8a8a; color:white; padding:7px 11px; font-size:14px">by: <a href="{e(p["author_url"])}" target="_blank" rel="noopener" style="color:white">{e(p["author"])}</a></span>\n' if p.get("author") else '')
+    feat_author = (f'<span class="wr-by" style="display:block; color:#c2c2c2; font:16px Arial,Helvetica,sans-serif">by: <a href="{e(p["author_url"])}" target="_blank" rel="noopener" style="color:white; text-decoration:none">{e(p["author"])}</a></span>\n' if p.get("author") else "")
     feat_html = (
         '<div class="dc-if" data-if="on0">\n'
         '<section class="wr-home" aria-label="' + e(UI['en']['open']) + ' ' + e(V(p, 'en')['title']) + '" style="display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center">\n'
@@ -614,7 +619,8 @@ def home_html(posts, order, feat, mosaic):
         '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; ' + U('start') + '</span><small>' + U('click') + '</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")} · {F(p, "status")}</span>\n'
-        + feat_author + f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title")}</h1>\n'
+        f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title")}</h1>\n'
+        + feat_author +
         f'<p style="margin: 0; color: #c4c4c4; max-width: 640px">{F(p, "feature_text", inline)}</p>\n'
         '<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
         '</div>\n</div>\n</section>\n</div>\n')

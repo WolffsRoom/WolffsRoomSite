@@ -5,10 +5,11 @@ grupo: Outras equipes
 data: 2026-11-14 15:31
 tag: Port · C · PS Vita
 status: v1.2.1 · Jogável
+versao: v1.2.1
 autor: Federicoilgrandebardo
 autor_url: https://github.com/Federicoilgrandebardo
 resumo: Port nativo de Vampire Survivors para PS Vita, desenvolvido por Federicoilgrandebardo.
-capa: capa.png
+capa: capa.jpg
 trofeus: true
 capturas:
   - captura-menu.png
@@ -25,9 +26,8 @@ ficha:
   Troféus: Sim (NoTrpDrm)
   Dados: Necessita jogo original
 links:
-  Release oficial v1.2.1: https://github.com/Federicoilgrandebardo/vampire-survivors-vita/releases/tag/v1.2.1
-  Dados externos (Google Drive): https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
-  Dados externos (MediaFire): https://www.mediafire.com/file/1627gt47emp57zb/VampireSurvivors+v1.1.zip/file
+  Baixar VPK: https://github.com/Federicoilgrandebardo/vampire-survivors-vita/releases/download/v1.2.1/VampireSurvivors-Vita-v1.2.1.vpk
+  Baixar dados: https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
 fontes:
   GitHub Vita Lite: https://wolffsroom.github.io/WolffsStore/Federicoilgrandebardo/vampire-survivors-vita/
   Repositório original: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
@@ -45,7 +45,6 @@ downloads:
     nome: Dados Vampire Survivors (Drive)
     url: https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
     arquivo: VampireSurvivors-v1.1.zip
-    versao: "1.1"
     tamanho: 136529441
     instrucoes: https://github.com/Federicoilgrandebardo/vampire-survivors-vita#setup-instructions-for-end-users
 ---

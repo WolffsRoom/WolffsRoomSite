@@ -26,6 +26,8 @@ a{color:#ffffff}a:hover{color:#bdbdbd}
 .wr-root::before{content:"";position:absolute;inset:0;background:url(assets/edgeL.png) left top / 480px 768px repeat-y,url(assets/edgeR.png) right top / 480px 768px repeat-y;image-rendering:pixelated;pointer-events:none}
 @media (max-width:1000px){.wr-root::before{background-size:240px 384px,240px 384px}}
 .wr-root>*{position:relative}
+/* Intro is entirely idle until a click or keyboard input; CSS delays do not autoplay. */
+.wr-wait .wr-home *,.wr-wait .wr-home *::before,.wr-wait .wr-home *::after{animation-play-state:paused !important}
 .wr-div{width:640px;max-width:100%;height:20px;background:url(assets/divider.png) center / 640px 20px no-repeat;image-rendering:pixelated}
 .wr-sh,.wr-sh-s{position:relative}
 .wr-l{display:inline-block;padding-bottom:10px;margin-bottom:-10px;transition:transform .12s steps(2,end)}
@@ -257,8 +259,11 @@ class Component extends DCLogic {
       if (ac && ac.state === 'suspended') ac.resume();
     };
     try { document.addEventListener('pointerdown', this._unlock); } catch (e) {}
+    /* Fallback for browsers without Pointer Events. */
+    document.addEventListener('mousedown', this._unlock);
     try {
       document.addEventListener('keydown', function (ev) {
+        if (!self.state.started && !ev.repeat && !ev.ctrlKey && !ev.metaKey && !ev.altKey) { self.start(); return; }
         if (ev.key === 'Escape' && self.state.vitaOpen) { self.beep('back'); self.setState({ vitaOpen: false, qrOpen: false }); }
       });
     } catch (e) {}
@@ -266,11 +271,10 @@ class Component extends DCLogic {
     var st = this.state || {};
     var atHome = !st.post && (!st.view || st.view === 'inicio');
     var ac = this.audio();
-    // Sem som ligado, fora da página inicial ou com áudio já liberado: começa direto.
-    // Post aberto direto (link ou nova guia): entra sem a intro. Na página inicial (inclusive ao recarregar) a intro toca.
+    // Do not start based on sound settings, loaded assets, timers or AudioContext.
+    // Direct links into posts skip the intro; the homepage requires a user gesture.
     if (!atHome) { this.start(true); return; }
-    // Sem som ligado ou com áudio já liberado: começa direto.
-    if ((!this.sndOn() && !this.musOn()) || (ac && ac.state === 'running')) this.start(false);
+
   }
   start(skipSfx) {
     if (this.state.started) return;
@@ -292,6 +296,7 @@ class Component extends DCLogic {
     clearTimeout(this._pbT); clearTimeout(this._fT); clearInterval(this._mT);
     (this._sfxT || []).forEach(clearTimeout);
     try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
+    document.removeEventListener('mousedown', this._unlock);
   }
   audio() {
     try {

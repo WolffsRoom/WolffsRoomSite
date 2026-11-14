@@ -10,9 +10,8 @@ ficha:
   Trophies: Yes (NoTrpDrm)
   Game data: Original game required
 links:
-  Official release v1.2.1: https://github.com/Federicoilgrandebardo/vampire-survivors-vita/releases/tag/v1.2.1
-  External data (Google Drive): https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
-  External data (MediaFire): https://www.mediafire.com/file/1627gt47emp57zb/VampireSurvivors+v1.1.zip/file
+  Download VPK: https://github.com/Federicoilgrandebardo/vampire-survivors-vita/releases/download/v1.2.1/VampireSurvivors-Vita-v1.2.1.vpk
+  Download data: https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
 fontes:
   GitHub Vita Lite: https://wolffsroom.github.io/WolffsStore/Federicoilgrandebardo/vampire-survivors-vita/
   Original GitHub repository: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
