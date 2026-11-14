@@ -3,7 +3,7 @@ titulo: The Case of the Golden Idol
 categoria: ports
 grupo: Em andamento
 data: 2026-06-01
-tag: Port · Python
+tag: Port · Godot · PS Vita
 status: Em andamento
 resumo: Port para PS Vita, com tradução em andamento.
 capa: capa.jpg

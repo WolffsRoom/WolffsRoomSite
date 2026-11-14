@@ -1,5 +1,5 @@
 ---
-tag: Port · C
+tag: Port · GameMaker · PS Vita
 status: 81% · Playable
 resumo: Deltarune, chapters 1 to 5, on PS Vita.
 titulo_barras: Review by chapter

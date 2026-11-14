@@ -3,7 +3,7 @@ titulo: Pizza Tower — SAGE 2019 Demo
 categoria: ports
 grupo: Em andamento
 data: 2026-11-13
-tag: Port · PS Vita
+tag: Port · GameMaker · PS Vita
 status: Em andamento
 resumo: Port da demo da SAGE 2019 para o PS Vita.
 chamada: Port não oficial da demo de Pizza Tower lançada na SAGE 2019, com Peppino e Snick, para o PS Vita.

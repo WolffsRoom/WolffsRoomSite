@@ -1,5 +1,5 @@
 ---
-tag: Port · C
+tag: Port · GameMaker · PS Vita
 status: 95% · Playable
 resumo: Unofficial native port of Void Stranger to PS Vita.
 ficha:

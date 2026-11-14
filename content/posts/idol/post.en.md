@@ -1,5 +1,5 @@
 ---
-tag: Port · Python
+tag: Port · Godot · PS Vita
 status: In progress
 resumo: PS Vita port, translation in progress.
 ficha:

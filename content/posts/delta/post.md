@@ -3,7 +3,7 @@ titulo: DeltaruneVita
 categoria: ports
 grupo: Em andamento
 data: 2026-11-10
-tag: Port · C
+tag: Port · GameMaker · PS Vita
 status: 81% · Jogável
 resumo: Deltarune, capítulos 1 a 5, no PS Vita.
 progresso: 81

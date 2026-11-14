@@ -1,9 +1,9 @@
 ---
-tag: Native port · C · PS Vita
+tag: Port · Native · PS Vita
 status: v1.2.1 · Playable
-resumo: Native PS Vita port of Vampire Survivors, developed by Federicoilgrandebardo.
+resumo: Native PS Vita port of Vampire Survivors, developed by RazorGaToR.
 ficha:
-  Developer: Federicoilgrandebardo
+  Developer: RazorGaToR
   Version: v1.2.1
   Title ID: VSPH00001
   Engine: C / raylib / vitaGL
@@ -17,7 +17,7 @@ fontes:
   Original GitHub repository: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
 ---
 
-A native PlayStation Vita port of Vampire Survivors, **developed and maintained by Federicoilgrandebardo**. Wolff's Room showcases the project; **Wolff provided UI and gameplay suggestions as well as the opening animation frames** credited in the v1.2.1 release.
+A native PlayStation Vita port of Vampire Survivors, **developed and maintained by RazorGaToR**. Wolff's Room showcases the project; **Wolff provided UI and gameplay suggestions as well as the opening animation frames** credited in the v1.2.1 release.
 
 ## Highlights
 - Native C port with PlayStation Vita controls
@@ -27,7 +27,7 @@ A native PlayStation Vita port of Vampire Survivors, **developed and maintained 
 - Vita-specific user interface and animated boot screen
 
 ## Installation
-- Install the v1.2.1 VPK from Federicoilgrandebardo
+- Install the v1.2.1 VPK from RazorGaToR
 - The VPK **does not contain the commercial game data**. You need your own legitimate PC copy of Vampire Survivors; follow the original repository's extraction instructions
 - The two externally supplied data links (Google Drive and MediaFire) are third-party alternatives; Wolff's Room does not host these archives or certify redistribution rights
 - Compatible data ZIP archives must contain the `VampireSurvivors` folder placed inside `ux0:data/`, resulting in `ux0:data/VampireSurvivors/`
@@ -35,6 +35,6 @@ A native PlayStation Vita port of Vampire Survivors, **developed and maintained 
 - Install `libshacccg.suprx` as described by the original project; trophies require `NoTrpDrm`
 
 ## Credits
-- **Port and development:** Federicoilgrandebardo
+- **Port and development:** RazorGaToR
 - **UI/gameplay suggestions and boot animation frames:** Wolff (Wolff's Room)
 - **Original game:** poncle

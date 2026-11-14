@@ -3,7 +3,7 @@ titulo: File Manager
 categoria: ferramentas
 grupo: Em andamento
 data: 2026-11-14 11:55
-tag: Gerenciador de arquivos · ScePaf
+tag: Ferramenta · Arquivos
 status: Em desenvolvimento
 resumo: Gerenciador de arquivos nativo para PS Vita com a interface, sons e transições do próprio sistema.
 capa: capa.webp

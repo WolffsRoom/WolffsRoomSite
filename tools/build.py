@@ -626,7 +626,7 @@ def home_html(posts, order, feat, mosaic):
         f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title")}</h1>\n'
         + feat_author +
         f'<p style="margin: 0; color: #c4c4c4; max-width: 640px">{F(p, "feature_text", inline)}</p>\n'
-        '<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
+        '<div class="wr-feat-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
         '</div>\n</div>\n</section>\n</div>\n')
     btns = '\n'.join(
         f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}" data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'

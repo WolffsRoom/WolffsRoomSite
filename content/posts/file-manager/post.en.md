@@ -1,5 +1,5 @@
 ---
-tag: File manager · ScePaf
+tag: Tool · Files
 status: In development
 resumo: Native PS Vita file manager using the system's own interface, sounds and transitions.
 titulo_barras: Progress

@@ -3,7 +3,7 @@ titulo: FMVita
 categoria: ferramentas
 grupo: Finalizado
 data: 2026-11-14 11:45
-tag: Ferramenta · C
+tag: Ferramenta · Arquivos
 status: v0.6.2
 resumo: Gerenciador de arquivos com interface moderna e suporte a toque. Fork do VitaShell.
 capa: capa.webp

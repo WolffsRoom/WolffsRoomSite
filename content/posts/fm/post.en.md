@@ -1,5 +1,5 @@
 ---
-tag: Tool · C
+tag: Tool · Files
 status: v0.6.2
 resumo: File manager with a modern interface and touch support. A VitaShell fork.
 ficha:

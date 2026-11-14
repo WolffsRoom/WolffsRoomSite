@@ -3,12 +3,12 @@ titulo: Vampire Survivors Vita
 categoria: ports
 grupo: Outras equipes
 data: 2026-11-14 15:31
-tag: Port · C · PS Vita
+tag: Port · Native · PS Vita
 status: v1.2.1 · Jogável
 versao: v1.2.1
-autor: Federicoilgrandebardo
+autor: RazorGaToR
 autor_url: https://github.com/Federicoilgrandebardo
-resumo: Port nativo de Vampire Survivors para PS Vita, desenvolvido por Federicoilgrandebardo.
+resumo: Port nativo de Vampire Survivors para PS Vita, desenvolvido por RazorGaToR.
 capa: capa.jpg
 trofeus: true
 capturas:
@@ -19,7 +19,7 @@ capturas:
   - captura-abyss.png
   - captura-coop.png
 ficha:
-  Desenvolvedor: Federicoilgrandebardo
+  Desenvolvedor: RazorGaToR
   Versão: v1.2.1
   Title ID: VSPH00001
   Motor: C / raylib / vitaGL
@@ -49,7 +49,7 @@ downloads:
     instrucoes: https://github.com/Federicoilgrandebardo/vampire-survivors-vita#setup-instructions-for-end-users
 ---
 
-Port nativo de Vampire Survivors para PlayStation Vita criado e mantido por **Federicoilgrandebardo**. A Wolff's Room divulga o projeto; **Wolff contribuiu com sugestões de interface (UI) e jogabilidade, além dos frames da animação de abertura** creditados na release v1.2.1.
+Port nativo de Vampire Survivors para PlayStation Vita criado e mantido por **RazorGaToR**. A Wolff's Room divulga o projeto; **Wolff contribuiu com sugestões de interface (UI) e jogabilidade, além dos frames da animação de abertura** creditados na release v1.2.1.
 
 ## Destaques
 - Port nativo reescrito em C, com suporte a controles do PS Vita
@@ -59,7 +59,7 @@ Port nativo de Vampire Survivors para PlayStation Vita criado e mantido por **Fe
 - Interface adaptada ao Vita e animação de abertura
 
 ## Instalação
-- Instale o VPK v1.2.1 de Federicoilgrandebardo
+- Instale o VPK v1.2.1 de RazorGaToR
 - O jogo **não inclui seus arquivos comerciais de dados** no VPK; obtenha os dados da sua própria cópia legítima do Vampire Survivors para PC, seguindo a ferramenta de extração do repositório original
 - Alternativamente, há links externos de dados compartilhados para consulta: Google Drive ou MediaFire; a Wolff's Room não hospeda nem verifica a autorização de redistribuição desses arquivos
 - Caso use um ZIP de dados compatível, extraia a pasta `VampireSurvivors` dentro de `ux0:data/`, resultando em `ux0:data/VampireSurvivors/`
@@ -67,6 +67,6 @@ Port nativo de Vampire Survivors para PlayStation Vita criado e mantido por **Fe
 - Instale `libshacccg.suprx` conforme o README; troféus requerem o plugin `NoTrpDrm`
 
 ## Créditos
-- **Port e desenvolvimento:** Federicoilgrandebardo
+- **Port e desenvolvimento:** RazorGaToR
 - **Sugestões de UI e jogabilidade / frames da abertura:** Wolff (Wolff's Room)
 - **Jogo original:** poncle

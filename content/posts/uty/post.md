@@ -3,7 +3,7 @@ titulo: Undertale Yellow
 categoria: ports
 grupo: Finalizado
 data: 2026-05-20
-tag: Port · C
+tag: Port · GameMaker · PS Vita
 status: Jogável
 resumo: Port de Undertale Yellow para o PS Vita.
 capa: capa.jpg

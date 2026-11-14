@@ -3,7 +3,7 @@ titulo: Void Stranger — PS Vita Edition
 categoria: ports
 grupo: Em andamento
 data: 2026-11-11
-tag: Port · C
+tag: Port · GameMaker · PS Vita
 status: 95% · Jogável
 resumo: Port nativo não oficial de Void Stranger para o PS Vita.
 progresso: 95

@@ -82,6 +82,9 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 @keyframes wr-open{from{clip-path:inset(50% 0 50% 0)}to{clip-path:inset(0)}}
 .wr-feat-wrap:not(.wr-loaded) .wr-feat-info{visibility:hidden}
 .wr-loaded .wr-feat-info>*{animation:wr-pop .32s steps(4,end) both}
+/* Calls to action are a separate final intro stage, not an implicit nth-child. */
+.wr-feat-info>.wr-feat-actions{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(16px);animation:none !important}
+.wr-root.wr-feat-actions-ready .wr-feat-info>.wr-feat-actions{opacity:1;visibility:visible;pointer-events:auto;transform:none;transition:opacity .32s steps(4,end),transform .32s steps(4,end)}
 .wr-loaded .wr-feat-info>:nth-child(1){animation-delay:4.2s}.wr-loaded .wr-feat-info>:nth-child(2){animation-delay:4.32s}.wr-loaded .wr-feat-info>:nth-child(3){animation-delay:4.44s}.wr-loaded .wr-feat-info>:nth-child(4){animation-delay:4.56s}
 @keyframes wr-pop{from{transform:translateY(16px);opacity:0}}
 .wr-pbdone .wr-mos{display:none}
@@ -281,6 +284,8 @@ class Component extends DCLogic {
     var self = this, ac = this.audio();
     this.setState({ started: true });
     this._pbT = setTimeout(function () { self.setState({ pbDone: true }); }, skipSfx ? 0 : 5400);
+    // Hero action links stay hidden until the intro's final seconds.
+    this._buttonsT = setTimeout(function () { self.setState({ actionsReady: true }); }, skipSfx ? 0 : 4950);
     if (skipSfx) return;
     var go = function () {
       var plan = [[120, 'boot'], [2600, 'off'], [2900, 'tvon']];
@@ -293,7 +298,7 @@ class Component extends DCLogic {
     if (ac && ac.state !== 'running') ac.resume().then(go, go); else go();
   }
   componentWillUnmount() {
-    clearTimeout(this._pbT); clearTimeout(this._fT); clearInterval(this._mT);
+    clearTimeout(this._pbT); clearTimeout(this._buttonsT); clearTimeout(this._fT); clearInterval(this._mT);
     (this._sfxT || []).forEach(clearTimeout);
     try { document.removeEventListener('pointerdown', this._unlock); } catch (e) {}
     document.removeEventListener('mousedown', this._unlock);
@@ -487,7 +492,7 @@ class Component extends DCLogic {
         setTimeout(function () { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) {} }, 30);
       },
       hov: function () { self.beep('hover', false, true); },
-      rootCls: (st.pbDone ? 'wr-pbdone' : '') + (st.started ? '' : ' wr-wait'),
+      rootCls: (st.pbDone ? 'wr-pbdone' : '') + (st.started ? '' : ' wr-wait') + ((st.actionsReady || st.pbDone) ? ' wr-feat-actions-ready' : ''),
       startIntro: function () { self.start(); },
       featCls: st.featLoaded ? 'wr-loaded' : '',
       featLoad: function () { if (!self.state.featLoaded) self.setState({ featLoaded: true }); },
