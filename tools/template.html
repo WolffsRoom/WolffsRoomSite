@@ -130,6 +130,10 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-word{display:inline-block;white-space:nowrap}
 .wr-type{text-wrap:balance}
 .wr-wait .wr-nav{visibility:hidden}
+.wr-wait .wr-latest{visibility:hidden}
+.wr-root:not(.wr-pbdone) .wr-latest{animation:wr-pop .32s steps(4,end) 4.6s both}
+.wr-wait .wr-latest{animation-play-state:paused !important}
+@media (prefers-reduced-motion:reduce){.wr-latest{animation:none !important}}
 .wr-root:not(.wr-pbdone) .wr-nav .wr-cat{animation:wr-pop .32s steps(4,end) both}
 .wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(1){animation-delay:4.7s}.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(2){animation-delay:4.8s}.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(3){animation-delay:4.9s}.wr-root:not(.wr-pbdone) .wr-nav .wr-cat:nth-child(4){animation-delay:5s}
 .wr-wait .wr-nav .wr-cat{animation-play-state:paused !important}

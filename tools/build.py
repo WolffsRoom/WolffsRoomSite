@@ -243,7 +243,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Ferramentas', 'traducoes': 'Traduções', 'reviews': 'Reviews'},
         'groups': {g: g for g in GROUPS}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas três novidades...', 'total': 'Total', 'progress': 'Progresso',
         'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -253,7 +253,7 @@ UI = {
         'groups': {'Em andamento': 'In progress', 'Finalizado': 'Finished', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest three updates...', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -457,7 +457,14 @@ def home_html(posts, order, feat, mosaic):
     btns = '\n'.join(
         f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}" data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'
         for n, (c, t) in enumerate(CATS, 1))
-    nav = ('<div class="dc-if" data-if="on0">\n'
+    # as três novidades mais recentes, antes dos botões de categoria
+    latest3 = '\n'.join(card(posts[i]) for i in order[:3])
+    latest = ('<div class="dc-if" data-if="on0">\n'
+              '<section class="wr-latest" aria-label="' + e(UI['en']['latest3']) + '" style="display: flex; flex-direction: column; gap: 24px">\n'
+              f'<h2 style="margin: 0; {DF} font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">' + T(e(UI['pt']['latest3']), e(UI['en']['latest3'])) + '</h2>\n'
+              f'<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">\n{latest3}\n</div>\n'
+              '</section>\n</div>\n')
+    nav = latest + ('<div class="dc-if" data-if="on0">\n'
            f'<nav class="wr-nav" aria-label="Categories" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px">\n{btns}\n</nav>\n</div>\n')
     peeks = ''
     for n, (c, t) in enumerate(CATS, 1):
