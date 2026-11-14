@@ -1,10 +1,10 @@
 ---
 tag: Tool · C
-status: v0.5.0
+status: v0.6.2
 resumo: File manager with a modern interface and touch support. A VitaShell fork.
 ficha:
-  Version: v0.5.0
-  Released: 17/06/2026
+  Version: v0.6.2
+  Title ID: FILEMNGR1
   Base: VitaShell
 links:
   View on GitHub: https://github.com/WolffsRoom/FMVita

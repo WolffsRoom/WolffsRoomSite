@@ -23,6 +23,7 @@ downloads:
     nome: Showcase v0.3
     url: https://github.com/WolffsRoom/godot4-psvita/releases/download/v0.3/Godot4Vita-v0.3-Showcase.vpk
     versao: "0.3"
+    titleid: G4V030001
     instrucoes: https://github.com/WolffsRoom/godot4-psvita/releases/tag/v0.3
 ---
 

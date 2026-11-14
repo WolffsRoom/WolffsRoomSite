@@ -22,7 +22,7 @@ capturas:
   - captura-4.png
   - captura-5.png
   - captura-6.png
-video_arquivo: trailer.mp4
+video_arquivo: trailer-vita-v2.mp4
 video_legenda: Trailer oficial
 links:
   Baixar VPK: https://drive.google.com/file/d/1EgVvq6LYAK5bxLwH1CLnedn7eMGqDFZ9/view?usp=sharing
@@ -37,6 +37,8 @@ downloads:
   - tipo: vpk
     nome: Pizza Tower SAGE 2019 (VPK)
     url: https://drive.google.com/file/d/1EgVvq6LYAK5bxLwH1CLnedn7eMGqDFZ9/view?usp=sharing
+    versao: "0.51"
+    titleid: PTSAGE001
   - tipo: dados
     nome: Dados do jogo (game-data)
     url: https://drive.google.com/file/d/1CBof60EExpF4IrZMhyix6CvRicqSONRA/view?usp=sharing

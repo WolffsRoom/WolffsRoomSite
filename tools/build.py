@@ -101,8 +101,8 @@ def parse_downloads(raw):
         if isinstance(tids, str):
             tids = [t.strip() for t in re.split(r'[,\s]+', tids) if t.strip()]
         for t in tids:
-            if not re.fullmatch(r'[A-Z]{4}\d{5}', str(t)):
-                raise PostError(f'downloads, item {i}: titleid "{t}" inválido (ex.: PCSE00584)')
+            if not re.fullmatch(r'[A-Z0-9]{9}', str(t)):
+                raise PostError(f'downloads, item {i}: titleid "{t}" inválido (9 letras/números, ex.: PCSE00584 ou FILEMNGR1)')
         if tipo == 'traducao' and not tids:
             raise PostError(f'downloads, item {i}: tradução precisa de "titleid:" (pasta do rePatch)')
         out.append({

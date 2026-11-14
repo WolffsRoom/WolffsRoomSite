@@ -19,7 +19,7 @@ capturas:
   - captura-6.png
   - captura-7.png
   - captura-8.png
-video_arquivo: trailer.mp4
+video_arquivo: trailer-vita-v2.mp4
 video_legenda: Trailer do DeltaruneVita
 titulo_barras: Revisão por capítulo
 barras:
@@ -44,6 +44,7 @@ downloads:
     nome: DeltaruneVita v0.81 (VPK)
     url: https://github.com/WolffsRoom/DeltaruneVita/releases/download/v0.81/Deltarune-v0.81.vpk
     versao: "0.81"
+    titleid: DELT00001
     precisa_dados: true
     instrucoes: https://github.com/WolffsRoom/DeltaruneVita#installation-guide
 ---
