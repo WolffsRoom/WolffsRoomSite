@@ -90,42 +90,34 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-pbdone .wr-mos{display:none}
 .wr-pbdone .wr-tvbox,.wr-pbdone .wr-tvbox .wr-sh::before{animation:none !important}
 .wr-pbdone .wr-ch,.wr-pbdone .wr-caret,.wr-pbdone .wr-feat-art,.wr-pbdone .wr-feat-info>*{animation:none !important}
-/* Returning Home replays the regular title typing, CRT and mosaic effects.
-   No center-screen paw or additional splash/overlay. */
-@keyframes wr-home-return{0%{opacity:0;transform:translateY(22px);clip-path:inset(45% 0 45% 0)}
-  48%{opacity:1;transform:none;clip-path:inset(48% 0 48% 0)}
-  100%{opacity:1;transform:none;clip-path:inset(0)}}
-.wr-root.wr-home-returning .wr-stage{animation:wr-home-return .85s steps(8,end) both !important}
-.wr-root.wr-home-returning .wr-tvbox{animation:wr-tv .8s steps(8,end) .25s both !important}
-.wr-root.wr-home-returning .wr-feat-art{animation:wr-pop .38s steps(4,end) .52s both !important}
-.wr-root.wr-home-returning .wr-mos{display:block !important;animation:wr-hide .05s steps(1,end) both !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(2){animation-delay:.61s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(3){animation-delay:.74s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(4){animation-delay:.87s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(5){animation-delay:1s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(6){animation-delay:1.13s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(7){animation-delay:1.26s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(8){animation-delay:1.39s !important}
-.wr-root.wr-home-returning .wr-mos:nth-of-type(9){animation-delay:1.52s !important}
-.wr-root.wr-home-returning .wr-kick{display:flex !important;justify-content:center;flex-wrap:wrap}
-.wr-root.wr-home-returning .wr-kick .wr-ch{animation:wr-chpop .12s steps(3,end) both !important}
-.wr-root.wr-home-returning .wr-kick .wr-caret{animation:wr-show .01s step-end 1.68s both,wr-caret .25s step-end 1.68s 4 !important}
-.wr-root.wr-home-returning .wr-feat-info>:not(.wr-feat-actions){animation:wr-pop .32s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:1.52s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:1.68s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:1.84s !important}
-.wr-root.wr-home-returning .wr-feat-info>:nth-child(4){animation-delay:2s !important}
+/* Home re-entry: reintroduce existing UI elements only. Never replay
+   the very first startup's phrase, CRT shutdown, title typing or mosaic. */
+@keyframes wr-return-item{0%{opacity:0;transform:translateY(14px)}100%{opacity:1;transform:translateY(0)}}
+.wr-root.wr-home-returning .wr-kick{display:none !important}
+.wr-root.wr-home-returning .wr-mos{display:none !important}
+.wr-root.wr-home-returning .wr-tvbox{animation:none !important}
+.wr-root.wr-home-returning .wr-stage{animation:wr-return-item .30s steps(5,end) both !important}
+.wr-root.wr-home-returning .wr-feat-art{animation:none !important}
+.wr-root.wr-home-returning .wr-feat-info>:not(.wr-feat-actions){animation:wr-return-item .28s steps(5,end) both !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(1){animation-delay:.22s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(2){animation-delay:.35s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(3){animation-delay:.48s !important}
+.wr-root.wr-home-returning .wr-feat-info>:nth-child(4):not(.wr-feat-actions){animation-delay:.61s !important}
 .wr-root.wr-home-returning .wr-feat-info>.wr-feat-actions{opacity:0 !important;visibility:hidden !important;pointer-events:none !important;animation:none !important;transition:none !important}
-.wr-root.wr-home-returning.wr-feat-actions-ready .wr-feat-info>.wr-feat-actions{opacity:1 !important;visibility:visible !important;pointer-events:auto !important;animation:wr-pop .30s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-latest{animation:wr-pop .30s steps(4,end) 2.08s both !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat{animation:wr-pop .30s steps(4,end) both !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:2.14s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:2.23s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:2.32s !important}
-.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:2.41s !important}
-@media(prefers-reduced-motion:reduce){.wr-root.wr-home-returning .wr-stage,.wr-root.wr-home-returning .wr-feat-info>*,
-.wr-root.wr-home-returning .wr-nav .wr-cat,.wr-root.wr-home-returning .wr-latest,.wr-root.wr-home-returning .wr-feat-art,
-.wr-root.wr-home-returning .wr-mos,.wr-root.wr-home-returning .wr-kick .wr-ch{animation:none !important}}
+.wr-root.wr-home-returning.wr-feat-actions-ready .wr-feat-info>.wr-feat-actions{opacity:1 !important;visibility:visible !important;pointer-events:auto !important;animation:wr-return-item .30s steps(5,end) both !important}
+.wr-root.wr-home-returning .wr-latest{animation:wr-return-item .32s steps(5,end) .72s both !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat{animation:wr-return-item .28s steps(5,end) both !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(1){animation-delay:.82s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(2){animation-delay:.90s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(3){animation-delay:.98s !important}
+.wr-root.wr-home-returning .wr-nav .wr-cat:nth-child(4){animation-delay:1.06s !important}
+@media(prefers-reduced-motion:reduce){
+  .wr-root.wr-home-returning .wr-stage,
+  .wr-root.wr-home-returning .wr-feat-info>*,
+  .wr-root.wr-home-returning .wr-nav .wr-cat,
+  .wr-root.wr-home-returning .wr-latest{animation:none !important}
+  .wr-root.wr-home-returning .wr-feat-info>.wr-feat-actions{opacity:1 !important;visibility:visible !important;pointer-events:auto !important}
+}
 .wr-peek .wr-card{animation:wr-pop .32s steps(4,end) both}.wr-peek .wr-card:nth-child(2){animation-delay:.1s}.wr-peek .wr-card:nth-child(3){animation-delay:.2s}
 .wr-cat[aria-expanded="true"]{background:#ffffff !important;color:#0b0b0b !important;border-color:#ffffff !important}
 .wr-slider-track{scrollbar-color:#5a5a5a #111111;scrollbar-width:thin}
@@ -349,10 +341,9 @@ class Component extends DCLogic {
     clearTimeout(this._returnButtonsT);
     (this._returnSfxT || []).forEach(clearTimeout);
     this._returnSfxT = [];
-    // Replay the original opening: CRT, typewriter, mosaic and chiptune,
-    // no extra paw in the center; the header paw stays in the header.
-    // Force a style/layout flush between class removal and re-adding so
-    // repeated clicks while already on Home restart every CSS keyframe.
+    // Re-introduce the Home elements in sequence; do not replay the startup
+    // phrase ("O que será..."), CRT or mosaic from the initial site launch.
+    // Force layout between class removal/re-add so repeated clicks restart it.
     this.setState({ view: 'inicio', post: null, peek: null,
                     returningHome: false, returnActionsReady: false });
     var root = document.querySelector('.wr-root');
@@ -360,14 +351,12 @@ class Component extends DCLogic {
     this.setState({ returningHome: true });
     this._returnButtonsT = setTimeout(function () {
       self.setState({ returnActionsReady: true });
-    }, 2490);
+    }, 660);
     this._returnHomeT = setTimeout(function () {
       self.setState({ returningHome: false, returnActionsReady: true });
-    }, 3000);
-    // Short original chiptune cues, respecting the user's effects preference.
-    var cues = [[60,'boot'],[360,'off'],[650,'tvon'],[820,'mos0'],
-                [990,'mos1'],[1160,'mos2'],[1330,'mos3'],[1490,'type'],
-                [1760,'tick'],[2050,'peek'],[2490,'ready']];
+    }, 1420);
+    // Subtle interface cues only, respecting sound settings; no startup jingle.
+    var cues = [[100,'tick'],[360,'peek'],[660,'ready']];
     cues.forEach(function (cue) {
       self._returnSfxT.push(setTimeout(function () { self.beep(cue[1], false, true); }, cue[0]));
     });
