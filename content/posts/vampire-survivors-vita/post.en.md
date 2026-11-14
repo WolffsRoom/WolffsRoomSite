@@ -13,8 +13,7 @@ links:
   Download VPK: https://github.com/Federicoilgrandebardo/vampire-survivors-vita/releases/download/v1.2.1/VampireSurvivors-Vita-v1.2.1.vpk
   Download data: https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
 fontes:
-  GitHub Vita Lite: https://wolffsroom.github.io/WolffsStore/Federicoilgrandebardo/vampire-survivors-vita/
-  Original GitHub repository: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
+  GitHub: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
 ---
 
 A native PlayStation Vita port of Vampire Survivors, **developed and maintained by RazorGaToR**. Wolff's Room showcases the project; **Wolff provided UI and gameplay suggestions as well as the opening animation frames** credited in the v1.2.1 release.

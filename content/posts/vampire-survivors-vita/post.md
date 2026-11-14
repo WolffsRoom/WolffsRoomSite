@@ -29,8 +29,7 @@ links:
   Baixar VPK: https://github.com/Federicoilgrandebardo/vampire-survivors-vita/releases/download/v1.2.1/VampireSurvivors-Vita-v1.2.1.vpk
   Baixar dados: https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
 fontes:
-  GitHub Vita Lite: https://wolffsroom.github.io/WolffsStore/Federicoilgrandebardo/vampire-survivors-vita/
-  Repositório original: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
+  GitHub: https://github.com/Federicoilgrandebardo/vampire-survivors-vita
 downloads:
   - tipo: vpk
     nome: Vampire Survivors v1.2.1 (VPK)
@@ -40,7 +39,7 @@ downloads:
     versao: "1.2.1"
     titleid: VSPH00001
     precisa_dados: true
-    instrucoes: https://wolffsroom.github.io/WolffsStore/Federicoilgrandebardo/vampire-survivors-vita/
+    instrucoes: https://github.com/Federicoilgrandebardo/vampire-survivors-vita#setup-instructions-for-end-users
   - tipo: dados
     nome: Dados Vampire Survivors (Drive)
     url: https://drive.google.com/file/d/1oKKnLI7tvSPWEDa0kmUkbIHeTsWXw4VF/view?usp=sharing
