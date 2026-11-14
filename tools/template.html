@@ -138,12 +138,16 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-ico:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
 .wr-foot-name{justify-content:center}
 .wr-foot-name .wr-l{color:#ffffff}
-/* A single slanted yellow pixel word: no badge frame or filled background. */
-.wr-news-flag{display:inline-block;position:relative;color:#ffd83c;font-family:'WR Start 2P','Press Start 2P','Pixelify Sans',monospace;font-size:13px;font-weight:400;line-height:1.5;text-transform:uppercase;white-space:nowrap;transform:rotate(-9deg);transform-origin:center;image-rendering:pixelated;text-shadow:2px 2px 0 #5a3900}
-.wr-news-over-cover{position:absolute;left:16px;bottom:15px;z-index:2;pointer-events:none}
-.wr-card .wr-news-flag{font-size:12px}
-.wr-feat-info h1 .wr-news-flag{font-size:14px;vertical-align:middle;margin-left:12px}
-@media(max-width:560px){.wr-feat-info h1 .wr-news-flag{font-size:10px}}
+/* Yellow slanted pixel-word overlaps the lower-right BORDER of the Details
+   button. It is purely visual: clicks always go through to 'Ver detalhes'. */
+.wr-news-flag{display:inline-block;color:#ffd83c;font-family:'WR Start 2P','Press Start 2P','Pixelify Sans',monospace;font-size:12px;font-weight:400;line-height:1.5;text-transform:uppercase;white-space:nowrap;image-rendering:pixelated;text-shadow:2px 2px 0 #3a2600,-2px -2px 0 #090909}
+.wr-feat-details>.wr-news-flag{position:absolute;right:-12px;bottom:-10px;z-index:2;opacity:0;transform:rotate(-9deg);pointer-events:none}
+@keyframes wr-news-pixel-in{0%{opacity:0;clip-path:inset(100% 0 0 0);transform:translateY(10px) scale(.76) rotate(-9deg)}35%{opacity:1;clip-path:inset(45% 0 0 0);transform:translateY(3px) scale(1.12) rotate(-9deg)}70%{opacity:1;clip-path:inset(0);transform:translateY(-2px) scale(.95) rotate(-9deg)}100%{opacity:1;clip-path:inset(0);transform:translateY(0) scale(1) rotate(-9deg)}}
+/* Trigger only when the Details button enters, both on initial intro and
+   on Home replay. The badge never appears before the first user click. */
+.wr-root.wr-feat-actions-ready .wr-feat-details>.wr-news-flag{animation:wr-news-pixel-in .34s steps(4,end) .12s both}
+@media(max-width:560px){.wr-feat-details>.wr-news-flag{font-size:10px;right:-8px;bottom:-8px}}
+@media(prefers-reduced-motion:reduce){.wr-root.wr-feat-actions-ready .wr-feat-details>.wr-news-flag{opacity:1!important;animation:none!important;clip-path:none!important;transform:rotate(-9deg)!important}}
 .wr-card:hover{border-color:#ffffff !important}
 .wr-btn:hover{border-color:#ffffff !important}
 .wr-btn:focus-visible,.wr-card:focus-visible,.wr-link:focus-visible{outline:4px solid #ffffff;outline-offset:3px}

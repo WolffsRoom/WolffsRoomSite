@@ -622,7 +622,7 @@ def home_html(posts, order, feat, mosaic):
         + kicker_words(UI[lg]['kicker']) + '</p>\n' for lg in ('en', 'pt'))
     art = (f'<img src="{p["cover"]}" alt="{e(UI["en"]["cover_of"] + " " + V(p, "en")["title"])}" data-onload="featLoad" style="width: 100%; height: auto; display: block{px}">\n'
            if p['cover'] else f'<div style="aspect-ratio: 16 / 9; background: #161616"></div>\n')
-    buttons = '<a class="wr-btn" href="#' + feat + '" data-act="open_' + feat + '" style="' + BTN + '; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">' + U('details') + '</a>\n'
+    buttons = '<a class="wr-btn wr-feat-details" href="#' + feat + '" data-act="open_' + feat + '" style="' + BTN + '; position: relative; border: 4px solid #ffffff; background: #ffffff; color: #0b0b0b; box-shadow: 4px 4px 0 #4a4a4a">' + U('details') + (news_flag(p) if p.get('news_kind') else '') + '</a>\n'
     if gh:
         buttons += f'<a class="wr-btn" href="{e(gh)}" target="_blank" rel="noopener" style="{BTN}; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff">{U("github")}</a>\n'
     feat_author = (f'<span class="wr-by" style="display:block; color:#c2c2c2; {DF} font-size:12px; font-weight:400; line-height:1.65">by: <a href="{e(p["author_url"])}" target="_blank" rel="noopener" style="color:white; text-decoration:none">{e(p["author"])}</a></span>\n' if p.get("author") else "")
@@ -636,7 +636,7 @@ def home_html(posts, order, feat, mosaic):
         '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; ' + U('start') + '</span><small>' + U('click') + '</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")} · {F(p, "status")}</span>\n'
-        f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title")} {news_flag(p)}</h1>\n'
+        f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title")}</h1>\n'
         + feat_author +
         f'<p style="margin: 0; color: #c4c4c4; max-width: 640px">{F(p, "feature_text", inline)}</p>\n'
         '<div class="wr-feat-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
