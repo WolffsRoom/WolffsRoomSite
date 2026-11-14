@@ -336,9 +336,10 @@ def trophy_svg(px=3):
 
 
 def trophy_badge(lang, px=3, label=True):
+    """Só o ícone (sem moldura), com o texto ao lado quando label=True."""
     t = UI[lang]['trophies']
-    txt = f'<span style="color: #f4c430; text-transform: uppercase; letter-spacing: 1px">{e(t)}</span>' if label else ''
-    return (f'<span class="wr-trophy" title="{e(t)} (NoTrpDrm)" style="display: inline-flex; align-items: center; gap: 10px; padding: 4px 8px; border: 4px solid #f4c430; background: #0b0b0b">'
+    txt = f'<span style="{DF} font-size: 16px; line-height: 1.5; color: #f4c430; text-transform: uppercase">{e(t)}</span>' if label else ''
+    return (f'<span class="wr-trophy" title="{e(t)} (NoTrpDrm)" style="display: inline-flex; align-items: center; justify-content: center; gap: 14px; filter: drop-shadow(2px 2px 0 #000000)">'
             f'{trophy_svg(px)}{txt}</span>')
 
 
@@ -390,6 +391,8 @@ def article(p0, lang):
             st = 'background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff' if i == 0 and key == 'links' else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a'
             links += f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n'
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui[key])}</h2>\n{links}</div>\n'
+    if p.get('trophies'):  # logo abaixo da caixa Source
+        side += f'<div style="display: flex; justify-content: center">{trophy_badge(lang)}</div>\n'
     if p.get('clock'):
         rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['clock'])
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["clock"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
@@ -401,7 +404,7 @@ def article(p0, lang):
             '<button class="wr-btn" type="button" data-act="back_' + p['slug'] + '" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + e(ui['back']) + '</button>\n'
             '</div>\n'
             f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">{e(p["title"])}</h1>\n'
-            + (f'<div style="display: flex; justify-content: center">{trophy_badge(lang)}</div>\n' if p.get('trophies') else '') +
+            +
             '<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">\n'
             '<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">\n'
             + hero + about + secs +
