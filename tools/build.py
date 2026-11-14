@@ -130,9 +130,14 @@ def load_post(slug):
     group = str(meta['grupo']).strip()
     if group not in GROUPS:
         raise PostError(f'grupo "{group}" inválido; use: ' + ', '.join(GROUPS))
-    date = meta['data']
-    if isinstance(date, str):
-        date = datetime.date.fromisoformat(date)
+    # data: 2026-11-13 ou 2026-11-13 23:40 (a hora desempata posts do mesmo dia)
+    when = meta['data']
+    if isinstance(when, str):
+        when = datetime.datetime.fromisoformat(when.strip())
+    if not isinstance(when, datetime.datetime):
+        when = datetime.datetime.combine(when, datetime.time())
+    when = when.replace(tzinfo=None)
+    date = when.date()
     about, secs = parse_markdown(body)
 
     def img(name):
@@ -155,12 +160,13 @@ def load_post(slug):
     else:
         progress = None
     p = {
-        'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date,
+        'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date, 'when': when,
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
         'desc': str(meta.get('resumo') or ''), 'about': about, 'secs': secs,
         'progress': progress, 'bars': parse_bars(meta.get('barras')),
         'meta': [(str(k), str(v)) for k, v in (meta.get('ficha') or {}).items()],
         'links': [(str(k), str(v)) for k, v in (meta.get('links') or {}).items()],
+        'sources': [(str(k), str(v)) for k, v in (meta.get('fontes') or {}).items()],
         'cover': img(meta.get('capa')), 'cover_style': str(meta.get('capa_estilo') or 'cobrir'),
         'pixel': bool(meta.get('pixelado')), 'shots': [img(s) for s in (meta.get('capturas') or [])],
         'video': vid,
@@ -196,6 +202,8 @@ def load_english(folder, p):
         en['meta'] = [(str(k), str(v)) for k, v in meta['ficha'].items()]
     if meta.get('links'):
         en['links'] = [(str(k), str(v)) for k, v in meta['links'].items()]
+    if meta.get('fontes'):
+        en['sources'] = [(str(k), str(v)) for k, v in meta['fontes'].items()]
     if not en['about']:
         del en['about']
     if not en['secs']:
@@ -217,7 +225,7 @@ def load_all():
             errors.append(f'{slug}/post.md: {ex}')
     if errors:
         sys.exit('Erros nos posts:\n  - ' + '\n  - '.join(errors))
-    order = sorted(posts, key=lambda k: (posts[k]['date'], k), reverse=True)
+    order = sorted(posts, key=lambda k: (posts[k]['when'], k), reverse=True)
     return posts, order
 
 
@@ -228,7 +236,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Ferramentas', 'traducoes': 'Traduções', 'reviews': 'Reviews'},
         'groups': {g: g for g in GROUPS}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Links', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'total': 'Total', 'progress': 'Progresso',
         'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -238,7 +246,7 @@ UI = {
         'groups': {'Em andamento': 'In progress', 'Finalizado': 'Finished', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Links', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -338,12 +346,14 @@ def article(p0, lang):
     bars = ([bar(ui['total'], p['progress'])] if p['progress'] is not None else []) + [bar(*b) for b in p['bars']]
     if bars:
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(p["bars_title"] or ui["progress"])}</h2>\n' + '\n'.join(bars) + '\n</div>\n'
-    if p['links']:
+    for key, items in (('links', p['links']), ('sources', p.get('sources') or [])):
+        if not items:
+            continue
         links = ''
-        for i, (lab, url) in enumerate(p['links']):
-            st = 'background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff' if i == 0 else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a'
+        for i, (lab, url) in enumerate(items):
+            st = 'background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff' if i == 0 and key == 'links' else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a'
             links += f'<a class="wr-btn" href="{e(url)}" target="_blank" rel="noopener" style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n'
-        side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["links"])}</h2>\n{links}</div>\n'
+        side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui[key])}</h2>\n{links}</div>\n'
     hero = (f'<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">\n{pic(p0, lang)}\n</div>\n' if p['cover'] else '')
     about = f'<p style="margin: 0; color: #e0e0e0; font-size: 19px">{inline(p["about"])}</p>\n' if p['about'] else ''
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'
@@ -408,7 +418,7 @@ def kicker_words(text):
 
 def home_html(posts, order, feat, mosaic):
     p = posts[feat]
-    gh = next((u for l, u in p['links'] if 'github' in u.lower()), None)
+    gh = next((u for l, u in p['links'] + p.get('sources', []) if 'github' in u.lower()), None)
     BTN = f'min-height: 48px; box-sizing: border-box; padding: 12px 20px; text-decoration: none; text-align: center; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase'
     px = '; image-rendering: pixelated' if p['pixel'] else ''
     mos = ''.join(f'<img class="wr-mos" src="{src}" alt="" aria-hidden="true" style="animation-delay: {t}s">\n' for src, t in reversed(mosaic))
@@ -478,12 +488,8 @@ def make_mosaic(p, out_dir):
 
 def build():
     posts, order = load_all()
-    feats = [k for k in order if posts[k]['feature']]
-    if not feats:
-        sys.exit('Nenhum post com "destaque: true". Marque o projeto que aparece na página inicial.')
-    feat = feats[0]
-    if len(feats) > 1:
-        print(f'aviso: mais de um post com destaque; usando o mais recente ({feat})')
+    # A página inicial (e o app Wolff's Store) sempre destacam o post mais recente.
+    feat = order[0]
 
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)

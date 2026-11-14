@@ -11,6 +11,7 @@ ficha:
   Requirements: HENkaku/Ensō and kubridge
 links:
   Download Showcase (VPK): https://github.com/WolffsRoom/godot4-psvita/releases/download/v0.3/Godot4Vita-v0.3-Showcase.vpk
+fontes:
   v0.3 release on GitHub: https://github.com/WolffsRoom/godot4-psvita/releases/tag/v0.3
   View the project: https://github.com/WolffsRoom/godot4-psvita
 ---

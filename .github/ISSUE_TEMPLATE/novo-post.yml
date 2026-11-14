@@ -172,9 +172,3 @@ body:
       label: Dados do jogo
       options:
         - label: Este jogo precisa dos arquivos de dados do jogo (o app mostra o aviso e as instruções do GitHub)
-  - type: checkboxes
-    id: destaque
-    attributes:
-      label: Destaque
-      options:
-        - label: Mostrar como projeto em destaque na página inicial (substitui o atual)

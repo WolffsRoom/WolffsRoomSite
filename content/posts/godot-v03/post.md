@@ -2,7 +2,7 @@
 titulo: Godot 4 Vita — Release v0.3
 categoria: ferramentas
 grupo: Em andamento
-data: 2026-11-13
+data: 2026-11-13 23:30
 tag: Engine · C++
 status: v0.3 lançada
 resumo: Nova versão da Godot 4 para PS Vita, agora com editor para Windows, Linux e macOS.
@@ -15,6 +15,7 @@ ficha:
   Requisitos: HENkaku/Ensō e kubridge
 links:
   Baixar Showcase (VPK): https://github.com/WolffsRoom/godot4-psvita/releases/download/v0.3/Godot4Vita-v0.3-Showcase.vpk
+fontes:
   Release v0.3 no GitHub: https://github.com/WolffsRoom/godot4-psvita/releases/tag/v0.3
   Ver o projeto: https://github.com/WolffsRoom/godot4-psvita
 downloads:

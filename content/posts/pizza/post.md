@@ -6,8 +6,7 @@ data: 2026-11-13
 tag: Port · PS Vita
 status: Em andamento
 resumo: Port da demo da SAGE 2019 para o PS Vita.
-destaque: true
-chamada: Port não oficial da demo de Pizza Tower lançada na SAGE 2019, com Peppino e Snick, para o PS Vita. Usa os dados da demo gratuita do itch.io.
+chamada: Port não oficial da demo de Pizza Tower lançada na SAGE 2019, com Peppino e Snick, para o PS Vita.
 capa: capa.png
 pixelado: true
 ficha:
@@ -15,15 +14,25 @@ ficha:
   Jogo: Pizza Tower — SAGE 2019 Demo
   Criadores: Tour de Pizza
   Engine original: GameMaker
-  Dados: PizzaTowerSAGE2019_v14.zip (itch.io)
+  Dados: pasta em ux0:data/
+capturas:
+  - captura-1.png
+  - captura-2.png
+  - captura-3.png
+  - captura-4.png
+  - captura-5.png
+  - captura-6.png
+video: https://www.youtube.com/watch?v=k1IOdEtrl6s
+video_legenda: Trailer oficial
 links:
+  Baixar VPK: https://drive.google.com/file/d/1EgVvq6LYAK5bxLwH1CLnedn7eMGqDFZ9/view?usp=sharing
+  Baixar dados: https://drive.google.com/file/d/1CBof60EExpF4IrZMhyix6CvRicqSONRA/view?usp=sharing
+fontes:
   Ver no GitHub: https://github.com/WolffsRoom/PizzaTowerSage2019Vita
-  Baixar a demo (itch.io): https://pizzatowerguy.itch.io/pizza-tower-demo
   Pizza Tower Wiki: https://pizzatower.wiki/SAGE_2019_Demo
-  The Cutting Room Floor: https://tcrf.net/Proto:Pizza_Tower/SAGE_2019_Demo
 ---
 
-Port não oficial da demo de Pizza Tower lançada na Sonic Amateur Games Expo (SAGE) de 2019 para o PS Vita. A demo é gratuita e feita em GameMaker; o port usa os dados dela, que cada jogador baixa no itch.io.
+Port não oficial da demo de Pizza Tower lançada na Sonic Amateur Games Expo (SAGE) de 2019 para o PS Vita. A demo é gratuita e feita em GameMaker.
 
 ## Sobre a demo
 
@@ -31,7 +40,12 @@ Port não oficial da demo de Pizza Tower lançada na Sonic Amateur Games Expo (S
 - Snick the Porcupine é jogável só nesta demo
 - Moedas de pizza caem dos blocos e servem para comprar a espingarda na Pizzamart
 
+## Instalação
+
+- Baixe o [VPK](https://drive.google.com/file/d/1EgVvq6LYAK5bxLwH1CLnedn7eMGqDFZ9/view?usp=sharing) e instale com o VitaShell
+- Baixe os [dados](https://drive.google.com/file/d/1CBof60EExpF4IrZMhyix6CvRicqSONRA/view?usp=sharing), extraia o .zip e copie a pasta extraída para ux0:data/
+- Abra o jogo pela LiveArea
+
 ## Requisitos
 
 - PS Vita desbloqueado
-- Arquivo PizzaTowerSAGE2019_v14.zip, baixado na página oficial da demo no itch.io

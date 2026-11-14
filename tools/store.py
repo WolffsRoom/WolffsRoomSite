@@ -170,7 +170,7 @@ def _texts(src):
         'titulo_barras': latin(src.get('bars_title')), 'sobre': latin(src.get('about')), 'blocos': blocks,
         'barras': [[latin(a), int(b), latin(c or '')] for a, b, c in src.get('bars') or []],
         'ficha': [[latin(k), latin(v)] for k, v in src.get('meta') or []],
-        'links': [[latin(k), v] for k, v in src.get('links') or []],
+        'links': [[latin(k), v] for k, v in (src.get('links') or []) + (src.get('sources') or [])],
     }
 
 
@@ -195,7 +195,7 @@ def write_store(posts, order, feat, groups, out_dir):
             img = Image.open(os.path.join(p['folder'], os.path.basename(s)))
             it['capturas'].append(_save(_fit(img, SHOT, 'conter', p['pixel']), p['pixel'], f'{store_dir}/{slug}', f'cap{i}', out_dir))
         for d in p.get('downloads') or []:
-            r = resolve_download(d, p['links'])
+            r = resolve_download(d, p['links'] + p.get('sources', []))
             if r:
                 it['downloads'].append(r)
         items.append(it)

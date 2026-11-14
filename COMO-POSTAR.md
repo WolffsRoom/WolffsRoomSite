@@ -36,7 +36,7 @@ Para editar pelo navegador: abra o `post.md` no GitHub, clique no lápis, altere
 titulo: Nome do projeto
 categoria: ports          # ports | ferramentas | traducoes | reviews
 grupo: Em andamento       # Em andamento | Finalizado | Próximos | Outras equipes
-data: 2026-11-13          # define a ordem: o mais recente aparece primeiro
+data: 2026-11-13 21:30    # define a ordem; o mais recente vira o destaque da página inicial e do app (hora opcional)
 tag: Port · PS Vita       # linha pequena acima do título no card
 status: Em andamento      # texto de status no card
 resumo: Uma frase curta para o card.
@@ -103,8 +103,7 @@ Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junt
 
 | Campo | Para que serve |
 |---|---|
-| `destaque: true` | Coloca o post no destaque da página inicial. Deixe em só um post. |
-| `chamada:` | Texto do destaque na página inicial (se faltar, usa o `resumo`). |
+| `chamada:` | Texto do destaque na página inicial (se faltar, usa o `resumo`). O destaque é sempre o post mais recente (`data`). |
 | `pixelado: true` | Mantém a capa nítida, sem suavização (bom para pixel art). |
 | `capa_estilo: logo` | Mostra a capa inteira centralizada em fundo preto (para logos). |
 | `titulo_barras:` | Título da caixa de barras (padrão: "Progresso"). |

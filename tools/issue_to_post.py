@@ -183,7 +183,7 @@ def main():
     folder = os.path.join(POSTS, slug)
     os.makedirs(folder)
 
-    fm = {'titulo': title, 'categoria': cat, 'grupo': group, 'data': datetime.date.today()}
+    fm = {'titulo': title, 'categoria': cat, 'grupo': group, 'data': datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).strftime('%Y-%m-%d %H:%M')}
     if f.get('tag'):
         fm['tag'] = f['tag']
     fm['status'] = f.get('status') or group
