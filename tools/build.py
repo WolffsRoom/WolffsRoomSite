@@ -32,10 +32,22 @@ CATS = [('ports', 'Ports'), ('ferramentas', 'Ferramentas'), ('traducoes', 'Tradu
 CAT_NAMES = dict(CATS)
 GROUPS = ['Em andamento', 'Finalizado', 'Próximos', 'Outras equipes']
 SLUG_RE = re.compile(r'^[a-z0-9][a-z0-9-]*$')
+VITA_GITHUB = 'https://wolffsroom.github.io/WolffsStore'
 
 
 class PostError(Exception):
     pass
+
+
+def vita_github_url(url):
+    """Troca páginas do GitHub pelo espelho leve; assets continuam diretos."""
+    url = str(url)
+    m = re.match(r'^https://github\.com/WolffsRoom/([^/?#]+)(/[^?#]*)?(?:[?#].*)?$', url, re.I)
+    if not m or '/releases/download/' in url:
+        return url
+    repo, path = m.group(1), (m.group(2) or '')
+    suffix = '/releases/' if path.rstrip('/').startswith('/releases') else '/'
+    return f'{VITA_GITHUB}/WolffsRoom/{repo}{suffix}'
 
 
 # ---------------------------------------------------------------- leitura
@@ -62,7 +74,7 @@ def parse_markdown(body):
 def inline(text):
     """Escapa o texto e converte [texto](url) e **negrito**."""
     out = e(text)
-    out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', lambda m: f'<a href="{drive_direct(html.unescape(m.group(2))).replace("&", "&amp;")}" target="_blank" rel="noopener">{m.group(1)}</a>', out)
+    out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', lambda m: f'<a href="{drive_direct(vita_github_url(html.unescape(m.group(2)))).replace("&", "&amp;")}" target="_blank" rel="noopener">{m.group(1)}</a>', out)
     out = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', out)
     return out
 
@@ -109,7 +121,7 @@ def parse_downloads(raw):
             'tipo': tipo, 'nome': d.get('nome'), 'url': d.get('url'), 'repo': d.get('repo'),
             'arquivo': d.get('arquivo'), 'tag': d.get('tag'), 'versao': d.get('versao'),
             'tamanho': d.get('tamanho'), 'titleids': [str(t) for t in tids],
-            'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': d.get('instrucoes'),
+            'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': vita_github_url(d.get('instrucoes')) if d.get('instrucoes') else None,
             'plugin': d.get('plugin') or ('rePatch' if tipo == 'traducao' else None),
         })
     return out
@@ -168,8 +180,8 @@ def load_post(slug):
         'desc': str(meta.get('resumo') or ''), 'about': about, 'secs': secs,
         'progress': progress, 'bars': parse_bars(meta.get('barras')),
         'meta': [(str(k), str(v)) for k, v in (meta.get('ficha') or {}).items()],
-        'links': [(str(k), str(v)) for k, v in (meta.get('links') or {}).items()],
-        'sources': [(str(k), str(v)) for k, v in (meta.get('fontes') or {}).items()],
+        'links': [(str(k), vita_github_url(v)) for k, v in (meta.get('links') or {}).items()],
+        'sources': [(str(k), vita_github_url(v)) for k, v in (meta.get('fontes') or {}).items()],
         'clock': [(str(k), str(v)) for k, v in (meta.get('clock') or {}).items()],
         # vídeo próprio (.mp4 na pasta do post ou link): toca no site e dentro do app
         'video_file': (str(meta['video_arquivo']) if str(meta.get('video_arquivo') or '').startswith('http')
@@ -209,11 +221,11 @@ def load_english(folder, p):
     if meta.get('ficha'):
         en['meta'] = [(str(k), str(v)) for k, v in meta['ficha'].items()]
     if meta.get('links'):
-        en['links'] = [(str(k), str(v)) for k, v in meta['links'].items()]
+        en['links'] = [(str(k), vita_github_url(v)) for k, v in meta['links'].items()]
     if meta.get('clock'):
         en['clock'] = [(str(k), str(v)) for k, v in meta['clock'].items()]
     if meta.get('fontes'):
-        en['sources'] = [(str(k), str(v)) for k, v in meta['fontes'].items()]
+        en['sources'] = [(str(k), vita_github_url(v)) for k, v in meta['fontes'].items()]
     if not en['about']:
         del en['about']
     if not en['secs']:
@@ -547,7 +559,7 @@ def lists_html(posts, order):
                 body += f'<p style="margin: 0; text-align: center; color: #8a8a8a">{U("nothing")}</p>\n'
             body += '</div>\n'
         if cid in ('ports', 'ferramentas'):
-            body += ('<a class="wr-btn" href="https://github.com/WolffsRoom?tab=repositories" target="_blank" rel="noopener" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
+            body += (f'<a class="wr-btn" href="{VITA_GITHUB}/" target="_blank" rel="noopener" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
         title = T(e(UI['pt']['cats'][cid]), e(UI['en']['cats'][cid]))
         out += ('\n<div class="dc-if" data-if="on' + str(n) + '">\n'
                 f'<section aria-label="{e(UI["en"]["cats"][cid])}" style="display: flex; flex-direction: column; gap: 44px">\n'
