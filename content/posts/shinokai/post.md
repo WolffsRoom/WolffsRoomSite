@@ -8,6 +8,10 @@ tag: Entretenimento · Anime
 status: Disponível · Brasil
 resumo: App gratuito de entretenimento voltado a fãs de anime, disponível somente no Brasil.
 capa: capa.webp
+capturas:
+  - captura-1.png
+  - captura-2.png
+  - captura-3.png
 ficha:
   Desenvolvedor: MeninoSung
   Plataforma: PS Vita / PSTV
