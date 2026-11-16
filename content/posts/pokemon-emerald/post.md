@@ -16,6 +16,10 @@ capturas:
   - captura-2.png
   - captura-3.png
   - captura-4.png
+  - captura-5.png
+  - captura-6.png
+  - captura-7.png
+  - captura-8.png
 ficha:
   Port original: HctrRB
   Versão Wolff's Room: PT-BR · LiveArea · Manual
@@ -23,13 +27,11 @@ ficha:
   Tecnologia: Código nativo ARM · vitaGL
 links:
   Download VPK: https://github.com/WolffsRoom/WolffsRoomSite/releases/download/pokemon-emerald-ptbr-v1.0/Pokemon-Emerald-PTBR-WolffsRoom.vpk
-  Download alternativo (Google Drive): https://drive.google.com/file/d/1osfuveVOTxpDmcsjFx-TibU9f-phOxTh/view?usp=sharing
+  Download alternativo (Google Drive): https://drive.google.com/file/d/1prXPQgulczBJYybvY5nbaaWHtEIMPe7-/view?usp=sharing
 fontes:
   Código-fonte do port (HctrRB): https://github.com/HctrRB/pokeemerald-vita-3ds
   Pull request PT-BR: https://github.com/HctrRB/pokeemerald-vita-3ds/pull/3
   Tradução original (Pokebat): https://pokebat.net/2017/04/pokemon-emerald-portugues-pt-brgba.html
-  Base do jogo (pret/pokeemerald): https://github.com/pret/pokeemerald
-  Emerald 3DS: https://github.com/ZallaxDev/emerald-3ds
 downloads:
   - tipo: vpk
     nome: Pokémon Emerald — PT-BR (Wolff's Room)
@@ -40,7 +42,7 @@ downloads:
     precisa_dados: false
   - tipo: vpk
     nome: Download alternativo (Google Drive)
-    url: https://drive.google.com/file/d/1osfuveVOTxpDmcsjFx-TibU9f-phOxTh/view?usp=sharing
+    url: https://drive.google.com/file/d/1prXPQgulczBJYybvY5nbaaWHtEIMPe7-/view?usp=sharing
     versao: "1.0"
 ---
 **Pokémon Emerald** recebeu um port nativo não oficial para PS Vita, desenvolvido por **HctrRB** a partir da [descompilação pret/pokeemerald](https://github.com/pret/pokeemerald). Não é um emulador: o código C do jogo é compilado para o processador ARM do Vita, com uma camada de plataforma que substitui as funções do hardware do GBA.

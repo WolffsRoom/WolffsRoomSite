@@ -11,13 +11,11 @@ ficha:
   Technology: Native ARM code · vitaGL
 links:
   Download VPK: https://github.com/WolffsRoom/WolffsRoomSite/releases/download/pokemon-emerald-ptbr-v1.0/Pokemon-Emerald-PTBR-WolffsRoom.vpk
-  Alternative download (Google Drive): https://drive.google.com/file/d/1osfuveVOTxpDmcsjFx-TibU9f-phOxTh/view?usp=sharing
+  Alternative download (Google Drive): https://drive.google.com/file/d/1prXPQgulczBJYybvY5nbaaWHtEIMPe7-/view?usp=sharing
 fontes:
   Original port source (HctrRB): https://github.com/HctrRB/pokeemerald-vita-3ds
   PT-BR pull request: https://github.com/HctrRB/pokeemerald-vita-3ds/pull/3
   Original translation (Pokebat): https://pokebat.net/2017/04/pokemon-emerald-portugues-pt-brgba.html
-  Game decompilation (pret/pokeemerald): https://github.com/pret/pokeemerald
-  Emerald 3DS: https://github.com/ZallaxDev/emerald-3ds
 ---
 **Pokémon Emerald** has an unofficial native PS Vita port developed by **HctrRB**, based on the [pret/pokeemerald](https://github.com/pret/pokeemerald) decompilation. It is not an emulator: the game's C code is compiled for Vita ARM, while a platform layer replaces GBA hardware functions.
 
