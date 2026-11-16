@@ -1,5 +1,5 @@
 ---
-titulo: Pokémon Emerald — PT-BR (PS Vita)
+titulo: Pokémon Emerald Voxel 3DS - with PT/BR
 categoria: ports
 grupo: Outras equipes
 autor: HctrRB
@@ -34,16 +34,12 @@ fontes:
   Tradução original (Pokebat): https://pokebat.net/2017/04/pokemon-emerald-portugues-pt-brgba.html
 downloads:
   - tipo: vpk
-    nome: Pokémon Emerald — PT-BR (Wolff's Room)
+    nome: Pokémon Emerald Voxel 3DS - with PT/BR
     repo: WolffsRoom/WolffsRoomSite
     tag: pokemon-emerald-ptbr-v1.0
     arquivo: Pokemon-Emerald-PTBR-WolffsRoom.vpk
     versao: "1.0"
     precisa_dados: false
-  - tipo: vpk
-    nome: Download alternativo (Google Drive)
-    url: https://drive.google.com/file/d/1prXPQgulczBJYybvY5nbaaWHtEIMPe7-/view?usp=sharing
-    versao: "1.0"
 ---
 **Pokémon Emerald** recebeu um port nativo não oficial para PS Vita, desenvolvido por **HctrRB** a partir da [descompilação pret/pokeemerald](https://github.com/pret/pokeemerald). Não é um emulador: o código C do jogo é compilado para o processador ARM do Vita, com uma camada de plataforma que substitui as funções do hardware do GBA.
 

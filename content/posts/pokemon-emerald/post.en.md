@@ -1,5 +1,5 @@
 ---
-titulo: Pokémon Emerald — Brazilian Portuguese (PS Vita)
+titulo: Pokémon Emerald Voxel 3DS - with PT/BR
 tag: Native port · PS Vita · PT-BR
 status: Available · PT-BR
 resumo: Native Pokémon Emerald port for PS Vita, now with Brazilian Portuguese, custom LiveArea assets and an included manual.
