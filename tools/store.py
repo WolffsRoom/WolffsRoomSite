@@ -26,8 +26,8 @@ APP_ASSET = 'WolffsStore.vpk'
 COVER = (512, 288)
 SHOT = (480, 270)
 SITE_URL = 'https://wolffsroom.github.io/WolffsRoomSite/'
-DEFAULT_ASSET = {'vpk': '*.vpk', 'traducao': '*.zip', 'plugin': '*.*', 'arquivo': '*.*', 'dados': '*.zip'}
-DEFAULT_NAME = {'vpk': 'download.vpk', 'traducao': 'traducao.zip', 'plugin': 'plugin.suprx', 'arquivo': 'download.bin', 'dados': 'dados.zip'}
+DEFAULT_ASSET = {'vpk': '*.vpk', 'traducao': '*.zip', 'plugin': '*.*', 'arquivo': '*.*', 'dados': '*.zip', 'app_arquivos': '*.rar'}
+DEFAULT_NAME = {'vpk': 'download.vpk', 'traducao': 'traducao.zip', 'plugin': 'plugin.suprx', 'arquivo': 'download.bin', 'dados': 'dados.zip', 'app_arquivos': 'app-patch.rar'}
 
 _DRIVE = re.compile(r'https?://drive\.google\.com/(?:file/d/([\w-]{20,})|(?:open|uc)\?(?:[^#]*&)?id=([\w-]{20,}))')
 

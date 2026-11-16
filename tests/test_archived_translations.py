@@ -72,7 +72,7 @@ class ArchiveTranslationsTests(unittest.TestCase):
                 if slug in ("delta1", "cave"):
                     self.assertEqual(d["tipo"], "vpk")
                 elif slug == "wipeout":
-                    self.assertEqual(d["tipo"], "arquivo")
+                    self.assertEqual(d["tipo"], "app_arquivos")
                 else:
                     self.assertEqual(d["tipo"], "traducao")
 

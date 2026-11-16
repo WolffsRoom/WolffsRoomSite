@@ -31,7 +31,7 @@ ficha:
   Tradução e dublagem: Rúben Fernandes (Rubinho146)
   Versão: PCSF00007
   Plataformas: PlayStation Vita
-  Instalação: "Extração no ux0: e Refresh LiveArea; requer conteúdo externo do pacote"
+  Instalação: "Extrair o pacote completo em ux0:app/PCSF00007/ e atualizar LiveArea com FMVita ou File Manager"
   Senha do arquivo: wolffsroom
   Ferramentas usadas: WipEout-Fonts, Karameru, Notepad++, Audacity e VitaSDK
 links:
@@ -39,8 +39,8 @@ links:
   MEGA: "https://mega.nz/file/F49FyKpI#IPzkciDhseElFWxsWdWbSL3dn-dMNUVr6Cs5DbS8mlc"
   MediaFire (arquivo auxiliar): https://www.mediafire.com/file/q1w6yowl8vca4r8/PCSF00007.rar/file
 downloads:
-  - tipo: arquivo
-    nome: Pacote PT-BR — wipeout
+  - tipo: app_arquivos
+    nome: WipEout 2048 - Instalar tradução
     url: https://www.mediafire.com/file/q1w6yowl8vca4r8/PCSF00007.rar/file
     alternativas:
       - https://drive.google.com/file/d/1mzxxAuYOxxzlQaFmwBws_b1hgbbZhSDh/view?usp=sharing
@@ -57,11 +57,13 @@ Tradução e dublagem em português de WipEout 2048 para o PS Vita, feitas por R
 
 ## Instalação
 
-- Baixe o pacote completo pelo provedor disponível; o espelho MediaFire oferece um arquivo auxiliar de aproximadamente 24 KB e pode exigir obtenção adicional do conteúdo
-- Extraia a pasta PCSF00007 usando a senha **wolffsroom**
-- Copie o conteúdo para ux0: no Vita (não use rePatch neste procedimento)
-- Abra a pasta ux0 no gerenciador e use Refresh LiveArea
-- Aguarde e reinicie o console
+- Tenha a versão **PCSF00007** instalada no PS Vita.
+- Obtenha o **pacote completo da tradução**. Os arquivos atuais do Google Drive e MediaFire contêm apenas um arquivo torrent dentro de um RAR de cerca de 24 KB: **não são o conteúdo instalável**.
+- Extraia o pacote completo com a senha **wolffsroom**.
+- Coloque os arquivos extraídos em **ux0:app/PCSF00007/**, preservando a estrutura interna e fazendo backup dos arquivos substituídos.
+- Após a cópia, **atualize a LiveArea** usando o **FMVita** ou **File Manager** e reinicie o console se necessário.
+
+Na futura v1.0, a Wolff's Store seguirá esse fluxo automaticamente **apenas quando houver um arquivo completo e validado**, e mostrará o aviso de atualização da LiveArea. Não marcará o jogo como traduzido ao encontrar somente o torrent.
 
 ## Créditos
 

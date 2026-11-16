@@ -84,7 +84,7 @@ def parse_bars(raw):
     return bars
 
 
-TIPOS_DOWNLOAD = ('vpk', 'traducao', 'plugin', 'arquivo', 'dados')
+TIPOS_DOWNLOAD = ('vpk', 'traducao', 'plugin', 'arquivo', 'dados', 'app_arquivos')
 
 
 def parse_downloads(raw):
@@ -103,8 +103,8 @@ def parse_downloads(raw):
         mirrors = d.get('alternativas') or []
         if not isinstance(mirrors, list) or any(not isinstance(u, str) or not u.startswith('https://') for u in mirrors):
             raise PostError(f'downloads, item {i}: alternativas devem ser uma lista de URLs HTTPS')
-        if d.get('senha') and tipo != 'traducao' and not d.get('app_pendente'):
-            raise PostError(f'downloads, item {i}: senha fora de tradução exige app_pendente até haver suporte na v1.0')
+        if d.get('senha') and tipo not in ('traducao', 'vpk', 'app_arquivos') and not d.get('app_pendente'):
+            raise PostError(f'downloads, item {i}: tipo de pacote sem suporte a senha')
         if not d.get('url') and not d.get('repo'):
             raise PostError(f'downloads, item {i}: informe "repo:" (release do GitHub) ou "url:" (link direto)')
         if d.get('repo') and not re.fullmatch(r'[\w.-]+/[\w.-]+', str(d['repo'])):
@@ -115,7 +115,7 @@ def parse_downloads(raw):
         for t in tids:
             if not re.fullmatch(r'[A-Z0-9]{9}', str(t)):
                 raise PostError(f'downloads, item {i}: titleid "{t}" inválido (9 letras/números, ex.: PCSE00584 ou FILEMNGR1)')
-        if tipo == 'traducao' and not tids:
+        if tipo in ('traducao', 'app_arquivos') and not tids:
             raise PostError(f'downloads, item {i}: tradução precisa de "titleid:" (pasta do rePatch)')
         out.append({
             'tipo': tipo, 'nome': d.get('nome'), 'url': d.get('url'), 'repo': d.get('repo'),

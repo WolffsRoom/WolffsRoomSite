@@ -1,11 +1,11 @@
 ---
 titulo: 'Deltarune: Chapter 1'
 tag: Port + PT-BR translation
-status: 98% · Available
+status: 100% · Available
 resumo: A story in the Undertale universe, full of mystery and twists.
 titulo_barras: Progress
 barras:
-  Scripts: 90
+  Scripts: 100
   Proofreading: 100
   Graphics: 100
   Cutscenes: 100
@@ -22,25 +22,40 @@ links:
   Google Drive: "https://drive.google.com/file/d/1-uf89S5Bz9iMJZzA5AkSmT48WTpiNqnm/view"
   MEGA: "https://mega.nz/file/slUUhQKL#zS1wuEAgez2n8HfPoLCPBHJBKDk37XHKuaDwuFygJ6U"
   MediaFire: "https://www.mediafire.com/file/hrhd5r8v9zbca4a/Deltarune+PTBR.zip/file"
+fontes:
+  Official website: https://deltarune.com/
+  Vita port author: https://www.reddit.com/user/tijesef/
 ---
 
-Brazilian Portuguese translation of Deltarune: Chapter 1 on PS Vita, built on tijesef's unofficial port. The VPK was rebuilt with the translation included, adapted to 16:9 and with translated LiveArea manuals.
+**DELTARUNE: Chapter 1** is a parallel story set in the *Undertale* universe, with memorable dialogue, mystery, friendship and choices, following Kris, Susie and Ralsei.
+
+## About the project
+
+The game was unofficially ported to PS Vita by **tijesef**. To adapt the **Teiarruma team's** Brazilian Portuguese translation, files from multiple versions were merged, compatibility issues were fixed, and sprites and controls were adjusted.
+
+The translation was initially tested with rePatch, but the final distribution is a **single VPK** with the translated content, 16:9 adjustments and new LiveArea manuals already integrated. The translation scripts are **recorded as 100% complete**.
 
 ## What was done
 - Merged versions of the original translation
 - Adjusted sprites and the default Vita controls
-- Fixed the save issue
-- 16:9 adaptation and LiveArea manuals with new images
+- Fixed the port's saving issue (previously it allowed only one save per session)
+- 16:9 adaptation and translated LiveArea manuals with new images
+- Rebuilt the VPK with the Portuguese translation included and changed the installed title to **Deltarune: Capítulo 1**
 
 ## Installation
-- Download and extract with password **wolffsroom** Deltarune PTBR.zip
-- Send the VPK to the Vita over FTP or USB
-- Install it with VitaShell
-- If you already have an English save, back up ux0:user/00 first
+- Download **Deltarune PTBR.zip** and extract it using password **wolffsroom** to obtain **Deltarune PTBR.vpk**.
+- Transfer the VPK to the PS Vita via FTP or USB.
+- Install the VPK with **VitaShell**. The translation and LiveArea manuals are already included; **rePatch is not required**.
+- If you already have an English save, back up **ux0:user/00/** before installing.
+- For further installation questions, see the [Wolff's Room FAQ](https://wolffsroom.wordpress.com/faq).
 
 ## Known issues
-- Changing the controls in the options crashes the game
-- The game still mentions the Z, C and X keys instead of the Vita buttons
+
+The script translation is complete, but the underlying **port** still has limitations unrelated to untranslated dialogue.
+
+- Changing controls in the options can cause a **soft lock**. Restart the game if it happens; unsaved progress might be lost.
+- Some prompts still refer to **Z, C and X**, rather than Vita buttons. This is a control-label issue, not untranslated dialogue.
+- If you encounter another problem, you can [report it here](https://wolffsroom.wordpress.com/relatar-um-erro/).
 
 ## Credits
 - tijesef — unofficial Vita port

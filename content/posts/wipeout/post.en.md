@@ -16,7 +16,7 @@ ficha:
   Translation and dubbing: Rúben Fernandes (Rubinho146)
   Version: PCSF00007
   Platforms: PlayStation Vita
-  Installation: "Extract to ux0: and Refresh LiveArea; external package contents required"
+  Installation: "Extract full package into ux0:app/PCSF00007/ and refresh LiveArea using FMVita or File Manager"
   Archive password: wolffsroom
   Tools used: WipEout-Fonts, Karameru, Notepad++, Audacity and VitaSDK
 links:
@@ -30,11 +30,13 @@ fontes:
 Portuguese translation and dub of WipEout 2048 for PS Vita, by Rúben Fernandes (Rubinho146). The text reuses WipEout Omega Collection (PS4); the digital manuals are in European Portuguese.
 
 ## Installation
-- Download the complete package; the MediaFire mirror only lists an auxiliary file of about 24 KB and may require fetching additional content
-- Extract the PCSF00007 folder with password **wolffsroom**
-- Copy its contents to ux0: on the Vita
-- Open the ux0 folder in your file manager and use Refresh LiveArea
-- Wait, then restart the console
+- Have game version **PCSF00007** installed on your PS Vita.
+- Obtain the **complete translation package**. The current Google Drive and MediaFire links only provide a roughly 24 KB RAR containing a torrent file, **not the installable contents**.
+- Extract the complete package with password **wolffsroom**.
+- Merge the extracted files into **ux0:app/PCSF00007/**, keeping the directory structure and backing up existing files.
+- **Refresh LiveArea** using **FMVita** or **File Manager**, then restart the console if necessary.
+
+The upcoming v1.0 installer will do this automatically **only once a complete and validated package is available**. It will not mark a torrent-only archive as installed.
 
 ## Credits
 - Rúben Fernandes (rubinho146) — text adjustments and voice direction
