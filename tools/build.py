@@ -342,11 +342,17 @@ def card(p):
 
 
 
+def progress_color(pct):
+    """Cores de avanço iguais ao Vita: baixo, intermediário e quase concluído."""
+    return '#e05a5a' if pct < 40 else '#f4c430' if pct < 80 else '#52c98c'
+
+
 def bar(label, pct, text=None):
+    pct = max(0, min(100, int(pct)))
     text = text or f'{pct}%'
     return ('<div style="display: flex; flex-direction: column; gap: 8px">\n'
             f'<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><span>{e(label)}</span><span style="{DF} font-size: 16px">{e(text)}</span></div>\n'
-            f'<div class="wr-pb" role="img" aria-label="{e(label)}: {e(text)}"><div class="wr-pb-track"><div class="wr-pb-fill" style="width: {pct}%"></div></div></div>\n</div>')
+            f'<div class="wr-pb" role="img" aria-label="{e(label)}: {e(text)}"><div class="wr-pb-track"><div class="wr-pb-fill" style="width: {pct}%; --wr-progress-color: {progress_color(pct)}"></div></div></div>\n</div>')
 
 
 BOX = 'border: 4px solid #5a5a5a; background: #0e0e0e; padding: 20px; display: flex; flex-direction: column; gap: 16px'

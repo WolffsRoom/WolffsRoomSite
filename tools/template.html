@@ -51,7 +51,7 @@ main section[aria-label]:not(.wr-home)::after,main article::after,nav.wr-nav::af
 @keyframes wr-wipe{0%{background-color:#060606;background-image:none}20%{background-color:transparent;background-image:url(assets/w75.png)}45%{background-color:transparent;background-image:url(assets/w50.png)}70%{background-color:transparent;background-image:url(assets/w25.png)}100%{background-color:transparent;background-image:none}}
 .wr-pb{flex:1 1 auto;height:16px;margin:4px;padding:4px;background:#0b0b0b;box-shadow:0 -4px 0 #ffffff,0 4px 0 #ffffff,-4px 0 0 #ffffff,4px 0 0 #ffffff}
 .wr-pb-track{height:100%;overflow:hidden;background:repeating-linear-gradient(90deg,#242424 0,#242424 8px,transparent 8px,transparent 12px)}
-.wr-pb-fill{position:relative;height:100%;background:repeating-linear-gradient(90deg,#ffffff 0,#ffffff 8px,#0b0b0b 8px,#0b0b0b 12px);animation:wr-fill 1.1s steps(12,end) .35s both}
+.wr-pb-fill{position:relative;height:100%;background:repeating-linear-gradient(90deg,var(--wr-progress-color,#ffffff) 0,var(--wr-progress-color,#ffffff) 8px,#0b0b0b 8px,#0b0b0b 12px);animation:wr-fill 1.1s steps(12,end) .35s both}
 @keyframes wr-fill{from{width:0}}
 @media (prefers-reduced-motion:reduce){main section[aria-label]:not(.wr-home)::after,main article::after,nav.wr-nav::after,.wr-pb-fill{animation:none}}
 .wr-pbdone .wr-pb-fill{animation:none}

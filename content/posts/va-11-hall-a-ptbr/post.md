@@ -14,6 +14,12 @@ capturas:
   - captura-3.png
   - captura-4.png
   - captura-5.png
+ficha:
+  Lançamento: 21 de junho de 2016
+  Desenvolvedor: Sukeban Games e Wolfgame
+  Versão: PCSE00756 (USA)
+  Plataformas: Nintendo Switch, PlayStation 4, Microsoft Windows, Linux, MacOS e PlayStation Vita
+  Ferramentas usadas: Sublime Text, Photoshop 2025, WinRAR, PyCharm e Undertale Mod Tool
 progresso: 69
 barras:
   Scripts: 100
@@ -26,7 +32,6 @@ links:
   MEGA: 'https://mega.nz/file/cl92nKLS#NZd4PB2IACGd8YwyhJpYudO4DNRlEtDPlPJ6IyUWn-4'
   MediaFire: https://www.mediafire.com/file/t86bnirt2nx5s2c/PCSE00756.zip/file
 fontes:
-  Publicação original: https://wolffsroom.wordpress.com/2025/01/12/psv-va-11-hall-a-traducao-pt-br/
   Tradução base (PC): https://coffeelord.itch.io/va11hallaptbr
 downloads:
   - tipo: traducao
@@ -41,7 +46,6 @@ downloads:
     arquivo: PCSE00756.zip
     tamanho: 8818828
     titleid: PCSE00756
-    instrucoes: https://wolffsroom.wordpress.com/2025/01/12/psv-va-11-hall-a-traducao-pt-br/
 ---
 
 Um bar cyberpunk, personagens marcantes e histórias que se revelam a cada drink. *VA-11 HALL-A: Cyberpunk Bartender Action* combina narrativa, pixel art e uma trilha sonora envolvente em um futuro distópico.

@@ -4,6 +4,12 @@ tag: Translation · PS Vita · PT-BR
 status: Available · Under review
 resumo: Experience VA-11 HALL-A on PS Vita in Brazilian Portuguese, with adapted text, interface and graphics.
 chamada: Visit Glitch City's most cyberpunk bar, now in Brazilian Portuguese.
+ficha:
+  Release date: June 21, 2016
+  Developer: Sukeban Games and Wolfgame
+  Version: PCSE00756 (USA)
+  Platforms: Nintendo Switch, PlayStation 4, Microsoft Windows, Linux, macOS and PlayStation Vita
+  Tools used: Sublime Text, Photoshop 2025, WinRAR, PyCharm and Undertale Mod Tool
 ---
 *VA-11 HALL-A: Cyberpunk Bartender Action* is a cyberpunk visual novel about mixing drinks and getting to know your customers.
 
