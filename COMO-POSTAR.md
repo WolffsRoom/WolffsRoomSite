@@ -171,6 +171,18 @@ python -m http.server -d _site
 
 Depois abra http://localhost:8000. Se algum `post.md` tiver erro, o `build.py` diz qual arquivo e o que corrigir.
 
+### Traduções com senha e espelhos (v1.0 do app)
+
+No campo downloads, use um único item do tipo traducao, com URL principal,
+alternativas (espelhos de fallback), senha do ZIP e titleid do jogo.
+A página web lista os provedores separadamente no campo links.
+O app futuro terá somente um botão para a instalação.
+
+Segurança: mantenha app_pendente: true até a nova release da Store no Vita.
+Enquanto estiver ativo, o site e o app antigo exibem os links manuais,
+mas não disponibilizam a instalação automatizada incompatível com ZIP AES.
+Remova o campo ao publicar a versão do aplicativo que conhece esse fluxo.
+
 ### Tipo de noticia (etiqueta amarela)
 
 No cabecalho do post.md use novidade: Release para o primeiro lancamento publico de um projeto, ou novidade: Update para uma atualizacao. A etiqueta pixelada e inclinada aparece no site e no VPK. Omita o campo para posts sem lancamento.

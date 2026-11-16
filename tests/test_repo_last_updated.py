@@ -1,4 +1,5 @@
-"""Footer should show repository commit time, not rebuild/current time."""
+"""Dates belong to posts in Details; a site-wide footer date must not exist."""
+import datetime
 import importlib.util
 from pathlib import Path
 import unittest
@@ -6,37 +7,31 @@ from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("site_builder", ROOT / "tools" / "build.py")
-# The normal build imports tools/store.py by adding its directory to sys.path.
 build = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build)
 
+class PostDateTests(unittest.TestCase):
+    def test_post_update_uses_only_its_own_git_history(self):
+        log = "2026-11-16T13:57:22+00:00\n2026-11-14T12:00:00+00:00\n"
+        with patch.object(build.subprocess, "check_output", return_value=log) as mocked:
+            updated = build.post_last_updated("pokemon-emerald", datetime.date(2026, 11, 14))
+        self.assertEqual(updated, datetime.date(2026, 11, 16))
+        self.assertEqual(mocked.call_args.args[0][-2:], ["--", "content/posts/pokemon-emerald"])
 
-class LastUpdatedTests(unittest.TestCase):
-    def test_git_commit_timestamp_in_both_languages(self):
+    def test_first_commit_or_same_day_does_not_show_update(self):
         with patch.object(build.subprocess, "check_output",
-                          return_value="2026-11-16T01:54:27-03:00\n") as mock:
-            result = build.repo_last_updated()
-        mock.assert_called_once()
-        self.assertIn("git", mock.call_args.args[0])
-        self.assertIn("Atualizado em: ", result)
-        self.assertIn("16/11/2026", result)
-        self.assertIn("Last update: ", result)
-        self.assertIn("November 16, 2026", result)
-        self.assertEqual(result.count('datetime="2026-11-16"'), 2)
-
-    def test_date_follows_commit_not_build_clock(self):
+                          return_value="2026-11-16T12:00:00+00:00\n"):
+            self.assertIsNone(build.post_last_updated("new", datetime.date(2026, 11, 16)))
         with patch.object(build.subprocess, "check_output",
-                          return_value="2025-12-31T23:59:00-03:00\n"):
-            result = build.repo_last_updated()
-        self.assertIn("31/12/2025", result)
-        self.assertIn("December 31, 2025", result)
+                          return_value="2026-11-16T13:00:00+00:00\n2026-11-15T12:00:00+00:00\n"):
+            self.assertIsNone(build.post_last_updated("same-day", datetime.date(2026, 11, 16)))
 
-    def test_template_contains_generated_marker(self):
-        template = (ROOT / "tools/template.html").read_text("utf-8")
-        self.assertEqual(template.count("<!--LAST_UPDATED-->"), 1)
-        script = (ROOT / "tools/build.py").read_text("utf-8")
-        self.assertIn("page.replace('<!--LAST_UPDATED-->', repo_last_updated())", script)
-
+    def test_language_dates_and_no_footer_marker(self):
+        day = datetime.date(2026, 11, 16)
+        self.assertIn("16/11/2026", build.post_date_html(day, "pt"))
+        self.assertIn("November 16, 2026", build.post_date_html(day, "en"))
+        self.assertNotIn("<!--LAST_UPDATED-->", (ROOT / "tools" / "template.html").read_text("utf-8"))
+        self.assertNotIn("repo_last_updated()", (ROOT / "tools" / "build.py").read_text("utf-8"))
 
 if __name__ == "__main__":
     unittest.main()

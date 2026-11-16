@@ -100,6 +100,11 @@ def parse_downloads(raw):
         tipo = str(d.get('tipo') or 'vpk').strip().lower().replace('ç', 'c').replace('ã', 'a')
         if tipo not in TIPOS_DOWNLOAD:
             raise PostError(f'downloads, item {i}: tipo "{d.get("tipo")}" inválido; use: ' + ', '.join(TIPOS_DOWNLOAD))
+        mirrors = d.get('alternativas') or []
+        if not isinstance(mirrors, list) or any(not isinstance(u, str) or not u.startswith('https://') for u in mirrors):
+            raise PostError(f'downloads, item {i}: alternativas devem ser uma lista de URLs HTTPS')
+        if d.get('senha') and tipo != 'traducao':
+            raise PostError(f'downloads, item {i}: senha só é aceita para tradução')
         if not d.get('url') and not d.get('repo'):
             raise PostError(f'downloads, item {i}: informe "repo:" (release do GitHub) ou "url:" (link direto)')
         if d.get('repo') and not re.fullmatch(r'[\w.-]+/[\w.-]+', str(d['repo'])):
@@ -116,6 +121,8 @@ def parse_downloads(raw):
             'tipo': tipo, 'nome': d.get('nome'), 'url': d.get('url'), 'repo': d.get('repo'),
             'arquivo': d.get('arquivo'), 'tag': d.get('tag'), 'versao': d.get('versao'),
             'tamanho': d.get('tamanho'), 'titleids': [str(t) for t in tids],
+            'alternativas': mirrors, 'senha': str(d.get('senha') or ''),
+            'app_pendente': bool(d.get('app_pendente')),
             'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': vita_github_url(d.get('instrucoes')) if d.get('instrucoes') else None,
             'plugin': d.get('plugin') or ('rePatch' if tipo == 'traducao' else None),
         })

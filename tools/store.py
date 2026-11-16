@@ -101,6 +101,8 @@ def resolve_download(d, post_links):
            'titleids': d.get('titleids') or [], 'plugin': latin(d.get('plugin') or '')}
     if d.get('url'):
         out['url'] = drive_direct(d['url'])
+        out['alternativas'] = [drive_direct(u) for u in d.get('alternativas') or []]
+        out['senha'] = d.get('senha') or ''
         out['versao'] = latin(d.get('versao') or '')
         out['tamanho'] = int(d.get('tamanho') or 0)
         out['arquivo'] = d.get('arquivo') or ('' if out['url'] != d['url'] else os.path.basename(d['url'].split('?')[0])) or DEFAULT_NAME[tipo]
@@ -179,7 +181,8 @@ def _save(img, pixel, folder, base, out_dir):
     data = buf.getvalue()
     name = f'{base}-{hashlib.sha1(data).hexdigest()[:8]}.{ext}'
     os.makedirs(os.path.join(out_dir, folder), exist_ok=True)
-    open(os.path.join(out_dir, folder, name), 'wb').write(data)
+    with open(os.path.join(out_dir, folder, name), 'wb') as f:
+        f.write(data)
     return f'{folder}/{name}'
 
 
@@ -211,6 +214,7 @@ def write_store(posts, order, feat, groups, out_dir):
         en = {**p, **(p['en'] or {})}
         it = {
             'slug': slug, 'cat': p['cat'], 'grupo': groups.index(p['group']), 'data': p['date'].isoformat(),
+            'atualizado_em': p['updated'].isoformat() if p.get('updated') else '',
             'destaque': slug == feat, 'pixel': p['pixel'],
             'progresso': p['progress'] if p['progress'] is not None else -1,
             'pt': _texts(p), 'en': _texts(en), 'capturas': [],
@@ -230,6 +234,10 @@ def write_store(posts, order, feat, groups, out_dir):
             img = Image.open(os.path.join(p['folder'], os.path.basename(s)))
             it['capturas'].append(_save(_fit(img, SHOT, 'conter', p['pixel']), p['pixel'], f'{store_dir}/{slug}', f'cap{i}', out_dir))
         for d in p.get('downloads') or []:
+            # A versão pública atual não extrai ZIP AES nem preserva mods antigos.
+            # Só liberar após publicar a v1.0 do app com o instalador seguro.
+            if d.get('app_pendente'):
+                continue
             r = resolve_download(d, p['links'] + p.get('sources', []))
             if r:
                 it['downloads'].append(r)
