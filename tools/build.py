@@ -171,6 +171,7 @@ def load_post(slug):
         progress = None
     p = {
         'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date, 'when': when,
+        'updated': post_last_updated(slug, date),
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
         'author': str(meta.get('autor') or '').strip(),
         'author_url': str(meta.get('autor_url') or '').strip(),
@@ -540,6 +541,16 @@ def article(p0, lang):
     if p.get('clock'):
         rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['clock'])
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["clock"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
+    published_date = post_date_html(p['date'], lang)
+    updated_date = (f'<span>{"Atualizado em" if lang == "pt" else "Last update"}: '
+                    f'{post_date_html(p["updated"], lang)}</span>' if p.get('updated') else '')
+    date_line = (
+        '<p class="wr-post-dates" style="margin: -16px 0 0; color: #a8a8a8; '
+        'font-size: 15px; line-height: 1.6; text-align: center; '
+        'display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 20px">'
+        f'<span>{"Publicado em" if lang == "pt" else "Published on"}: {published_date}</span>'
+        f'{updated_date}</p>\n'
+    )
     hero = (f'<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">\n{pic(p0, lang)}\n</div>\n' if p['cover'] else '')
     about = f'<p style="margin: 0; color: #e0e0e0; font-size: 19px">{inline(p["about"])}</p>\n' if p['about'] else ''
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'
@@ -548,7 +559,7 @@ def article(p0, lang):
             '<button class="wr-btn" type="button" data-act="back_' + p['slug'] + '" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + e(ui['back']) + '</button>\n'
             '</div>\n'
             f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">{e(p["title"])}</h1>\n'
-             +
+             + date_line +
              '<div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">\n'
             '<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 28px">\n'
             + hero + about + secs +
@@ -691,28 +702,34 @@ def make_mosaic(p, out_dir):
     return res
 
 
-def repo_last_updated():
-    """Render the last *Git commit* date, never the deployment/build time.
+def post_last_updated(slug, published):
+    """Última mudança real no diretório do post, não a data do deploy.
 
-    A scheduled Pages rebuild must not change this label without a commit.
-    GitHub Actions checks out HEAD and supplies its timestamp in git log.
+    Precisa do histórico Git (checkout com fetch-depth: 0 no GitHub Actions).
     """
-    stamp = subprocess.check_output(
-        ['git', '-C', ROOT, 'log', '-1', '--format=%cI'],
-        text=True, encoding='utf-8'
-    ).strip()
-    dt = datetime.datetime.fromisoformat(stamp)
-    if dt.tzinfo is None:
-        raise ValueError('Git commit date must include a timezone offset')
-    return (
-        '<p class="wr-last-updated" style="margin: 0; color: #a8a8a8; '
-        'font-size: 14px; line-height: 1.6">'
-        '<span data-l="pt">Atualizado em: '
-        f'<time datetime="{dt.date().isoformat()}">{dt:%d/%m/%Y}</time></span>'
-        '<span data-l="en">Last update: '
-        f'<time datetime="{dt.date().isoformat()}">{dt:%B %d, %Y}</time></span>'
-        '</p>'
-    )
+    try:
+        log = subprocess.check_output(
+            ['git', '-C', ROOT, 'log', '--format=%cI', '--', f'content/posts/{slug}'],
+            text=True, encoding='utf-8'
+        ).splitlines()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    # O commit de criação sozinho não representa uma atualização.
+    if len(log) < 2:
+        return None
+    latest = datetime.datetime.fromisoformat(log[0]).date()
+    return latest if latest > published else None
+
+
+def post_date_html(day, lang):
+    """Data sem depender do locale da máquina que gera o site."""
+    if lang == 'pt':
+        label = f'{day:%d/%m/%Y}'
+    else:
+        months = ('January', 'February', 'March', 'April', 'May', 'June',
+                  'July', 'August', 'September', 'October', 'November', 'December')
+        label = f'{months[day.month - 1]} {day.day}, {day.year}'
+    return f'<time datetime="{day.isoformat()}">{label}</time>'
 
 
 def build():
@@ -737,7 +754,6 @@ def build():
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
     page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_icon())
     page = page.replace('<!--OGIMAGE-->', posts[feat]['cover'] or 'assets/favicon.png')
-    page = page.replace('<!--LAST_UPDATED-->', repo_last_updated())
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
     open(os.path.join(OUT, '.nojekyll'), 'w').write('')
     import store  # catálogo do app Wolff's Store (PS Vita)
