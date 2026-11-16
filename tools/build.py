@@ -14,6 +14,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 
 import yaml
@@ -690,6 +691,30 @@ def make_mosaic(p, out_dir):
     return res
 
 
+def repo_last_updated():
+    """Render the last *Git commit* date, never the deployment/build time.
+
+    A scheduled Pages rebuild must not change this label without a commit.
+    GitHub Actions checks out HEAD and supplies its timestamp in git log.
+    """
+    stamp = subprocess.check_output(
+        ['git', '-C', ROOT, 'log', '-1', '--format=%cI'],
+        text=True, encoding='utf-8'
+    ).strip()
+    dt = datetime.datetime.fromisoformat(stamp)
+    if dt.tzinfo is None:
+        raise ValueError('Git commit date must include a timezone offset')
+    return (
+        '<p class="wr-last-updated" style="margin: 0; color: #a8a8a8; '
+        'font-size: 14px; line-height: 1.6">'
+        '<span data-l="pt">Atualizado em: '
+        f'<time datetime="{dt.date().isoformat()}">{dt:%d/%m/%Y}</time></span>'
+        '<span data-l="en">Last update: '
+        f'<time datetime="{dt.date().isoformat()}">{dt:%B %d, %Y}</time></span>'
+        '</p>'
+    )
+
+
 def build():
     posts, order = load_all()
     # A página inicial (e o app Wolff's Store) sempre destacam o post mais recente.
@@ -712,6 +737,7 @@ def build():
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
     page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_icon())
     page = page.replace('<!--OGIMAGE-->', posts[feat]['cover'] or 'assets/favicon.png')
+    page = page.replace('<!--LAST_UPDATED-->', repo_last_updated())
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
     open(os.path.join(OUT, '.nojekyll'), 'w').write('')
     import store  # catálogo do app Wolff's Store (PS Vita)
