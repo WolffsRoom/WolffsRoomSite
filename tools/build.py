@@ -103,8 +103,8 @@ def parse_downloads(raw):
         mirrors = d.get('alternativas') or []
         if not isinstance(mirrors, list) or any(not isinstance(u, str) or not u.startswith('https://') for u in mirrors):
             raise PostError(f'downloads, item {i}: alternativas devem ser uma lista de URLs HTTPS')
-        if d.get('senha') and tipo != 'traducao':
-            raise PostError(f'downloads, item {i}: senha só é aceita para tradução')
+        if d.get('senha') and tipo != 'traducao' and not d.get('app_pendente'):
+            raise PostError(f'downloads, item {i}: senha fora de tradução exige app_pendente até haver suporte na v1.0')
         if not d.get('url') and not d.get('repo'):
             raise PostError(f'downloads, item {i}: informe "repo:" (release do GitHub) ou "url:" (link direto)')
         if d.get('repo') and not re.fullmatch(r'[\w.-]+/[\w.-]+', str(d['repo'])):

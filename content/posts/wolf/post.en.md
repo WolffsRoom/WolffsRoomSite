@@ -10,15 +10,19 @@ barras:
   Cutscenes: 100
   Testing: 100
 ficha:
+  Release date: October 11, 2013
+  Developer: Telltale Games
   Team: GameLab Traduções
-  Game version: PCSE00352
-  Port: Heitor Spectre
+  Ported by: Heitor Spectre
+  Version: PCSE00352
+  Platforms: PS Vita, Windows, Nintendo Switch, PlayStation 3, PlayStation 4 and Xbox 360
+  Installation: rePatch (RAR package)
   Archive password: wolffsroom
+  Tools used: TTG-Tools and Notepad++
 links:
-  Google Drive: https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing
-  MEGA: https://mega.nz/file/9otQDLYR#TqVqHv7MGhEdrEgTdc9k_2rNXwgqFdUuT5fB0Tk4u3s
-  MediaFire: https://www.mediafire.com/file/j4m92448sonzci1/Tradu%25C3%25A7%25C3%25A3o_-_The_Wolf_Among_Us_%2528PS_Vita%2529.rar/file
-  Original post: https://wolffsroom.wordpress.com/2026/02/23/the-wolf-among-us-psvita/
+  Google Drive: "https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing"
+  MEGA: "https://mega.nz/file/9otQDLYR#TqVqHv7MGhEdrEgTdc9k_2rNXwgqFdUuT5fB0Tk4u3s"
+  MediaFire: "https://www.mediafire.com/file/j4m92448sonzci1/Tradu%C3%A7%C3%A3o_-_The_Wolf_Among_Us_%28PS_Vita%29.rar/file"
 ---
 
 Brazilian Portuguese translation of The Wolf Among Us on PS Vita. The original text is by Tribo Gamer, reviewed by GameLab Traduções, with a port by Heitor Spectre. It also unlocks the game's debug menu (Select button).
@@ -30,9 +34,9 @@ Brazilian Portuguese translation of The Wolf Among Us on PS Vita. The original t
 - Debug menu enabled (Select button)
 
 ## Installation
-- Download and extract the archive on your computer
+- Download and extract the RAR on your computer using password **wolffsroom**
 - Connect the Vita over USB or FTP
-- Copy the rePatch folder (inside CONSOLE) to the root of ux0:
+- Back up any existing mod first, then copy the rePatch folder (inside CONSOLE) to the root of ux0:
 - Restart the Vita and open the game
 
 ## Warning

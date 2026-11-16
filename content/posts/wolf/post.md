@@ -9,10 +9,15 @@ resumo: Tradução revisada pela GameLab e portada para o PS Vita.
 progresso: 100
 capa: capa.jpg
 capturas:
-- captura-1.jpg
-- captura-2.jpg
-- captura-3.jpg
-- captura-4.jpg
+  - captura-1.jpg
+  - captura-2.jpg
+  - captura-3.jpg
+  - captura-4.jpg
+  - captura-extra-5.jpg
+  - captura-extra-6.jpg
+  - captura-extra-7.jpg
+  - captura-extra-8.jpg
+  - captura-extra-9.jpg
 titulo_barras: Progresso
 barras:
   Scripts: 100
@@ -21,15 +26,31 @@ barras:
   Cinemáticas: 100
   Testes: 100
 ficha:
+  Lançamento: 11 de outubro de 2013
+  Desenvolvedor: Telltale Games
   Equipe: GameLab Traduções
-  Versão do jogo: PCSE00352
-  Porte: Heitor Spectre
+  Portado por: Heitor Spectre
+  Versão: PCSE00352
+  Plataformas: PS Vita, Windows, Nintendo Switch, PlayStation 3, PlayStation 4 e Xbox 360
+  Instalação: rePatch (pacote RAR)
   Senha do arquivo: wolffsroom
+  Ferramentas usadas: TTG-Tools e Notepad++
 links:
   Google Drive: https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing
   MEGA: https://mega.nz/file/9otQDLYR#TqVqHv7MGhEdrEgTdc9k_2rNXwgqFdUuT5fB0Tk4u3s
-  MediaFire: https://www.mediafire.com/file/j4m92448sonzci1/Tradu%25C3%25A7%25C3%25A3o_-_The_Wolf_Among_Us_%2528PS_Vita%2529.rar/file
-  Ver post original: https://wolffsroom.wordpress.com/2026/02/23/the-wolf-among-us-psvita/
+  MediaFire: https://www.mediafire.com/file/j4m92448sonzci1/Tradu%C3%A7%C3%A3o_-_The_Wolf_Among_Us_%28PS_Vita%29.rar/file
+
+downloads:
+  - tipo: traducao
+    nome: Pacote PT-BR — wolf
+    url: https://www.mediafire.com/file/j4m92448sonzci1/Tradu%C3%A7%C3%A3o_-_The_Wolf_Among_Us_%28PS_Vita%29.rar/file
+    alternativas:
+      - https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing
+      - "https://mega.nz/file/9otQDLYR#TqVqHv7MGhEdrEgTdc9k_2rNXwgqFdUuT5fB0Tk4u3s"
+    senha: wolffsroom
+    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    arquivo: Traducao-The-Wolf-Among-Us.rar
+    titleid: PCSE00352
 ---
 
 Tradução para português do Brasil de The Wolf Among Us no PS Vita. O texto original é da Tribo Gamer, revisado pela GameLab Traduções, com porte de Heitor Spectre. Também habilita o menu de depuração do jogo (botão Select).
@@ -43,9 +64,9 @@ Tradução para português do Brasil de The Wolf Among Us no PS Vita. O texto or
 
 ## Instalação
 
-- Baixe e extraia o arquivo no computador
+- Baixe o arquivo RAR e extraia no computador com a senha **wolffsroom**
 - Conecte o Vita por USB ou FTP
-- Copie a pasta rePatch (dentro de CONSOLE) para a raiz de ux0:
+- Antes de substituir outro mod, faça backup da pasta atual; copie a pasta rePatch (dentro de CONSOLE) para a raiz de ux0:
 - Reinicie o Vita e abra o jogo
 
 ## Aviso

@@ -9,9 +9,12 @@ resumo: Ação e plataforma indie com visual retrô, em um mundo subterrâneo.
 progresso: 84
 capa: capa.jpg
 capturas:
-- captura-1.jpg
-- captura-2.jpg
-- captura-3.jpg
+  - captura-1.jpg
+  - captura-2.jpg
+  - captura-3.jpg
+  - captura-extra-4.jpg
+  - captura-extra-5.jpg
+  - captura-extra-6.jpg
 titulo_barras: Progresso
 barras:
   Scripts: 100
@@ -20,15 +23,29 @@ barras:
   Cinemáticas: 100
   Testes: 20
 ficha:
-  Status: Disponível
+  Lançamento: 20 de dezembro de 2004
+  Desenvolvedor: Nicalis (conforme publicação original)
+  Portado por: Epifanov Ivan / sage_dna (NXEngine)
   Versão: DOKU41220 (V1.0.3)
-  Post: 06/02/2025
+  Plataformas: Windows, Nintendo Switch, PlayStation 4, PS Vita, Nintendo 3DS, Wii, Linux e macOS
   Senha do arquivo: wolffsroom
+  Ferramentas usadas: Sublime Text, Photoshop 2025 e WinRAR
 links:
   Google Drive: https://drive.google.com/file/d/1OJuyRLHyqmou2FMxREUEdvcgUqcbbkD7/view
   MEGA: https://mega.nz/file/d1FAmKyS#tp7T-DAA2MG4HymcnNjuhUJy-p7YfZSkwNT-nd5VF-g
   MediaFire: https://www.mediafire.com/file/jb44o6hsrx1sg4a/CaveStory.zip/file
-  Ver post original: https://wolffsroom.wordpress.com/2025/02/06/psv-cave-story-traducao-pt-br/
+
+downloads:
+  - tipo: vpk
+    nome: Pacote PT-BR — cave
+    url: https://www.mediafire.com/file/jb44o6hsrx1sg4a/CaveStory.zip/file
+    alternativas:
+      - https://drive.google.com/file/d/1OJuyRLHyqmou2FMxREUEdvcgUqcbbkD7/view
+      - "https://mega.nz/file/d1FAmKyS#tp7T-DAA2MG4HymcnNjuhUJy-p7YfZSkwNT-nd5VF-g"
+    senha: wolffsroom
+    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    arquivo: CaveStory.zip
+    titleid: DOKU41220
 ---
 
 Tradução para português do Brasil de Cave Story, adaptada para o PS Vita na versão NXEngine. Inclui VPK próprio, artes editadas e manual da LiveArea em desenvolvimento.
@@ -43,7 +60,7 @@ Tradução para português do Brasil de Cave Story, adaptada para o PS Vita na v
 
 ## Instalação
 
-- Baixe e extraia Cave Story.zip
+- Baixe e extraia com a senha **wolffsroom** Cave Story.zip
 - Envie CaveStory.vpk ao Vita por FTP ou USB
 - Instale pelo VitaShell
 - Se já tiver save em inglês, faça backup de ux0:user/00 antes

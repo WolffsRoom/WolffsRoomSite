@@ -9,9 +9,10 @@ resumo: Ação e plataforma em pixel art, com puzzles, estrelando a mecânica Ro
 progresso: 70
 capa: capa.jpg
 capturas:
-- captura-1.jpg
-- captura-2.jpg
-- captura-3.jpg
+  - captura-1.jpg
+  - captura-2.jpg
+  - captura-3.jpg
+  - captura-extra-4.jpg
 titulo_barras: Progresso
 barras:
   Scripts: 100
@@ -20,15 +21,29 @@ barras:
   Cinemáticas: 100
   Testes: 70
 ficha:
-  Status: Disponível
-  Versão do jogo: PCSE01177 (USA)
-  Atualizado em: 12/01/2025
+  Lançamento: 23 de janeiro de 2018
+  Desenvolvedor: Joakim Sandberg e MP2 Games
+  Versão: PCSE01177 (USA)
+  Plataformas: Windows, Linux, macOS, PlayStation 4, PlayStation Vita, Nintendo Switch e Xbox One
+  Instalação: rePatch (jogo base necessário)
   Senha do arquivo: wolffsroom
+  Ferramentas usadas: Adobe Photoshop 2025, Sublime Text, Python e IconoParser
 links:
   MediaFire: https://www.mediafire.com/file/gl4pa9kup40lwtu/PCSE01177.zip/file
   Google Drive: https://drive.google.com/file/d/1MpvamxqtuDs36nCKiUClXYD7_hCNTV3W/view
   MEGA: https://mega.nz/file/ggEWXKxb#j3McOGblU7Gz76jTtNdEUWW23NQJNzDEvw9SK5VBgko
-  Ver post original: https://wolffsroom.wordpress.com/2025/01/25/psv-iconoclasts-traducao-pt-br/
+
+downloads:
+  - tipo: traducao
+    nome: Pacote PT-BR — icono
+    url: https://www.mediafire.com/file/gl4pa9kup40lwtu/PCSE01177.zip/file
+    alternativas:
+      - https://drive.google.com/file/d/1MpvamxqtuDs36nCKiUClXYD7_hCNTV3W/view
+      - "https://mega.nz/file/ggEWXKxb#j3McOGblU7Gz76jTtNdEUWW23NQJNzDEvw9SK5VBgko"
+    senha: wolffsroom
+    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    arquivo: PCSE01177.zip
+    titleid: PCSE01177
 ---
 
 Tradução para português do Brasil de Iconoclasts no PS Vita: os arquivos da tradução de PC da Tribo Gamer e da Central de Traduções foram portados para o console. Nenhum gráfico foi redesenhado, então algumas palavras continuam em inglês.
@@ -41,9 +56,9 @@ Tradução para português do Brasil de Iconoclasts no PS Vita: os arquivos da t
 
 ## Instalação
 
-- Baixe o arquivo e extraia com o VitaShell
+- Baixe o arquivo ZIP e extraia usando a senha **wolffsroom** (no VitaShell ou computador)
 - Crie a pasta rePatch em ux0:
-- Copie a pasta PCSE01177 para ux0:rePatch/
+- Faça backup de qualquer mod existente e copie a pasta PCSE01177 para ux0:rePatch/PCSE01177/
 - Reinicie o Vita
 
 ## Problemas conhecidos

@@ -11,15 +11,19 @@ barras:
   Cutscenes: 100
   Testing: 100
 ficha:
+  Release date: December 17, 2013
+  Developer: Telltale Games
   Team: GameLab Traduções
-  Game version: PCSE00556
-  Port: Heitor Spectre
+  Ported by: Heitor Spectre
+  Version: PCSE00556
+  Platforms: PS Vita, Windows, Nintendo Switch, PlayStation 3, PlayStation 4 and Xbox 360
+  Installation: rePatch (RAR package)
   Archive password: wolffsroom
+  Tools used: TTG-Tools and Notepad++
 links:
-  Google Drive: https://drive.google.com/file/d/1_U2kVFTmZ0uiHE1s2I9BHViSMlbhrCGw/view?usp=sharing
-  MEGA: https://mega.nz/file/w0MlQDgD#yYMDDbmC-Cg5-8wxQT4Bvkjlpu_AvKkYFpds1RBwkeA
-  MediaFire: https://www.mediafire.com/file/6a5btu7eg3buazc/Tradu%C3%A7%C3%A3o_TWD_Temporada2.rar/file
-  Original post: https://wolffsroom.wordpress.com/2026/02/18/the-walking-dead-temporada-2-psvita/
+  Google Drive: "https://drive.google.com/file/d/1_U2kVFTmZ0uiHE1s2I9BHViSMlbhrCGw/view?usp=sharing"
+  MEGA: "https://mega.nz/file/w0MlQDgD#yYMDDbmC-Cg5-8wxQT4Bvkjlpu_AvKkYFpds1RBwkeA"
+  MediaFire: "https://www.mediafire.com/file/6a5btu7eg3buazc/Tradu%C3%A7%C3%A3o_TWD_Temporada2.rar/file"
 ---
 
 Brazilian Portuguese translation of The Walking Dead: Season Two on PS Vita, by GameLab Traduções with a port by Heitor Spectre. It starts from Telltale's official translation, with a full review and adjusted textures.
@@ -31,9 +35,9 @@ Brazilian Portuguese translation of The Walking Dead: Season Two on PS Vita, by 
 - Spelling and grammar fixes
 
 ## Installation
-- Download and extract the archive on your computer
+- Download and extract the RAR on your computer using password **wolffsroom**
 - Connect the Vita over USB or FTP
-- Copy the rePatch folder (inside CONSOLE) to the root of ux0:
+- Back up any existing mod first, then copy the rePatch folder (inside CONSOLE) to the root of ux0:
 - Restart the Vita and open the game
 
 ## Credits
