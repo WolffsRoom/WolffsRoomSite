@@ -34,7 +34,6 @@ links:
 God of War Ragnarök continua a jornada de **Kratos e Atreus** pelo mundo nórdico e encerra uma fase importante da franquia. Esta análise pessoal, publicada originalmente em **26 de janeiro de 2025**, foi feita após **48 horas de jogo no PlayStation 4**. As seis categorias seguem o método *Seis ao Cubo*, com até 36 pontos por categoria.
 
 ## Gráficos — Perfeito (36/36)
-![Kratos em pixel art](captura-3.gif)
 ![God of War Ragnarök](capa.jpg)
 - O PS4 ainda entrega cenários impressionantes, com riqueza de detalhes na água, na vegetação, nas embarcações e nos reinos nórdicos.
 - A direção de arte proporciona diversos momentos de contemplação e exploração.
