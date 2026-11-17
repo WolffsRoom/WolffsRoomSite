@@ -27,6 +27,8 @@ class ReviewMediaTests(unittest.TestCase):
         self.assertEqual(inline_sources, [f"posts/god-of-war-ragnarok/{filename}" for filename in assets])
         self.assertNotIn("Capturas de tela", html)
         self.assertEqual(html.count('class="wr-review-media"'), 3)
+        self.assertNotIn("Imagens da jornada", html)
+        self.assertLess(html.index("Jogabilidade"), html.index('posts/god-of-war-ragnarok/combate.gif'))
 
     def test_english_article_has_same_media_count(self):
         for slug, count in (("p4g", 4), ("god-of-war-ragnarok", 3)):

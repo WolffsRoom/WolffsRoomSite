@@ -33,15 +33,11 @@ links:
 ---
 God of War Ragnarök continua a jornada de **Kratos e Atreus** pelo mundo nórdico e encerra uma fase importante da franquia. Esta análise pessoal, publicada originalmente em **26 de janeiro de 2025**, foi feita após **48 horas de jogo no PlayStation 4**. As seis categorias seguem o método *Seis ao Cubo*, com até 36 pontos por categoria.
 
-## Imagens da jornada
+## Gráficos — Perfeito (36/36)
 ![Kratos em pixel art](captura-3.gif)
 ![God of War Ragnarök](capa.jpg)
-
-## Gráficos — Perfeito (36/36)
 - O PS4 ainda entrega cenários impressionantes, com riqueza de detalhes na água, na vegetação, nas embarcações e nos reinos nórdicos.
 - A direção de arte proporciona diversos momentos de contemplação e exploração.
-
-![Combates de God of War Ragnarök](combate.gif)
 
 ## História — Ótimo (30/36)
 - A relação de Kratos e Atreus evolui em uma narrativa intensa, com grandes revelações e novos personagens.
@@ -49,6 +45,8 @@ God of War Ragnarök continua a jornada de **Kratos e Atreus** pelo mundo nórdi
 
 ## Jogabilidade — Perfeito (36/36)
 - O combate expande a base de God of War (2018), com alternância fluida entre armas e habilidades.
+
+![Combates de God of War Ragnarök](combate.gif)
 - A progressão por equipamentos e melhorias ainda é mais complexa do que deveria, apesar da qualidade dos confrontos.
 
 ## Trilha sonora — Perfeito (36/36)
