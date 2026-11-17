@@ -1,8 +1,10 @@
 ---
-tag: Review · PS Vita
+titulo: Persona 4 Golden — PS Vita Review
+tag: Review · PS Vita · JRPG
 status: Score 8.9/10
-resumo: A personal review after finishing the game.
-titulo_barras: Scores
+resumo: Friendship, mystery and self-discovery in Inaba, reviewed after 86 hours of gameplay.
+chamada: Persona 4 Golden on PS Vita — six review categories and a mystery worth experiencing.
+titulo_barras: Scores · Six Cubed
 barras:
   Final score: 89 (192/216)
   Graphics: 100 (36/36)
@@ -12,28 +14,46 @@ barras:
   Level design: 83 (30/36)
   Length: 83 (30/36)
 ficha:
+  Game: Persona 4 Golden
   Platform: PS Vita
   Published: 26/04/2025
   Playtime: 86 hours
-  Score: 192/216 (8.9/10)
+  Published score: 192/216 · 8.9/10
+  Review method: Six Cubed
 links:
-  Read the full review: https://wolffsroom.wordpress.com/2025/04/26/persona-4-golden-psvita-analise/
+  Read full original review (Portuguese): https://wolffsroom.wordpress.com/2025/04/26/persona-4-golden-psvita-analise/
 ---
+After **86 hours in Inaba**, Persona 4 Golden stands out for turning friendship, self-discovery and mystery into a deeply personal experience. This review was first published on **April 26, 2025** after finishing the PS Vita edition. Scores follow the *Six Cubed* system: six categories, each worth up to 36 points.
 
-A personal review of Persona 4 Golden on PS Vita, written after finishing the game in 86 hours. The score uses a "six cubed" system: six categories, each worth up to 36 points.
+## Graphics — Perfect (36/36)
+- Improved models, character expressions and textures compared with the PS2 edition.
+- The locations and characters blend well with the art direction, despite the Vita hardware constraints.
+- Portrait sprites are more expressive than some 3D character animations.
 
-## Pros
-- Well-written story, with deep characters and funny moments
-- Excellent Brazilian Portuguese translation
-- Soundtrack with original and new tracks
-- Improved graphics over the PS2 version
-- Persona, skill and fusion systems
+## Story — Perfect (36/36)
+- The Inaba murder mystery, the TV world and growing friendships make the story engaging.
+- Memorable characters, humorous moments and anime cutscenes add to its personality.
+- The original review praises the Brazilian Portuguese fan translation.
 
-## Cons
-- Repetitive dungeons
-- Weak romances with little impact on the story
-- Inaba is small and limited
-- 3D models are less expressive than the dialogue sprites
+## Gameplay — Great (30/36)
+- The calendar balances school, studying, Social Links, romance and dungeon exploration.
+- Turn-based battles, Personas and fusion provide tactical variety.
+- Dungeon repetition and the relatively limited impact of romances are downsides.
 
-## Verdict
-- Recommended, especially if you are new to the series
+## Soundtrack — Perfect (36/36)
+- Shoji Meguro mixes rock, jazz, pop and electronic elements.
+- The Golden edition combines original and additional tracks to support the atmosphere.
+
+## Level design — Great (30/36)
+- Inaba's relatively small world is packed with social activities.
+- Procedural dungeons are challenging but can feel repetitive.
+
+## Length — Great (30/36)
+- Plenty of story, relationship building and optional content.
+- My playthrough lasted **86 hours**.
+
+## Verdict — 8.9/10
+- **Recommended!** An excellent introduction to Persona and a memorable journey through friendship, personal growth and mystery.
+- Original published score: **192/216 (8.9/10)**.
+
+*This page summarizes the author's original Portuguese review; see the linked WordPress article for the full analysis.*
