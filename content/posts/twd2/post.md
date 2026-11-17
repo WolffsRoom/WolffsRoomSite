@@ -39,10 +39,10 @@ links:
 
 downloads:
   - tipo: traducao
-    nome: Pacote PT-BR — twd2
-    url: https://www.mediafire.com/file/6a5btu7eg3buazc/Tradu%C3%A7%C3%A3o_TWD_Temporada2.rar/file
+    nome: "The Walking Dead: Temporada 2 (PTBR)"
+    url: https://drive.google.com/file/d/1_U2kVFTmZ0uiHE1s2I9BHViSMlbhrCGw/view?usp=sharing
     alternativas:
-      - https://drive.google.com/file/d/1_U2kVFTmZ0uiHE1s2I9BHViSMlbhrCGw/view?usp=sharing
+      - https://www.mediafire.com/file/6a5btu7eg3buazc/Tradu%C3%A7%C3%A3o_TWD_Temporada2.rar/file
       - "https://mega.nz/file/w0MlQDgD#yYMDDbmC-Cg5-8wxQT4Bvkjlpu_AvKkYFpds1RBwkeA"
     senha: wolffsroom
     app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0

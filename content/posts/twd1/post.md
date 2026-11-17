@@ -39,10 +39,10 @@ links:
   MediaFire: https://www.mediafire.com/file/057iv1x99q0djb1/Tradu%C3%A7%C3%A3o_Oficial_The_Walking_Dead_Temporada_1_PS_Vita.rar/file
 downloads:
   - tipo: traducao
-    nome: The Walking Dead Temporada 1 - Tradução PT-BR
-    url: https://www.mediafire.com/file/057iv1x99q0djb1/Tradu%C3%A7%C3%A3o_Oficial_The_Walking_Dead_Temporada_1_PS_Vita.rar/file
+    nome: "The Walking Dead: Temporada 1 (PTBR)"
+    url: https://drive.google.com/file/d/1XNHD9ruQsComRdrR3jnbu4yGVJJS9ErU/view?usp=sharing
     alternativas:
-      - https://drive.google.com/file/d/1XNHD9ruQsComRdrR3jnbu4yGVJJS9ErU/view?usp=sharing
+      - https://www.mediafire.com/file/057iv1x99q0djb1/Tradu%C3%A7%C3%A3o_Oficial_The_Walking_Dead_Temporada_1_PS_Vita.rar/file
       - 'https://mega.nz/file/g0sBgDDJ#ipYFjee1zWiwcLpi8uqtZumiFgvU0iAdLIyihQS6CLA'
     senha: wolffsroom
     app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0

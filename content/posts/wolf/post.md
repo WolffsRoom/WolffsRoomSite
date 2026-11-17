@@ -42,10 +42,10 @@ links:
 
 downloads:
   - tipo: traducao
-    nome: Pacote PT-BR — wolf
-    url: https://www.mediafire.com/file/j4m92448sonzci1/Tradu%C3%A7%C3%A3o_-_The_Wolf_Among_Us_%28PS_Vita%29.rar/file
+    nome: The Wolf Among Us (PTBR)
+    url: https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing
     alternativas:
-      - https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing
+      - https://www.mediafire.com/file/j4m92448sonzci1/Tradu%C3%A7%C3%A3o_-_The_Wolf_Among_Us_%28PS_Vita%29.rar/file
       - "https://mega.nz/file/9otQDLYR#TqVqHv7MGhEdrEgTdc9k_2rNXwgqFdUuT5fB0Tk4u3s"
     senha: wolffsroom
     app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
