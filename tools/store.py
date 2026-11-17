@@ -234,17 +234,36 @@ def write_store(posts, order, feat, groups, out_dir):
             img = Image.open(os.path.join(p['folder'], os.path.basename(s)))
             it['capturas'].append(_save(_fit(img, SHOT, 'conter', p['pixel']), p['pixel'], f'{store_dir}/{slug}', f'cap{i}', out_dir))
         for d in p.get('downloads') or []:
-            # A versão pública atual não extrai ZIP AES nem preserva mods antigos.
-            # Só liberar após publicar a v1.0 do app com o instalador seguro.
-            if d.get('app_pendente'):
+            # Legacy clients (v0.99.x) use store.json and must never receive
+            # ZIP-with-VPK, AES rePatch or RAR installs meant for v1.0.
+            if d.get('app_pendente') or d.get('app_min'):
                 continue
             r = resolve_download(d, p['links'] + p.get('sources', []))
             if r:
                 it['downloads'].append(r)
         items.append(it)
-    store = {'formato': 1, 'app': app_release(), 'posts': items}
+    release = app_release()
+    store = {'formato': 1, 'app': release, 'posts': items}
     with open(os.path.join(out_dir, 'store.json'), 'w', encoding='utf-8') as f:
         json.dump(store, f, ensure_ascii=False, separators=(',', ':'))
+
+    # v1.0 reads its own catalog. Old installed versions remain on store.json,
+    # avoiding accidental unsafe interpretation of the new package types.
+    import copy
+    v1 = copy.deepcopy(store)
+    by_slug = {item['slug']: item for item in v1['posts']}
+    for slug in order:
+        p = posts[slug]
+        for d in p.get('downloads') or []:
+            if d.get('app_pendente') or d.get('app_min') != '1.0':
+                continue
+            resolved = resolve_download(d, p['links'] + p.get('sources', []))
+            if resolved:
+                by_slug[slug]['downloads'].append(resolved)
+    with open(os.path.join(out_dir, 'store-v1.json'), 'w', encoding='utf-8') as f:
+        json.dump(v1, f, ensure_ascii=False, separators=(',', ':'))
+
     nd = sum(len(i['downloads']) for i in items)
+    v1_nd = sum(len(i['downloads']) for i in v1['posts'])
     app = store['app']['versao'] if store['app'] else 'nenhuma'
-    print(f'store.json: {len(items)} posts, {nd} downloads, app {app}')
+    print(f'store.json: {len(items)} posts, {nd} downloads (legacy); store-v1.json: {v1_nd} downloads, app {app}')

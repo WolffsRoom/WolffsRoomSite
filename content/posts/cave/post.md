@@ -43,7 +43,7 @@ downloads:
       - https://drive.google.com/file/d/1OJuyRLHyqmou2FMxREUEdvcgUqcbbkD7/view
       - "https://mega.nz/file/d1FAmKyS#tp7T-DAA2MG4HymcnNjuhUJy-p7YfZSkwNT-nd5VF-g"
     senha: wolffsroom
-    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     arquivo: CaveStory.zip
     titleid: DOKU41220
 ---

@@ -48,7 +48,7 @@ downloads:
       - https://drive.google.com/file/d/15wPBd36wCPJnXkCQxTQ8Kk_lovv4AU-p/view?usp=sharing
       - "https://mega.nz/file/9otQDLYR#TqVqHv7MGhEdrEgTdc9k_2rNXwgqFdUuT5fB0Tk4u3s"
     senha: wolffsroom
-    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     arquivo: Traducao-The-Wolf-Among-Us.rar
     titleid: PCSE00352
 ---

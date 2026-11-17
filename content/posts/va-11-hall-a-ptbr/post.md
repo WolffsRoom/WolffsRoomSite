@@ -41,7 +41,7 @@ downloads:
       - https://www.mediafire.com/file/t86bnirt2nx5s2c/PCSE00756.zip/file
       - 'https://mega.nz/file/cl92nKLS#NZd4PB2IACGd8YwyhJpYudO4DNRlEtDPlPJ6IyUWn-4'
     senha: wolffsroom
-    app_pendente: true  # habilitar só após publicar o instalador seguro na v1.0
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     versao: "2025.05.04"
     arquivo: PCSE00756.zip
     tamanho: 8818828

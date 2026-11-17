@@ -51,6 +51,31 @@ class PackageModesTests(unittest.TestCase):
                 self.assertEqual(item["downloads"], [])
                 self.assertEqual(len(item["pt"]["links"]), 3)
 
+    def test_downloads_are_first_sidebar_section_in_both_languages(self):
+        for slug in ("delta1", "wipeout", "va-11-hall-a-ptbr"):
+            post = build.load_post(slug)
+            for lang in ("pt", "en"):
+                with self.subTest(slug=slug, lang=lang):
+                    doc = build.article(post, lang)
+                    sidebar = doc.split("<aside", 1)[1].split("</aside>", 1)[0]
+                    downloads = "Downloads"
+                    details = "Detalhes" if lang == "pt" else "Details"
+                    self.assertLess(sidebar.index(downloads), sidebar.index(details))
+
+    def test_v1_catalog_includes_only_supported_translations(self):
+        slugs = ("delta1", "cave", "icono", "va-11-hall-a-ptbr",
+                 "wolf", "twd1", "twd2", "wipeout")
+        posts = {slug: build.load_post(slug) for slug in slugs}
+        with TemporaryDirectory() as out:
+            with patch.object(store, "app_release", return_value=None):
+                store.write_store(posts, list(posts), "delta1", build.GROUPS, out)
+            old = json.loads((Path(out) / "store.json").read_text("utf-8"))
+            v1 = json.loads((Path(out) / "store-v1.json").read_text("utf-8"))
+            self.assertEqual(sum(len(p["downloads"]) for p in old["posts"]), 0)
+            eligible = {p["slug"] for p in v1["posts"] if p["downloads"]}
+            self.assertEqual(eligible, set(slugs) - {"wipeout"})
+            self.assertEqual(sum(len(p["downloads"]) for p in v1["posts"]), 7)
+
     def test_future_catalog_routes_vpk_and_app_files(self):
         posts = {slug: build.load_post(slug) for slug in ("delta1", "wipeout")}
         for p in posts.values():
@@ -58,7 +83,7 @@ class PackageModesTests(unittest.TestCase):
         with TemporaryDirectory() as out:
             with patch.object(store, "app_release", return_value=None):
                 store.write_store(posts, list(posts), "delta1", build.GROUPS, out)
-            payload = json.loads((Path(out) / "store.json").read_text("utf-8"))
+            payload = json.loads((Path(out) / "store-v1.json").read_text("utf-8"))
             data = {item["slug"]: item["downloads"] for item in payload["posts"]}
             self.assertEqual(data["delta1"][0]["tipo"], "vpk")
             self.assertEqual(data["delta1"][0]["arquivo"], "Deltarune PTBR.zip")

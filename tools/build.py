@@ -105,6 +105,8 @@ def parse_downloads(raw):
             raise PostError(f'downloads, item {i}: alternativas devem ser uma lista de URLs HTTPS')
         if d.get('senha') and tipo not in ('traducao', 'vpk', 'app_arquivos') and not d.get('app_pendente'):
             raise PostError(f'downloads, item {i}: tipo de pacote sem suporte a senha')
+        if d.get('app_min') and not re.fullmatch(r'\d+\.\d+(?:\.\d+)?', str(d.get('app_min'))):
+            raise PostError(f'downloads, item {i}: app_min requer versao numerica (ex.: 1.0)')
         if not d.get('url') and not d.get('repo'):
             raise PostError(f'downloads, item {i}: informe "repo:" (release do GitHub) ou "url:" (link direto)')
         if d.get('repo') and not re.fullmatch(r'[\w.-]+/[\w.-]+', str(d['repo'])):
@@ -123,6 +125,7 @@ def parse_downloads(raw):
             'tamanho': d.get('tamanho'), 'titleids': [str(t) for t in tids],
             'alternativas': mirrors, 'senha': str(d.get('senha') or ''),
             'app_pendente': bool(d.get('app_pendente')),
+            'app_min': str(d.get('app_min') or ''),
             'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': vita_github_url(d.get('instrucoes')) if d.get('instrucoes') else None,
             'plugin': d.get('plugin') or ('rePatch' if tipo == 'traducao' else None),
         })
@@ -535,13 +538,24 @@ def article(p0, lang):
                         f'<span style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; line-height: 1.5">{PLAY}<span style="{DF} font-size: 16px; text-transform: uppercase; text-shadow: 4px 4px 0 #000000">{e(ui["watch"])}</span></span>\n</a>\n'
                         f'<span style="color: #a8a8a8">{e(label)}. {e(ui["video_note"])}</span>\n')
     side = ''
+    # Downloads are the first sidebar section for both ports and translations.
+    if p['links']:
+        download_links = ''
+        for i, (lab, url) in enumerate(p['links']):
+            st = ('background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff'
+                  if i == 0 else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a')
+            download_links += (f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" '
+                               f'style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; '
+                               f'text-decoration: none; text-align: center; {DF} font-size: 16px; '
+                               f'line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n')
+        side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["links"])}</h2>\n{download_links}</div>\n'
     if p['meta']:
         rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['meta'])
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["info"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
     bars = ([bar(ui['total'], p['progress'])] if p['progress'] is not None else []) + [bar(*b) for b in p['bars']]
     if bars:
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(p["bars_title"] or ui["progress"])}</h2>\n' + '\n'.join(bars) + '\n</div>\n'
-    for key, items in (('links', p['links']), ('sources', p.get('sources') or [])):
+    for key, items in (('sources', p.get('sources') or []),):
         if not items:
             continue
         links = ''

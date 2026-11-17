@@ -48,7 +48,7 @@ class VA11StoreTests(unittest.TestCase):
             with patch.object(store, "app_release", return_value=None):
                 store.write_store({p["slug"]: p}, [p["slug"]],
                                   p["slug"], build.GROUPS, out)
-            data = json.loads((Path(out) / "store.json").read_text("utf-8"))
+            data = json.loads((Path(out) / "store-v1.json").read_text("utf-8"))
             ds = data["posts"][0]["downloads"]
             self.assertEqual(len(ds), 1)
             self.assertEqual(ds[0]["tipo"], "traducao")

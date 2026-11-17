@@ -45,7 +45,7 @@ downloads:
       - https://drive.google.com/file/d/1_U2kVFTmZ0uiHE1s2I9BHViSMlbhrCGw/view?usp=sharing
       - "https://mega.nz/file/w0MlQDgD#yYMDDbmC-Cg5-8wxQT4Bvkjlpu_AvKkYFpds1RBwkeA"
     senha: wolffsroom
-    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     arquivo: Tradução_TWD_Temporada2.rar
     titleid: PCSE00556
 ---

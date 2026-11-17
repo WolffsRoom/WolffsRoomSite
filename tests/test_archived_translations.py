@@ -66,7 +66,11 @@ class ArchiveTranslationsTests(unittest.TestCase):
                 d = p["downloads"][0]
                 self.assertEqual(d["titleids"], [titleid])
                 self.assertEqual(d["senha"], "wolffsroom")
-                self.assertTrue(d["app_pendente"])
+                if slug == "wipeout":
+                    self.assertTrue(d["app_pendente"])
+                else:
+                    self.assertFalse(d["app_pendente"])
+                    self.assertEqual(d["app_min"], "1.0")
                 self.assertEqual(len(d["alternativas"]), 2)
                 self.assertEqual(len({d["url"], *d["alternativas"]}), 3)
                 if slug in ("delta1", "cave"):

@@ -45,7 +45,7 @@ downloads:
       - https://drive.google.com/file/d/1-uf89S5Bz9iMJZzA5AkSmT48WTpiNqnm/view
       - "https://mega.nz/file/slUUhQKL#zS1wuEAgez2n8HfPoLCPBHJBKDk37XHKuaDwuFygJ6U"
     senha: wolffsroom
-    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     arquivo: Deltarune PTBR.zip
     titleid: PCSB00964
 ---

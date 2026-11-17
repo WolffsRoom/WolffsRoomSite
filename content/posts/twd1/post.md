@@ -45,7 +45,7 @@ downloads:
       - https://drive.google.com/file/d/1XNHD9ruQsComRdrR3jnbu4yGVJJS9ErU/view?usp=sharing
       - 'https://mega.nz/file/g0sBgDDJ#ipYFjee1zWiwcLpi8uqtZumiFgvU0iAdLIyihQS6CLA'
     senha: wolffsroom
-    app_pendente: true
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     arquivo: The_Walking_Dead_Temporada_1.rar
     titleid: PCSE00316
 ---

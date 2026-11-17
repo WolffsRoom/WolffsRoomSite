@@ -186,3 +186,19 @@ Remova o campo ao publicar a versão do aplicativo que conhece esse fluxo.
 ### Tipo de noticia (etiqueta amarela)
 
 No cabecalho do post.md use novidade: Release para o primeiro lancamento publico de um projeto, ou novidade: Update para uma atualizacao. A etiqueta pixelada e inclinada aparece no site e no VPK. Omita o campo para posts sem lancamento.
+
+## Compatibilidade do instalador da Wolff's Store v1.0
+
+Para pacotes que a v0.99.x não sabia instalar (ZIP com VPK, ZIP/RAR de rePatch),
+inclua o campo app_min no item de download:
+
+    app_min: "1.0"
+
+O site continua gerando store.json para as lojas antigas, SEM esses novos pacotes.
+A v1.0 sincroniza store-v1.json e recebe os sete pacotes de tradução habilitados
+para o fluxo automático. Downloads com app_pendente: true continuam ocultos
+nos dois catálogos (ex.: WipEout 2048, que ainda distribui só um torrent).
+
+Os links dentro de links: continuam visíveis e separados no site, mesmo quando
+o app tem apenas um botão de instalação e fallbacks configurados em alternativas:.
+Datas de publicação não devem ser substituídas pela data de revisão do post.

@@ -41,7 +41,7 @@ downloads:
       - https://drive.google.com/file/d/1MpvamxqtuDs36nCKiUClXYD7_hCNTV3W/view
       - "https://mega.nz/file/ggEWXKxb#j3McOGblU7Gz76jTtNdEUWW23NQJNzDEvw9SK5VBgko"
     senha: wolffsroom
-    app_pendente: true  # ZIP com VPK/RAR ou patch rePatch; liberar após validação do instalador da v1.0
+    app_min: "1.0" # instalador compativel somente com Wolffs Store v1.0
     arquivo: PCSE01177.zip
     titleid: PCSE01177
 ---
