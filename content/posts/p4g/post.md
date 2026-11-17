@@ -37,6 +37,8 @@ Após **86 horas em Inaba**, Persona 4 Golden se destaca pela maneira como trans
 - Ambientes e personagens combinam com o estilo visual do jogo, mesmo nas limitações do PS Vita.
 - Os sprites nos diálogos transmitem mais emoção do que algumas animações dos modelos 3D.
 
+![Personagens de Persona 4 Golden em comparação visual](modelo-personagens.gif)
+
 ## História — Perfeito (36/36)
 - A investigação de assassinatos em Inaba, o mundo dentro das televisões e as relações entre amigos mantêm o mistério envolvente.
 - Personagens profundos, momentos de humor e cenas em estilo anime enriquecem a narrativa.
@@ -47,6 +49,8 @@ Após **86 horas em Inaba**, Persona 4 Golden se destaca pela maneira como trans
 - Combates por turnos, Personas e fusões oferecem boas possibilidades de estratégia.
 - As masmorras podem ser repetitivas; os romances têm consequências mais limitadas do que o esperado.
 
+![Batalha em Persona 4 Golden](combate.gif)
+
 ## Trilha sonora — Perfeito (36/36)
 - As composições de Shoji Meguro misturam rock, jazz, pop e elementos eletrônicos.
 - Faixas originais e músicas adicionais da edição Golden ajudam a dar personalidade a cada momento da aventura.
@@ -55,9 +59,14 @@ Após **86 horas em Inaba**, Persona 4 Golden se destaca pela maneira como trans
 - O mundo social de Inaba é denso em atividades e interações, mesmo com áreas pequenas.
 - Masmorras procedurais oferecem desafios, embora a exploração possa se tornar repetitiva.
 
+![Cenários e exploração de Persona 4 Golden](inaba.jpg)
+
 ## Duração — Ótimo (30/36)
 - A campanha combina dezenas de horas de história, vínculos sociais e conteúdo opcional.
 - Minha conclusão levou **86 horas**, sem esgotar todas as possibilidades da aventura.
+
+## Recomendo?
+![Teddie de Persona 4 Golden](teddie.gif)
 
 ## Veredito — 8.9/10
 - **Recomendo!** Persona 4 Golden é uma ótima porta de entrada para a série e uma jornada memorável sobre amizade, superação e mistério.

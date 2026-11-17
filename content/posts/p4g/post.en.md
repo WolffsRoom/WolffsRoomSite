@@ -30,6 +30,8 @@ After **86 hours in Inaba**, Persona 4 Golden stands out for turning friendship,
 - The locations and characters blend well with the art direction, despite the Vita hardware constraints.
 - Portrait sprites are more expressive than some 3D character animations.
 
+![Persona 4 Golden character model comparison](modelo-personagens.gif)
+
 ## Story — Perfect (36/36)
 - The Inaba murder mystery, the TV world and growing friendships make the story engaging.
 - Memorable characters, humorous moments and anime cutscenes add to its personality.
@@ -40,6 +42,8 @@ After **86 hours in Inaba**, Persona 4 Golden stands out for turning friendship,
 - Turn-based battles, Personas and fusion provide tactical variety.
 - Dungeon repetition and the relatively limited impact of romances are downsides.
 
+![Persona 4 Golden combat](combate.gif)
+
 ## Soundtrack — Perfect (36/36)
 - Shoji Meguro mixes rock, jazz, pop and electronic elements.
 - The Golden edition combines original and additional tracks to support the atmosphere.
@@ -48,9 +52,14 @@ After **86 hours in Inaba**, Persona 4 Golden stands out for turning friendship,
 - Inaba's relatively small world is packed with social activities.
 - Procedural dungeons are challenging but can feel repetitive.
 
+![Persona 4 Golden exploration](inaba.jpg)
+
 ## Length — Great (30/36)
 - Plenty of story, relationship building and optional content.
 - My playthrough lasted **86 hours**.
+
+## Recommendation
+![Teddie from Persona 4 Golden](teddie.gif)
 
 ## Verdict — 8.9/10
 - **Recommended!** An excellent introduction to Persona and a memorable journey through friendship, personal growth and mystery.

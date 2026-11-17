@@ -48,21 +48,27 @@ def vita_github_url(url):
 # ---------------------------------------------------------------- leitura
 
 def parse_markdown(body):
-    """Separa o texto em 'sobre' (antes do primeiro ##) e seções (## Título + lista)."""
+    """Read post prose and preserve inline media order inside content sections."""
     about, secs, cur = [], [], None
     for line in body.splitlines():
-        s = line.strip()
-        if s.startswith('## '):
-            cur = {'title': s[3:].strip(), 'items': [], 'paras': []}
+        text = line.strip()
+        if text.startswith('## '):
+            cur = {'title': text[3:].strip(), 'items': [], 'paras': [], 'blocks': []}
             secs.append(cur)
-        elif not s:
+        elif not text:
             continue
         elif cur is None:
-            about.append(s)
-        elif re.match(r'^[-*] ', s):
-            cur['items'].append(s[2:].strip())
+            about.append(text)
+        elif re.match(r'^[-*] ', text):
+            item = text[2:].strip()
+            cur['items'].append(item)
+            cur['blocks'].append(('li', item))
+        elif re.fullmatch(r'!\[[^\]]*\]\([A-Za-z0-9][A-Za-z0-9._-]*\)', text):
+            match = re.fullmatch(r'!\[([^\]]*)\]\(([A-Za-z0-9][A-Za-z0-9._-]*)\)', text)
+            cur['blocks'].append(('media', match.group(1), match.group(2)))
         else:
-            cur['paras'].append(s)
+            cur['paras'].append(text)
+            cur['blocks'].append(('p', text))
     return ' '.join(about), secs
 
 
@@ -179,6 +185,12 @@ def load_post(slug):
         progress = max(0, min(100, int(progress)))
     else:
         progress = None
+    # Embedded media is distinct from the optional screenshot gallery.
+    # Validate all local references before writing any public HTML.
+    for sec in secs:
+        for block in sec.get('blocks', []):
+            if block[0] == 'media':
+                img(block[2])
     p = {
         'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date, 'when': when,
         'updated': post_last_updated(slug, date),
@@ -221,6 +233,10 @@ def load_english(folder, p):
     m = re.match(r'^---\s*\n(.*?)\n---\s*\n?(.*)$', raw, re.S)
     meta, body = (yaml.safe_load(m.group(1)) or {}, m.group(2)) if m else ({}, raw)
     about, secs = parse_markdown(body)
+    for sec in secs:
+        for block in sec.get('blocks', []):
+            if block[0] == 'media' and not os.path.isfile(os.path.join(folder, block[2])):
+                raise PostError(f'English media not found: {block[2]}')
     en = {'about': about, 'secs': secs}
     for src, dst in (('titulo', 'title'), ('tag', 'tag'), ('status', 'status'), ('resumo', 'desc'),
                      ('video_legenda', 'video_label'), ('titulo_barras', 'bars_title')):
@@ -513,12 +529,38 @@ def article(p0, lang):
     p, ui = V(p0, lang), UI[lang]
     secs = ''
     for s in p['secs']:
-        inner = ''.join(f'<p style="margin: 0; color: #d6d6d6">{inline(t)}</p>\n' for t in s['paras'])
-        if s['items']:
-            lis = '\n'.join(f'<li>{inline(i)}</li>' for i in s['items'])
-            inner += f'<ul style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; color: #d6d6d6; list-style: square">\n{lis}\n</ul>\n'
+        blocks = s.get('blocks') or []
+        if not any(block[0] == 'media' for block in blocks):
+            inner = ''.join(f'<p style="margin: 0; color: #d6d6d6">{inline(t)}</p>\n' for t in s['paras'])
+            if s['items']:
+                lis = '\n'.join(f'<li>{inline(i)}</li>' for i in s['items'])
+                inner += f'<ul style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; color: #d6d6d6; list-style: square">\n{lis}\n</ul>\n'
+        else:
+            # Maintain prose, bullets and images/GIFs exactly in author order.
+            inner = ''
+            pending = []
+            def flush_items():
+                nonlocal pending
+                if not pending:
+                    return ''
+                lis = '\n'.join(f'<li>{inline(t)}</li>' for t in pending)
+                pending = []
+                return (f'<ul style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 6px; color: #d6d6d6; list-style: square">\n{lis}\n</ul>\n')
+            for block in blocks:
+                if block[0] == 'li':
+                    pending.append(block[1])
+                    continue
+                inner += flush_items()
+                if block[0] == 'p':
+                    inner += f'<p style="margin: 0; color: #d6d6d6">{inline(block[1])}</p>\n'
+                elif block[0] == 'media':
+                    alt, filename = block[1], block[2]
+                    src = f'posts/{p["slug"]}/{filename}'
+                    inner += (f'<figure class="wr-review-media" style="margin: 8px 0; max-width: 100%; align-self: center; border: 4px solid #5a5a5a; background: #000; line-height: 0; overflow: hidden">'
+                              f'<img src="{e(src)}" alt="{e(alt)}" loading="lazy" style="width: 100%; max-height: 580px; height: auto; object-fit: contain; display: block"></figure>\n')
+            inner += flush_items()
         secs += section(s['title'], inner)
-    if p['shots']:
+    if p['shots'] and p['cat'] != 'reviews':
         imgs = '\n'.join(f'<div class="wr-shot" style="border: 4px solid #5a5a5a; background: #000000; line-height: 0"><img src="{s}" alt="{e(ui["shot_of"] + " " + p["title"])}" loading="lazy" style="width: 100%; height: auto; display: block"></div>' for s in p['shots'])
         secs += section(ui['shots'], f'<div class="wr-shots" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">\n{imgs}\n</div>\n')
     if p.get('video_file'):

@@ -25,9 +25,15 @@ links:
 ---
 God of War Ragnarök follows **Kratos and Atreus** on the final stretch of their Norse adventure. This personal review was first published on **January 26, 2025** after **48 hours on PlayStation 4**. It uses the author's *Six Cubed* method: six categories, each worth up to 36 points.
 
+## Images from the journey
+![Kratos pixel art](captura-3.gif)
+![God of War Ragnarök key art](capa.jpg)
+
 ## Graphics — Perfect (36/36)
 - Beautiful PS4 environments, full of detail in water, forests, boats and the Norse realms.
 - Strong art direction rewards exploration and offers plenty of memorable scenes.
+
+![God of War Ragnarök combat](combate.gif)
 
 ## Story — Great (30/36)
 - Kratos and Atreus grow through emotional developments, revelations and new encounters.
