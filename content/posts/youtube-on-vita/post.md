@@ -6,7 +6,7 @@ data: '2026-11-17 23:20'
 atualizado_em: 2026-11-18
 tag: Client não oficial · YouTube · PS Vita
 status: Alpha v0.34 · Testes no Vita real
-novidade: Update
+novidade: Release
 versao: v0.34
 resumo: Interface original do YouTube on TV no PS Vita, com login, toque e reprodução H.264/AAC em até 720p.
 chamada: YouTube no PS Vita real, com a experiência Starboard 15, controle por toque e vídeo até 720p.
