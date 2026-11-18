@@ -28,7 +28,7 @@ ficha:
   Title ID: YTVCB0001
   Plugin recomendado: CapUnlocker (4 núcleos de CPU; opcional)
 links:
-  Wolff's Store (PS Vita): https://wolffsroom.github.io/WolffsRoomSite/
+  Somente na Wolff's Store: https://wolffsroom.github.io/WolffsRoomSite/
 fontes:
   GitHub - YouTubeOnVita: https://github.com/WolffsRoom/YouTubeOnVita
 downloads:
