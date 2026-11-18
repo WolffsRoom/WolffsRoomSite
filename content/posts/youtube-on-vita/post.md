@@ -8,8 +8,6 @@ status: Alpha experimental
 resumo: O YouTube on TV real, executado no PS Vita por meio de um port experimental do Google Cobalt e Starboard.
 chamada: O verdadeiro YouTube on TV no PlayStation Vita — um port experimental do motor Cobalt, não uma interface imitada.
 capa: capa.png
-capturas:
-  - navegacao.gif
 ficha:
   Versão: Alpha v0.22 (experimental)
   Motor: Google Cobalt Evergreen 5.50.2
