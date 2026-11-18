@@ -134,6 +134,7 @@ def parse_downloads(raw):
             'app_min': str(d.get('app_min') or ''),
             'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': vita_github_url(d.get('instrucoes')) if d.get('instrucoes') else None,
             'plugin': d.get('plugin') or ('rePatch' if tipo == 'traducao' else None),
+             'aviso_plugin': str(d.get('aviso_plugin') or ''),
         })
     return out
 
@@ -191,9 +192,19 @@ def load_post(slug):
         for block in sec.get('blocks', []):
             if block[0] == 'media':
                 img(block[2])
+    manual_updated = meta.get('atualizado_em')
+    if manual_updated:
+        if isinstance(manual_updated, str):
+            manual_updated = datetime.date.fromisoformat(manual_updated[:10])
+        if isinstance(manual_updated, datetime.datetime):
+            manual_updated = manual_updated.date()
+        if not isinstance(manual_updated, datetime.date):
+            raise PostError('atualizado_em: informe YYYY-MM-DD')
+        if manual_updated < date:
+            raise PostError('atualizado_em: não pode ser anterior à publicação')
     p = {
         'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date, 'when': when,
-        'updated': post_last_updated(slug, date),
+        'updated': manual_updated or post_last_updated(slug, date),
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
         'author': str(meta.get('autor') or '').strip(),
         'author_url': str(meta.get('autor_url') or '').strip(),
@@ -611,12 +622,12 @@ def article(p0, lang):
         rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['clock'])
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["clock"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
     published_date = post_date_html(p['date'], lang)
-    updated_date = (f'<span>{"Atualizado em" if lang == "pt" else "Last update"}: '
+    updated_date = (f'<span>{"Atualizado em" if lang == "pt" else "Updated on"}: '
                     f'{post_date_html(p["updated"], lang)}</span>' if p.get('updated') else '')
     date_line = (
         '<p class="wr-post-dates" style="margin: -16px 0 0; color: #a8a8a8; '
         'font-size: 15px; line-height: 1.6; text-align: center; '
-        'display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 20px">'
+        'display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px">'
         f'<span>{"Publicado em" if lang == "pt" else "Published on"}: {published_date}</span>'
         f'{updated_date}</p>\n'
     )

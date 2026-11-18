@@ -1,11 +1,11 @@
 ---
 tag: Port · GameMaker · PS Vita
-status: v0.55 · Playable
-resumo: "New v0.55 release of the Pizza Tower SAGE 2019 Demo (v14) PS Vita port."
+status: v0.62 · Playable
+resumo: "v0.62 update of the SAGE 2019 Demo (v14) port, improving GPU residency, palette shading, input and pause controls."
 chamada: Pizza Tower SAGE 2019 is now on PS Vita! Three playable v14 demo stages at 60 FPS.
 ficha:
   Status: Released · Playable (95% progress)
-  Version: v0.55
+  Version: v0.62
   Original demo: Pizza Tower SAGE 2019 (v14)
   Original game: Tour de Pizza
   Original engine: GameMaker
@@ -14,7 +14,7 @@ ficha:
   Data: ux0:data/pizzatowersage/data.win
 video_legenda: PS Vita port trailer
 links:
-  Download VPK: https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.55/PizzaTowerSAGE-v0.55.vpk
+  Download VPK: https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.62/PizzaTowerSAGE-v0.62.vpk
   Download data: https://drive.google.com/file/d/1CBof60EExpF4IrZMhyix6CvRicqSONRA/view?usp=sharing
 fontes:
   GitHub: https://github.com/WolffsRoom/PizzaTowerSage2019Vita
@@ -25,9 +25,16 @@ clock:
   Performance: 60 FPS (as reported by project testing)
 ---
 
-Unofficial PlayStation Vita port of the free **Pizza Tower SAGE 2019 Demo (v14)**, newly released as **v0.55**. Powered by Butterscotch, VitaGL, and OpenAL. The demo is playable from start to finish, with **95% overall project progress**.
+Unofficial PlayStation Vita port of the free **Pizza Tower SAGE 2019 Demo (v14)**, newly released as **v0.62**. Powered by Butterscotch, VitaGL, and OpenAL. The demo is playable from start to finish, with **95% overall project progress**.
 
-## What's new in v0.55
+## What's new in v0.62
+
+- Permanent BC3 (DXT5) residency for all 35 texture pages (~87 MiB), avoiding mid-frame texture evictions and synchronizing GPU work on room transitions
+- SAGE Blue Peppino costume via the pal_swapper shader without extra uncompressed VRAM texture atlases
+- Dash / Super Jump fix: invalid VK_NOKEY settings can no longer trigger unintended Super Jumps at Mach 3
+- Fixed level selector activation and analog drift: Up now uses D-pad Up (or configured touch Up) to avoid phantom inputs
+- **Start** opens the original SAGE pause menu; **Select** opens the port's settings overlay
+
 
 - Three playable stages: **Pizzascape**, **Oregano Desert**, and **The Snick Challenge**
 - 60 FPS in hardware tests with VitaGL rendering
@@ -39,7 +46,7 @@ Unofficial PlayStation Vita port of the free **Pizza Tower SAGE 2019 Demo (v14)*
 
 ## Installation
 
-- Download the [v0.55 VPK](https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.55/PizzaTowerSAGE-v0.55.vpk) and install via VitaShell
+- Download the [v0.62 VPK](https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.62/PizzaTowerSAGE-v0.62.vpk) and install via VitaShell
 - Get the original free demo from the [official Pizza Tower itch.io page](https://pizzatowerguy.itch.io/pizza-tower-demo)
 - Extract data.win and copy to **ux0:data/pizzatowersage/data.win**
 - The Download data button preserves the previously shared external archive; verify it contains v14 demo data

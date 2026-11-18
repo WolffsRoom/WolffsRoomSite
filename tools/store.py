@@ -98,7 +98,8 @@ def resolve_download(d, post_links):
     """Devolve o download pronto para o app, ou None (com aviso) se não deu para resolver."""
     tipo = d['tipo']
     out = {'tipo': tipo, 'nome': latin(d.get('nome') or ''), 'precisa_dados': bool(d.get('precisa_dados')),
-           'titleids': d.get('titleids') or [], 'plugin': latin(d.get('plugin') or '')}
+           'titleids': d.get('titleids') or [], 'plugin': latin(d.get('plugin') or ''),
+           'aviso_plugin': latin(d.get('aviso_plugin') or '')}
     if d.get('url'):
         out['url'] = drive_direct(d['url'])
         out['alternativas'] = [drive_direct(u) for u in d.get('alternativas') or []]
@@ -262,6 +263,20 @@ def write_store(posts, order, feat, groups, out_dir):
                 by_slug[slug]['downloads'].append(resolved)
     with open(os.path.join(out_dir, 'store-v1.json'), 'w', encoding='utf-8') as f:
         json.dump(v1, f, ensure_ascii=False, separators=(',', ':'))
+
+    # v1.0.3+ reads its own catalog: earlier clients do not know the optional
+    # CapUnlocker pre-install warning yet.
+    v103 = copy.deepcopy(v1)
+    by_slug_v103 = {item['slug']: item for item in v103['posts']}
+    for slug in order:
+        for d in posts[slug].get('downloads') or []:
+            if d.get('app_pendente') or d.get('app_min') != '1.0.3':
+                continue
+            resolved = resolve_download(d, posts[slug]['links'] + posts[slug].get('sources', []))
+            if resolved:
+                by_slug_v103[slug]['downloads'].append(resolved)
+    with open(os.path.join(out_dir, 'store-v103.json'), 'w', encoding='utf-8') as f:
+        json.dump(v103, f, ensure_ascii=False, separators=(',', ':'))
 
     nd = sum(len(i['downloads']) for i in items)
     v1_nd = sum(len(i['downloads']) for i in v1['posts'])
