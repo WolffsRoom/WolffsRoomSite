@@ -597,10 +597,19 @@ def article(p0, lang):
         for i, (lab, url) in enumerate(p['links']):
             st = ('background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff'
                   if i == 0 else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a')
-            download_links += (f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" '
-                               f'style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; '
-                               f'text-decoration: none; text-align: center; {DF} font-size: 16px; '
-                               f'line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n')
+            if p['slug'] == 'youtube-on-vita' and url.rstrip('/') == 'https://wolffsroom.github.io/WolffsRoomSite':
+                # Store-exclusive builds must open the existing Store installation modal,
+                # not navigate to the home page or expose the YouTube VPK directly.
+                download_links += (f'<button class="wr-btn" type="button" data-act="openVita" data-hover="hov" '
+                                   f'style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; '
+                                   f'text-align: center; {DF} font-size: 16px; line-height: 1.6; '
+                                   f'text-transform: uppercase; cursor: pointer">'
+                                   + T(e(lab), e("Only on Wolff's Store")) + '</button>\n')
+            else:
+                download_links += (f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" '
+                                   f'style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; '
+                                   f'text-decoration: none; text-align: center; {DF} font-size: 16px; '
+                                   f'line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n')
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["links"])}</h2>\n{download_links}</div>\n'
     if p['meta']:
         rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['meta'])
