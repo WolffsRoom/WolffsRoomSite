@@ -132,6 +132,7 @@ def parse_downloads(raw):
             'alternativas': mirrors, 'senha': str(d.get('senha') or ''),
             'app_pendente': bool(d.get('app_pendente')),
             'app_min': str(d.get('app_min') or ''),
+            'instalar': bool(d.get('instalar')),
             'precisa_dados': bool(d.get('precisa_dados')), 'instrucoes': vita_github_url(d.get('instrucoes')) if d.get('instrucoes') else None,
             'plugin': d.get('plugin') or ('rePatch' if tipo == 'traducao' else None),
              'aviso_plugin': str(d.get('aviso_plugin') or ''),

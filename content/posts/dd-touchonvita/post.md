@@ -28,7 +28,16 @@ fontes:
   Release v0.59: https://github.com/WolffsRoom/DD-TouchOnVita/releases/tag/v0.59
 downloads:
   - tipo: plugin
-    nome: TouchOnVita v0.59 - ZIP
+    instalar: true
+    nome: TouchOnVita v0.59 - Baixar e instalar
+    url: https://github.com/WolffsRoom/DD-TouchOnVita/releases/download/v0.59/DDTouchUI-v0.59.zip
+    arquivo: DDTouchUI-v0.59.zip
+    versao: "0.59"
+    tamanho: 367560
+    app_min: "1.0.4"
+    instrucoes: https://github.com/WolffsRoom/DD-TouchOnVita#installation
+  - tipo: plugin
+    nome: TouchOnVita v0.59 - Apenas baixar
     url: https://github.com/WolffsRoom/DD-TouchOnVita/releases/download/v0.59/DDTouchUI-v0.59.zip
     arquivo: DDTouchUI-v0.59.zip
     versao: "0.59"
@@ -52,6 +61,6 @@ Arrastar o mapa, drag-and-drop e alguns fluxos avançados ainda não possuem sup
 
 ## Instalação
 
-Baixe o ZIP e siga as instruções de instalação manual no GitHub. É necessário adicionar a entrada do plugin no **taiHEN** e reiniciar o jogo. Faça backup da configuração antes de instalar. A opção de instalação automática pela Wolff's Store será disponibilizada somente após a atualização e validação do instalador.
+Na **Wolff's Store v1.0.4 ou superior**, escolha entre **Apenas baixar** (salva em ux0:Downloads/Plugins/) e **Baixar e instalar** (instala em ur0:tai e ux0:data, com backup automático e confirmação). Reinicie o PS Vita após a primeira instalação. Em versões anteriores da loja, use apenas o download e instale manualmente seguindo o GitHub.
 
 O download não contém dados comerciais ou áudio protegido do jogo.

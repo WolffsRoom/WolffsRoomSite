@@ -99,7 +99,8 @@ def resolve_download(d, post_links):
     tipo = d['tipo']
     out = {'tipo': tipo, 'nome': latin(d.get('nome') or ''), 'precisa_dados': bool(d.get('precisa_dados')),
            'titleids': d.get('titleids') or [], 'plugin': latin(d.get('plugin') or ''),
-           'aviso_plugin': latin(d.get('aviso_plugin') or '')}
+           'aviso_plugin': latin(d.get('aviso_plugin') or ''),
+           'instalar': bool(d.get('instalar'))}
     if d.get('url'):
         out['url'] = drive_direct(d['url'])
         out['alternativas'] = [drive_direct(u) for u in d.get('alternativas') or []]
@@ -277,6 +278,20 @@ def write_store(posts, order, feat, groups, out_dir):
                 by_slug_v103[slug]['downloads'].append(resolved)
     with open(os.path.join(out_dir, 'store-v103.json'), 'w', encoding='utf-8') as f:
         json.dump(v103, f, ensure_ascii=False, separators=(',', ':'))
+
+    # Store v1.0.5+ has explicit, confirmed taiHEN plugin installation.
+    # Older clients still receive their own catalog without install-only rows.
+    v105 = copy.deepcopy(v103)
+    by_slug_v105 = {item['slug']: item for item in v105['posts']}
+    for slug in order:
+        for d in posts[slug].get('downloads') or []:
+            if d.get('app_pendente') or d.get('app_min') not in ('1.0.4', '1.0.5'):
+                continue
+            resolved = resolve_download(d, posts[slug]['links'] + posts[slug].get('sources', []))
+            if resolved:
+                by_slug_v105[slug]['downloads'].append(resolved)
+    with open(os.path.join(out_dir, 'store-v105.json'), 'w', encoding='utf-8') as f:
+        json.dump(v105, f, ensure_ascii=False, separators=(',', ':'))
 
     nd = sum(len(i['downloads']) for i in items)
     v1_nd = sum(len(i['downloads']) for i in v1['posts'])

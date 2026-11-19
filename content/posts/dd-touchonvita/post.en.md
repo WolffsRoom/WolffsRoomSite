@@ -31,6 +31,6 @@ Map dragging, drag-and-drop and some advanced flows are not yet fully supported.
 
 ## Installation
 
-Download the ZIP and follow the manual taiHEN setup instructions on GitHub. Back up the taiHEN configuration before installation and fully restart the game. Automatic installation in Wolff's Store will only appear after its installer is updated and validated.
+In **Wolff's Store v1.0.4 or newer**, choose **Download only** (saves the ZIP under ux0:Downloads/Plugins/) or **Download and install** (backs up taiHEN and installs the plugin and assets). Reboot the PS Vita after first-time installation. Older Store versions support download only; follow the GitHub manual instructions.
 
 No commercial game data or copyrighted audio is included.
