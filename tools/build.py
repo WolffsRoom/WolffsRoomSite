@@ -780,7 +780,7 @@ def poll_article(p, lang):
                         f'<span style="color:#aaa">○</span> {label}</div>')
     availability = (T('Enquete encerrada.', 'Poll closed.') if ended else
                     T('Disponível somente pela loja', 'Available only through the Store'))
-    action = (f'<button class="wr-btn" type="button" data-act="openVita" style="border:4px solid #fff;background:#fff;color:#000;padding:14px;cursor:pointer;{DF}">{availability}</button>'
+    action = (f'<button class="wr-btn wr-vitabtn" type="button" data-act="openVita" style="position:static;z-index:auto;width:auto;height:auto;display:inline-block;align-self:flex-start;border:4px solid #fff;background:#fff;color:#000;padding:14px;cursor:pointer;{DF}">{availability}</button>'
               if not ended else f'<p>{availability}</p>')
     published = T('Encerra em', 'Ends on')
     return (f'<article data-l="{lang}" class="wr-poll-detail" style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px">'
