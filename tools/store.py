@@ -215,7 +215,7 @@ def write_store(posts, order, feat, groups, out_dir):
         p = posts[slug]
         en = {**p, **(p['en'] or {})}
         it = {
-            'slug': slug, 'cat': p['cat'], 'grupo': groups.index(p['group']), 'data': p['date'].isoformat(),
+            'slug': slug, 'cat': p['cat'], 'subcategoria': p.get('subcat') or '', 'grupo': groups.index(p['group']), 'data': p['date'].isoformat(),
             'atualizado_em': p['updated'].isoformat() if p.get('updated') else '',
             'destaque': slug == feat, 'pixel': p['pixel'],
             'progresso': p['progress'] if p['progress'] is not None else -1,
@@ -227,6 +227,7 @@ def write_store(posts, order, feat, groups, out_dir):
             'autor': latin(p.get('author') or ''),
             'autor_url': p.get('author_url') or '',
             'novidade': p.get('news_kind') or '',
+            'enquete': p.get('poll') or None,
             'downloads': [],
         }
         if p['cover']:
@@ -245,7 +246,14 @@ def write_store(posts, order, feat, groups, out_dir):
                 it['downloads'].append(r)
         items.append(it)
     release = app_release()
-    store = {'formato': 1, 'app': release, 'posts': items}
+    store = {'formato': 1, 'app': release, 'posts': items,
+             'enquetes_api': os.environ.get('WOLFFS_POLL_API_URL', '').rstrip('/')}
+    poll_config = {'formato': 1, 'polls': [posts[slug]['poll'] for slug in order
+                   if posts[slug].get('poll')]}
+    for item in poll_config['polls']:
+        item.pop('counts', None)  # vote totals are a separate, post-close result
+    with open(os.path.join(out_dir, 'polls.json'), 'w', encoding='utf-8') as f:
+        json.dump(poll_config, f, ensure_ascii=False, separators=(',', ':'))
     with open(os.path.join(out_dir, 'store.json'), 'w', encoding='utf-8') as f:
         json.dump(store, f, ensure_ascii=False, separators=(',', ':'))
 

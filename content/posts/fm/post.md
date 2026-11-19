@@ -1,6 +1,7 @@
 ---
 titulo: FMVita
 categoria: ferramentas
+subcategoria: apps
 grupo: Finalizado
 data: 2026-11-14 11:45
 tag: Ferramenta · Arquivos

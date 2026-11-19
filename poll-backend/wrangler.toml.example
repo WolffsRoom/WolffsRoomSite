@@ -1,0 +1,15 @@
+name = "wolffs-room-votes"
+main = "worker.mjs"
+compatibility_date = "2026-11-19"
+
+[[durable_objects.bindings]]
+name = "POLL_STATE"
+class_name = "PollRoom"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["PollRoom"]
+
+[vars]
+GITHUB_REPO = "WolffsRoom/WolffsRoomSite"
+# Set encrypted secrets GITHUB_TOKEN and VOTER_SALT with wrangler secret put.

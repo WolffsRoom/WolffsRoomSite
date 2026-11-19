@@ -1,6 +1,7 @@
 ---
 titulo: "Darkest Dungeon - TouchOnVita"
 categoria: ferramentas
+subcategoria: plugins
 grupo: Em andamento
 data: "2026-11-18 23:32"
 atualizado_em: 2026-11-18

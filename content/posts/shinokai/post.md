@@ -2,6 +2,7 @@
 titulo: ShinoKaiVita
 autor: MeninoSung
 categoria: ferramentas
+subcategoria: apps
 grupo: Outras equipes
 data: 2026-11-14 12:00
 tag: Entretenimento · Anime

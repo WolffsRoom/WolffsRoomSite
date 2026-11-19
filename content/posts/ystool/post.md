@@ -1,6 +1,7 @@
 ---
 titulo: Ys Origins Translation Tool
 categoria: ferramentas
+subcategoria: ferramentas
 grupo: Em andamento
 data: 2026-06-10
 tag: Ferramenta · Python

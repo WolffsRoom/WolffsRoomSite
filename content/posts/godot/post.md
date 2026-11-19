@@ -1,6 +1,7 @@
 ---
 titulo: Godot 4 PSVita
 categoria: ferramentas
+subcategoria: ferramentas
 grupo: Em andamento
 data: 2026-06-05
 tag: Engine · C++

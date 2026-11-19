@@ -1,6 +1,7 @@
 ---
 titulo: Persona 4 Golden — Análise PS Vita
-categoria: reviews
+categoria: journal
+subcategoria: reviews
 grupo: Finalizado
 data: 2025-04-26
 tag: Review · PS Vita · JRPG

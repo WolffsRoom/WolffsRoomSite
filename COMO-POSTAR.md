@@ -207,3 +207,52 @@ nos dois catálogos (ex.: WipEout 2048, que ainda distribui só um torrent).
 Os links dentro de links: continuam visíveis e separados no site, mesmo quando
 o app tem apenas um botão de instalação e fallbacks configurados em alternativas:.
 Datas de publicação não devem ser substituídas pela data de revisão do post.
+
+
+## Navegação das categorias (site e Store)
+
+Categorias superiores: **Ports**, **Apps/Mods** (categoria YAML antiga
+ferramentas), **Traduções** e **Journal**. O campo subcategoria organiza:
+
+- Ferramentas: apps, ferramentas, modificacoes, plugins.
+- Journal: news, reviews, enquetes.
+
+Em Ports, o campo grupo continua usando os valores existentes Finalizado,
+Em andamento, Próximos e Outras equipes (nessa ordem de apresentação).
+
+### News: pequenas atualizações
+
+Use categoria: journal, subcategoria: news, novidade: ''.
+Escreva um parágrafo breve ou adicione capturas (capturas:), video: e/ou
+video_arquivo: para uma notícia com imagens ou vídeo. News não é Release/Update
+e não toma o destaque reservado a um novo lançamento.
+
+### Enquetes (exemplo documental)
+
+    ---
+    titulo: "Enquete: próximo projeto"
+    categoria: journal
+    subcategoria: enquetes
+    grupo: Em andamento
+    data: "2026-12-01 12:00"
+    pergunta: "Escolha o próximo projeto a ser desenvolvido pelo Wolff:"
+    duracao_dias: 3
+    opcoes:
+      - "Projeto A"
+      - "Projeto B"
+      - "Projeto C"
+    capa: capa.png
+    ---
+
+O prazo padrão é 3 dias, alterável por duracao_dias (1 a 30) ou encerra_em.
+No primeiro dia aberto aparece na homepage; depois o destaque padrão é o
+último Release/Update. O site exibe opções em modo somente visualização:
+o botão Disponível somente pela loja abre a modal do aplicativo.
+
+A API de votos exige Cloudflare Worker + Durable Object e token do GitHub
+Issues armazenado somente no servidor (ver poll-backend/README.md).
+Configure WOLFFS_POLL_API_URL antes de ativar enquetes. GitHub Pages sozinho
+não recebe votos. O Vita envia somente um pseudônimo derivado por SHA-256,
+e o servidor usa HMAC por enquete para limitar votos honestos por dispositivo.
+A proteção não é uma atestação de hardware, e pode ser contornada por clientes
+modificados.

@@ -1,6 +1,7 @@
 ---
 titulo: Godot 4 Vita — Release v0.3
 categoria: ferramentas
+subcategoria: ferramentas
 grupo: Em andamento
 data: 2026-11-13 23:30
 tag: Engine · C++

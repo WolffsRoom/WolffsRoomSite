@@ -1,6 +1,7 @@
 ---
 titulo: 'Horizon Chase Turbo: Patch de Otimização'
 categoria: ferramentas
+subcategoria: modificacoes
 grupo: Finalizado
 data: 2026-05-15
 tag: Mod · PS Vita

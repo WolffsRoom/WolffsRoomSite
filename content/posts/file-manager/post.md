@@ -1,6 +1,7 @@
 ---
 titulo: File Manager
 categoria: ferramentas
+subcategoria: apps
 grupo: Em andamento
 data: 2026-11-14 11:55
 tag: Ferramenta · Arquivos

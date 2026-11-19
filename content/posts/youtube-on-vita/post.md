@@ -1,6 +1,7 @@
 ---
 titulo: 'Youtube - Unofficial client for PS Vita (alpha)'
 categoria: ferramentas
+subcategoria: apps
 grupo: Em andamento
 data: '2026-11-17 23:20'
 atualizado_em: 2026-11-18

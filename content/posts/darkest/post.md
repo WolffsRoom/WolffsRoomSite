@@ -1,6 +1,7 @@
 ---
 titulo: 'Darkest Dungeon: Pilha Reforçada'
 categoria: ferramentas
+subcategoria: modificacoes
 grupo: Em andamento
 data: 2025-01-27
 tag: Mod · PS Vita

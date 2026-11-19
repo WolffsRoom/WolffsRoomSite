@@ -29,7 +29,14 @@ TEMPLATE = os.path.join(ROOT, 'tools', 'template.html')
 
 e = html.escape
 DF = "font-family: 'WR Start 2P', 'Press Start 2P', 'Pixelify Sans', monospace;"
-CATS = [('ports', 'Ports'), ('ferramentas', 'Ferramentas'), ('traducoes', 'Traduções'), ('reviews', 'Reviews')]
+CATS = [('ports', 'Ports'), ('ferramentas', 'Apps/Mods'), ('traducoes', 'Traduções'), ('journal', 'Journal')]
+SUBCATS = {
+    'ferramentas': [('apps', 'Apps', 'Apps'), ('ferramentas', 'Ferramentas', 'Tools'),
+                    ('modificacoes', 'Modificações', 'Mods'), ('plugins', 'Plugins', 'Plugins')],
+    'journal': [('news', 'Notícias', 'News'), ('reviews', 'Análises', 'Reviews'),
+                ('enquetes', 'Enquetes', 'Polls')],
+}
+
 CAT_NAMES = dict(CATS)
 GROUPS = ['Em andamento', 'Finalizado', 'Próximos', 'Outras equipes']
 SLUG_RE = re.compile(r'^[a-z0-9][a-z0-9-]*$')
@@ -155,6 +162,10 @@ def load_post(slug):
     cat = str(meta['categoria']).strip().lower().replace('ç', 'c').replace('õ', 'o')
     if cat not in CAT_NAMES:
         raise PostError(f'categoria "{meta["categoria"]}" inválida; use: ' + ', '.join(CAT_NAMES))
+    subcat = str(meta.get('subcategoria') or
+                 ('reviews' if cat == 'journal' else 'ferramentas' if cat == 'ferramentas' else '')).strip().lower()
+    if cat in SUBCATS and subcat not in [entry[0] for entry in SUBCATS[cat]]:
+        raise PostError(f'subcategoria inválida: {subcat}')
     group = str(meta['grupo']).strip()
     if group not in GROUPS:
         raise PostError(f'grupo "{group}" inválido; use: ' + ', '.join(GROUPS))
@@ -236,8 +247,41 @@ def load_post(slug):
     if not isinstance(home_allowed, bool):
         raise PostError('destaque_home: use true ou false')
     activity_when = max(when, last_activity) if news_kind in ('Update', 'Release') and last_activity else when
+    poll = None
+    if cat == 'journal' and subcat == 'enquetes':
+        opts = meta.get('opcoes') or []
+        if not isinstance(opts, list) or not 2 <= len(opts) <= 8 or any(
+                not isinstance(opt, str) or not opt.strip() or len(opt) > 110 for opt in opts):
+            raise PostError('enquete: opcoes requer de 2 a 8 opções de texto')
+        duration = int(meta.get('duracao_dias', 3))
+        if not 1 <= duration <= 30:
+            raise PostError('duracao_dias: use 1 a 30 dias')
+        start = when
+        ends_at = start + datetime.timedelta(days=duration)
+        if meta.get('encerra_em'):
+            try:
+                ends_at = datetime.datetime.fromisoformat(str(meta['encerra_em']))
+            except ValueError as ex:
+                raise PostError('encerra_em: use YYYY-MM-DD HH:MM') from ex
+            if ends_at <= start:
+                raise PostError('encerra_em: deve ser posterior à publicação')
+        poll = {'id': slug,
+                'question': str(meta.get('pergunta') or 'Escolha o próximo projeto a ser desenvolvido pelo Wolff:'),
+                'options': [item.strip() for item in opts],
+                'starts_at': start.isoformat(), 'ends_at': ends_at.isoformat(),
+                'days': duration}
+        # Results are server-generated and do not allow arbitrary HTML.
+        result_file = os.path.join(ROOT, 'content', 'poll-results', slug + '.json')
+        if os.path.isfile(result_file):
+            payload = json.load(open(result_file, encoding='utf-8'))
+            counts = payload.get('counts')
+            if isinstance(counts, list) and len(counts) == len(opts) and all(
+                    isinstance(n, int) and not isinstance(n, bool) and n >= 0 for n in counts):
+                poll['counts'] = counts
+    elif cat == 'journal' and subcat == 'news' and news_kind:
+        raise PostError('Journal/News não usa novidade: Release/Update')
     p = {
-        'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date, 'when': when,
+        'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'subcat': subcat, 'poll': poll, 'group': group, 'date': date, 'when': when,
         'updated': updated_date, 'activity_when': activity_when,
         'home_allowed': home_allowed,
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
@@ -331,16 +375,30 @@ def order_posts(posts):
 
 
 def choose_feature(posts, order):
-    """Use latest Update/Release unless explicitly excluded as old content."""
-    return next((slug for slug in order if posts[slug].get('home_allowed', True)), order[0])
+    """First-day open polls temporarily take Home; thereafter use latest news."""
+    today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3)))
+    polls = [slug for slug in order if posts[slug].get('poll')
+             and posts[slug].get('home_allowed', True)
+             and posts[slug]['poll']['starts_at'][:10] == today.date().isoformat()
+             and today.replace(tzinfo=None) <
+                 datetime.datetime.fromisoformat(posts[slug]['poll']['ends_at'])]
+    if polls:
+        return max(polls, key=lambda slug: posts[slug]['when'])
+    return next((slug for slug in order
+                 if posts[slug].get('home_allowed', True)
+                 and not posts[slug].get('poll')
+                 and posts[slug].get('news_kind') in ('Update', 'Release')),
+                next((slug for slug in order
+                      if posts[slug].get('home_allowed', True)
+                      and not posts[slug].get('poll')), order[0]))
 
 
 # ---------------------------------------------------------------- HTML
 
 UI = {
     'pt': {
-        'cats': {'ports': 'Ports', 'ferramentas': 'Ferramentas', 'traducoes': 'Traduções', 'reviews': 'Reviews'},
-        'groups': {g: g for g in GROUPS}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
+        'cats': {'ports': 'Ports', 'ferramentas': 'Apps/Mods', 'traducoes': 'Traduções', 'journal': 'Journal'},
+        'groups': {'Em andamento': 'Em desenvolvimento', 'Finalizado': 'Finalizados', 'Próximos': 'Próximos', 'Outras equipes': 'Outras equipes'}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
         'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas três novidades...', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
         'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
@@ -348,8 +406,8 @@ UI = {
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
     },
     'en': {
-        'cats': {'ports': 'Ports', 'ferramentas': 'Tools', 'traducoes': 'Translations', 'reviews': 'Reviews'},
-        'groups': {'Em andamento': 'In progress', 'Finalizado': 'Finished', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
+        'cats': {'ports': 'Ports', 'ferramentas': 'Apps/Mods', 'traducoes': 'Translations', 'journal': 'Journal'},
+        'groups': {'Em andamento': 'In development', 'Finalizado': 'Completed', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
         'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest three updates...', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
@@ -616,7 +674,7 @@ def article(p0, lang):
                               f'<img src="{e(src)}" alt="{e(alt)}" loading="lazy" style="width: 100%; max-height: 580px; height: auto; object-fit: contain; display: block"></figure>\n')
             inner += flush_items()
         secs += section(s['title'], inner)
-    if p['shots'] and p['cat'] != 'reviews':
+    if p['shots'] and p.get('subcat') != 'reviews':
         imgs = '\n'.join(f'<div class="wr-shot" style="border: 4px solid #5a5a5a; background: #000000; line-height: 0"><img src="{s}" alt="{e(ui["shot_of"] + " " + p["title"])}" loading="lazy" style="width: 100%; height: auto; display: block"></div>' for s in p['shots'])
         secs += section(ui['shots'], f'<div class="wr-shots" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">\n{imgs}\n</div>\n')
     if p.get('video_file'):
@@ -702,22 +760,94 @@ def article(p0, lang):
             '</div>\n</article>\n')
 
 
+def poll_article(p, lang):
+    info = p['poll']
+    title = e(V(p, lang)['title'])
+    question = e(info['question'])
+    ended = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).replace(tzinfo=None) >= datetime.datetime.fromisoformat(info['ends_at'])
+    options = ''
+    counts = info.get('counts')
+    total = sum(counts) if counts else 0
+    for i, option in enumerate(info['options']):
+        label = e(option)
+        if ended and counts:
+            pct = round(counts[i] * 100 / total) if total else 0
+            options += ('<div style="display:flex;flex-direction:column;gap:6px;padding:12px;border:2px solid #555;background:#101010">'
+                        f'<div style="display:flex;justify-content:space-between"><span>{label}</span><strong>{pct}%</strong></div>'
+                        f'<div class="wr-pb-track"><div class="wr-pb-fill" style="width:{pct}%"></div></div></div>')
+        else:
+            options += (f'<div style="border:2px solid #666;padding:14px 16px;background:#101010">'
+                        f'<span style="color:#aaa">○</span> {label}</div>')
+    availability = (T('Enquete encerrada.', 'Poll closed.') if ended else
+                    T('Disponível somente pela loja', 'Available only through the Store'))
+    action = (f'<button class="wr-btn" type="button" data-act="openVita" style="border:4px solid #fff;background:#fff;color:#000;padding:14px;cursor:pointer;{DF}">{availability}</button>'
+              if not ended else f'<p>{availability}</p>')
+    published = T('Encerra em', 'Ends on')
+    return (f'<article data-l="{lang}" class="wr-poll-detail" style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px">'
+            '<button class="wr-btn" type="button" data-act="goHome" style="align-self:flex-start;padding:12px 22px;border:3px solid #777;background:#111;color:#fff;cursor:pointer">'
+            + T('Voltar', 'Back') + '</button>'
+            f'<h1 style="{DF};font-size:23px;line-height:1.6;margin:0">{title}</h1>'
+            f'<p style="font-size:17px;color:#ddd">{question}</p>'
+            f'<div style="display:flex;flex-direction:column;gap:12px">{options}</div>'
+            f'<p style="color:#aaa">{published}: {e(info["ends_at"].replace("T", " "))}</p>'
+            + action + '</article>')
+
+
+def news_article(p, lang):
+    q = V(p, lang)
+    media = []
+    content = '<p style="margin:0;line-height:1.75">' + inline(q['about']) + '</p>' if q.get('about') else ''
+    for sec in q.get('secs') or []:
+        content += f'<h2 style="{DF};font-size:16px">{e(sec["title"])}</h2>'
+        for block in sec.get('blocks') or []:
+            if block[0] == 'p':
+                content += '<p>' + inline(block[1]) + '</p>'
+            elif block[0] == 'li':
+                content += '<p>• ' + inline(block[1]) + '</p>'
+            elif block[0] == 'media':
+                src = f'posts/{p["slug"]}/{block[2]}'
+                media.append(f'<img loading="lazy" src="{e(src)}" alt="{e(block[1])}" style="width:100%;height:auto;object-fit:contain">')
+    for shot in p.get('shots') or []:
+        if not any(e(shot) in item for item in media):
+            media.append(f'<img loading="lazy" src="{e(shot)}" alt="{e(q["title"])}" style="width:100%;height:auto;object-fit:contain">')
+    if p.get('video_file'):
+        media.append(f'<video controls preload="none" playsinline style="width:100%;max-height:440px">'
+                     f'<source src="{e(drive_direct(p["video_file"]))}" type="video/mp4"></video>')
+    elif p.get('video'):
+        url = 'https://www.youtube.com/watch?v=' + p['video']
+        media.append(f'<a href="{e(url)}" target="_blank" rel="noopener">'
+                     + T('Assistir vídeo no YouTube', 'Watch video on YouTube') + '</a>')
+    return (f'<article data-l="{lang}" class="wr-journal-news" style="max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:18px;border:4px solid #555;padding:24px;background:#0e0e0e">'
+            '<button type="button" data-act="goHome" style="align-self:flex-start;background:#222;color:#fff;border:2px solid #777;padding:8px 18px;cursor:pointer">'
+            + T('Voltar', 'Back') + '</button>'
+            f'<h1 style="{DF};font-size:20px;line-height:1.6;margin:0">{e(q["title"])}</h1>'
+            f'<p style="color:#aaa;margin:0">{e(p["date"].isoformat())}</p>'
+            + content + ''.join(media) + '</article>')
+
+
 def detail(p):
-    return '\n<div class="dc-if" data-if="p_' + p['slug'] + '">\n' + article(p, 'en') + article(p, 'pt') + '</div>\n'
+    renderer = poll_article if p.get('poll') else news_article if p.get('subcat') == 'news' else article
+    return '\n<div class="dc-if" data-if="p_' + p['slug'] + '">\n' + renderer(p, 'en') + renderer(p, 'pt') + '</div>\n'
 
 
 def lists_html(posts, order):
     out = ''
     for n, (cid, _t) in enumerate(CATS, 1):
         body = ''
-        groups = GROUPS if any(posts[k]['group'] == 'Outras equipes' and posts[k]['cat'] == cid for k in order) else GROUPS[:3]
-        for g in groups:
-            ids = [k for k in order if posts[k]['cat'] == cid and posts[k]['group'] == g]
-            gname = T(e(UI['pt']['groups'][g]), e(UI['en']['groups'][g]))
+        if cid in SUBCATS:
+            sections = [(key, T(e(pt), e(en)),
+                         [k for k in order if posts[k]['cat'] == cid and posts[k].get('subcat') == key])
+                        for key, pt, en in SUBCATS[cid]]
+        else:
+            groups = ['Finalizado', 'Em andamento', 'Próximos', 'Outras equipes'] if cid == 'ports' else GROUPS
+            sections = [(g, T(e(UI['pt']['groups'][g]), e(UI['en']['groups'][g])),
+                         [k for k in order if posts[k]['cat'] == cid and posts[k]['group'] == g])
+                        for g in groups]
+        for key, heading_text, ids in sections:
             body += ('<div style="display: flex; flex-direction: column; gap: 28px">\n'
-                     f'<h2 style="margin: 0; {DF} font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">{gname} <span style="color: #8a8a8a">({len(ids)})</span></h2>\n')
+                     f'<h2 id="{cid}-{key}" style="margin: 0; {DF} font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">{heading_text} <span style="color: #8a8a8a">({len(ids)})</span></h2>\n')
             if ids:
-                body += '<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">\n\n' + '\n\n'.join(card(posts[i]) for i in ids) + '\n\n</div>\n'
+                body += '<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">\n' + '\n'.join(card(posts[i]) for i in ids) + '\n</div>\n'
             else:
                 body += f'<p style="margin: 0; text-align: center; color: #8a8a8a">{U("nothing")}</p>\n'
             body += '</div>\n'
@@ -791,7 +921,7 @@ def home_html(posts, order, feat, mosaic):
         f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}" data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'
         for n, (c, t) in enumerate(CATS, 1))
     # as três novidades mais recentes, antes dos botões de categoria
-    latest3 = '\n'.join(card(posts[i]) for i in order[:3])
+    latest3 = '\n'.join(card(posts[i]) for i in [k for k in order if not posts[k].get('poll')][:3])
     latest = ('<div class="dc-if" data-if="on0">\n'
               '<section class="wr-latest" aria-label="' + e(UI['en']['latest3']) + '" style="display: flex; flex-direction: column; gap: 24px">\n'
               f'<h2 style="margin: 0; {DF} font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">' + T(e(UI['pt']['latest3']), e(UI['en']['latest3'])) + '</h2>\n'

@@ -1,6 +1,7 @@
 ---
 titulo: God of War Ragnarök — Análise PS4
-categoria: reviews
+categoria: journal
+subcategoria: reviews
 grupo: Finalizado
 data: 2025-01-26
 tag: Review · PlayStation 4 · Ação
