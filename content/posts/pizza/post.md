@@ -4,17 +4,17 @@ categoria: ports
 grupo: Finalizado
 data: 2026-11-14 17:59
 tag: Port · GameMaker · PS Vita
-status: v0.62 · Jogável
+status: v0.64 · Jogável
 novidade: Update
-versao: v0.62
-resumo: "Atualização v0.62 do port de Pizza Tower SAGE 2019 Demo (v14), com texturas BC3 residentes e correções de controles."
+versao: v0.64
+resumo: "Atualização v0.64 do Pizza Tower SAGE 2019 no PS Vita, com correção da ordem de camadas e retorno do analógico esquerdo para ações para cima."
 chamada: Pizza Tower SAGE 2019 chegou ao PS Vita! Demo v14 jogável em 60 FPS com Pizzascape, Oregano Desert e Snick Challenge.
 progresso: 95
 capa: capa.png
 pixelado: true
 ficha:
   Status: Lançado · Jogável (95% de progresso)
-  Versão: v0.62
+  Versão: v0.64
   Demo original: Pizza Tower SAGE 2019 (v14)
   Criadores: Tour de Pizza
   Engine original: GameMaker
@@ -31,7 +31,7 @@ capturas:
 video_arquivo: trailer-vita-v2.mp4
 video_legenda: Trailer do port para PS Vita
 links:
-  Baixar VPK: https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.62/PizzaTowerSAGE-v0.62.vpk
+  Baixar VPK: https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.64/PizzaTowerSAGE-v0.64.vpk
   Baixar dados: https://drive.google.com/file/d/1CBof60EExpF4IrZMhyix6CvRicqSONRA/view?usp=sharing
 fontes:
   GitHub: https://github.com/WolffsRoom/PizzaTowerSage2019Vita
@@ -42,11 +42,11 @@ clock:
   Desempenho: 60 FPS (conforme testes do projeto)
 downloads:
   - tipo: vpk
-    nome: Pizza Tower SAGE 2019 v0.62 (VPK)
+    nome: Pizza Tower SAGE 2019 v0.64 (VPK)
     repo: WolffsRoom/PizzaTowerSage2019Vita
-    tag: v0.62
-    arquivo: PizzaTowerSAGE-v0.62.vpk
-    versao: "0.62"
+    tag: v0.64
+    arquivo: PizzaTowerSAGE-v0.64.vpk
+    versao: "0.64"
     titleid: PTSAGE001
     precisa_dados: true
     instrucoes: https://github.com/WolffsRoom/PizzaTowerSage2019Vita
@@ -57,14 +57,19 @@ downloads:
 
 ---
 
-Port não oficial da demo gratuita **Pizza Tower SAGE 2019 (v14)** para PlayStation Vita, lançado na versão **v0.62**. Utiliza o runner Butterscotch com VitaGL e OpenAL. O projeto relata jogabilidade completa do início ao fim, com **95% de progresso geral**.
+Port não oficial da demo gratuita **Pizza Tower SAGE 2019 (v14)** para PlayStation Vita, lançado na versão **v0.64**. Utiliza o runner Butterscotch com VitaGL e OpenAL. O projeto relata jogabilidade completa do início ao fim, com **95% de progresso geral**.
 
-## Novidades da v0.62
+## Novidades da v0.64
+
+- **Ordem de camadas corrigida:** Peppino não aparece mais atrás de portas, escadas ou do efeito de provocação (`obj_taunteffect`). A atualização preserva a profundidade (`depth`) das instâncias entre salas e desativa os testes e gravações de profundidade na `application_surface` do VitaGL.
+- **Analógico esquerdo para cima restaurado:** o comando vertical volta a funcionar em escadas, portas/portões e ao carregar o Super Jump. O controle possui zona morta (*deadzone*) e verificação do eixo vertical para impedir ativações acidentais durante corridas Mach horizontais.
+
+## Melhorias anteriores (v0.62)
 
 - Texturas BC3 (DXT5) residentes: 35 páginas de texturas (~87 MiB), reduzindo evicções durante a renderização e adicionando uma barreira de sincronização da GPU na troca de salas
 - Roupa azul SAGE de Peppino renderizada com shader pal_swapper, sem duplicar a VRAM em atlas descompactados
 - Dash / Super Jump corrigidos: a entrada VK_NOKEY inválida em saveData.ini não aciona mais o pulo automaticamente em Mach 3
-- Seletores de fases e drift analógico ajustados: **Cima** utiliza D-pad Up (ou toque configurado), evitando entradas fantasma
+- Ajustes anteriores nos seletores de fases e na zona morta do analógico, complementados na v0.64 pelo retorno do comando para cima no analógico esquerdo
 - **Start** abre o menu de pausa original SAGE 2019; **Select** abre os ajustes nativos do port
 
 
@@ -79,7 +84,7 @@ Port não oficial da demo gratuita **Pizza Tower SAGE 2019 (v14)** para PlayStat
 
 ## Instalação
 
-- Baixe o [VPK v0.62](https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.62/PizzaTowerSAGE-v0.62.vpk) e instale pelo VitaShell
+- Baixe o [VPK v0.64](https://github.com/WolffsRoom/PizzaTowerSage2019Vita/releases/download/v0.64/PizzaTowerSAGE-v0.64.vpk) e instale pelo VitaShell
 - Obtenha a demo original gratuita na [página oficial do Pizza Tower no itch.io](https://pizzatowerguy.itch.io/pizza-tower-demo)
 - Extraia o arquivo data.win e copie-o para **ux0:data/pizzatowersage/data.win**
 - O botão Baixar dados mantém o arquivo externo já disponibilizado; confira se ele corresponde à demo v14
