@@ -192,24 +192,58 @@ def load_post(slug):
         for block in sec.get('blocks', []):
             if block[0] == 'media':
                 img(block[2])
-    manual_updated = meta.get('atualizado_em')
-    if manual_updated:
-        if isinstance(manual_updated, str):
-            manual_updated = datetime.date.fromisoformat(manual_updated[:10])
-        if isinstance(manual_updated, datetime.datetime):
-            manual_updated = manual_updated.date()
-        if not isinstance(manual_updated, datetime.date):
-            raise PostError('atualizado_em: informe YYYY-MM-DD')
-        if manual_updated < date:
+    # A new Update/Release must be ordered by its *update event*, rather
+    # than the article's original publication date. An explicit timestamp
+    # has priority; otherwise use the last commit to this specific post.
+    last_commit_at = post_last_commit_at(slug)
+    manual_value = meta.get('atualizado_em')
+    manual_at = None
+    manual_has_time = False
+    if manual_value is not None and manual_value != '':
+        if isinstance(manual_value, datetime.datetime):
+            manual_at, manual_has_time = manual_value, True
+        elif isinstance(manual_value, datetime.date):
+            manual_at = datetime.datetime.combine(manual_value, datetime.time.min)
+        elif isinstance(manual_value, str):
+            manual_has_time = bool(re.search(r'\d{2}:\d{2}', manual_value))
+            try:
+                manual_at = datetime.datetime.fromisoformat(manual_value.strip())
+            except ValueError as ex:
+                raise PostError('atualizado_em: use YYYY-MM-DD ou YYYY-MM-DD HH:MM') from ex
+        else:
+            raise PostError('atualizado_em: use YYYY-MM-DD ou YYYY-MM-DD HH:MM')
+        if manual_at.tzinfo is not None:
+            local_tz = datetime.timezone(datetime.timedelta(hours=-3))
+            manual_at = manual_at.astimezone(local_tz).replace(tzinfo=None)
+        if manual_at.date() < date:
             raise PostError('atualizado_em: não pode ser anterior à publicação')
+
+    # A date-only explicit update can use its own same-day commit time to
+    # break ties; unrelated later edits never advance its stated date.
+    if manual_at is not None:
+        last_activity = manual_at
+        if not manual_has_time and last_commit_at and last_commit_at.date() == manual_at.date():
+            last_activity = max(last_activity, last_commit_at)
+        updated_date = manual_at.date()
+    else:
+        last_activity = last_commit_at if last_commit_at and last_commit_at > when else None
+        updated_date = (last_commit_at.date()
+                        if last_commit_at and last_commit_at.date() > date else None)
+
+    news_kind = str(meta.get('novidade') or '').strip()
+    home_allowed = meta.get('destaque_home', True)
+    if not isinstance(home_allowed, bool):
+        raise PostError('destaque_home: use true ou false')
+    activity_when = max(when, last_activity) if news_kind in ('Update', 'Release') and last_activity else when
     p = {
         'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'group': group, 'date': date, 'when': when,
-        'updated': manual_updated or post_last_updated(slug, date),
+        'updated': updated_date, 'activity_when': activity_when,
+        'home_allowed': home_allowed,
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
         'author': str(meta.get('autor') or '').strip(),
         'author_url': str(meta.get('autor_url') or '').strip(),
         'version_label': str(meta.get('versao') or '').strip(),
-        'news_kind': str(meta.get('novidade') or '').strip(),
+        'news_kind': news_kind,
         'desc': str(meta.get('resumo') or ''), 'about': about, 'secs': secs,
         'progress': progress, 'bars': parse_bars(meta.get('barras')),
         'meta': [(str(k), str(v)) for k, v in (meta.get('ficha') or {}).items()],
@@ -286,8 +320,18 @@ def load_all():
             errors.append(f'{slug}/post.md: {ex}')
     if errors:
         sys.exit('Erros nos posts:\n  - ' + '\n  - '.join(errors))
-    order = sorted(posts, key=lambda k: (posts[k]['when'], k), reverse=True)
-    return posts, order
+    return posts, order_posts(posts)
+
+
+def order_posts(posts):
+    """Sort all sections by the latest relevant event, with stable ties."""
+    return sorted(posts, key=lambda slug: (posts[slug]['activity_when'],
+                                           posts[slug]['when'], slug), reverse=True)
+
+
+def choose_feature(posts, order):
+    """Use latest Update/Release unless explicitly excluded as old content."""
+    return next((slug for slug in order if posts[slug].get('home_allowed', True)), order[0])
 
 
 # ---------------------------------------------------------------- HTML
@@ -791,10 +835,11 @@ def make_mosaic(p, out_dir):
     return res
 
 
-def post_last_updated(slug, published):
-    """Última mudança real no diretório do post, não a data do deploy.
+def post_last_commit_at(slug):
+    """Timestamp real da alteração do post, normalizado para horário de Brasília.
 
-    Precisa do histórico Git (checkout com fetch-depth: 0 no GitHub Actions).
+    Busca apenas a história deste post (não da publicação/deploy do site).
+    O commit inicial é a data de publicação, não uma atualização.
     """
     try:
         log = subprocess.check_output(
@@ -803,11 +848,19 @@ def post_last_updated(slug, published):
         ).splitlines()
     except (OSError, subprocess.CalledProcessError):
         return None
-    # O commit de criação sozinho não representa uma atualização.
     if len(log) < 2:
         return None
-    latest = datetime.datetime.fromisoformat(log[0]).date()
-    return latest if latest > published else None
+    latest = datetime.datetime.fromisoformat(log[0])
+    if latest.tzinfo is not None:
+        brazil = datetime.timezone(datetime.timedelta(hours=-3))
+        latest = latest.astimezone(brazil).replace(tzinfo=None)
+    return latest
+
+
+def post_last_updated(slug, published):
+    """Data do último commit do post, apenas quando posterior à publicação."""
+    last = post_last_commit_at(slug)
+    return last.date() if last and last.date() > published else None
 
 
 def post_date_html(day, lang):
@@ -823,8 +876,10 @@ def post_date_html(day, lang):
 
 def build():
     posts, order = load_all()
-    # A página inicial (e o app Wolff's Store) sempre destacam o post mais recente.
-    feat = order[0]
+    # Homepage and Vita Store use the same event-based featured post.
+    # A date-only original publication never outranks a newer Update/Release.
+    # For historical items explicitly set destaque_home: false.
+    feat = choose_feature(posts, order)
 
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)

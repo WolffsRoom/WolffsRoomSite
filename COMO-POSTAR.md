@@ -36,7 +36,7 @@ Para editar pelo navegador: abra o `post.md` no GitHub, clique no lápis, altere
 titulo: Nome do projeto
 categoria: ports          # ports | ferramentas | traducoes | reviews
 grupo: Em andamento       # Em andamento | Finalizado | Próximos | Outras equipes
-data: 2026-11-13 21:30    # define a ordem; o mais recente vira o destaque da página inicial e do app (hora opcional)
+data: 2026-11-13 21:30    # publicação original; a home também considera atualizações posteriores
 tag: Port · PS Vita       # linha pequena acima do título no card
 status: Em andamento      # texto de status no card
 resumo: Uma frase curta para o card.
@@ -103,7 +103,10 @@ Pelo formulário, preencha os campos "(inglês)" e o `post.en.md` é criado junt
 
 | Campo | Para que serve |
 |---|---|
-| `chamada:` | Texto do destaque na página inicial (se faltar, usa o `resumo`). O destaque é sempre o post mais recente (`data`). |
+| `chamada:` | Texto do destaque na página inicial (se faltar, usa o `resumo`). |
+| `novidade: Update` ou `novidade: Release` | A home considera a data da última atualização do post para destacar o lançamento mais recente. |
+| `atualizado_em: "2026-11-18 23:53"` | Data/hora explícita da atualização (ou somente a data). Tem prioridade sobre o histórico Git. |
+| `destaque_home: false` | Impede que publicações antigas assumam a home; continuam acessíveis nas listas. |
 | `pixelado: true` | Mantém a capa nítida, sem suavização (bom para pixel art). |
 | `capa_estilo: logo` | Mostra a capa inteira centralizada em fundo preto (para logos). |
 | `fontes:` | Caixa **Source** (abaixo de Downloads): links de código, wiki etc., no mesmo formato de `links:`. |
@@ -185,7 +188,9 @@ Remova o campo ao publicar a versão do aplicativo que conhece esse fluxo.
 
 ### Tipo de noticia (etiqueta amarela)
 
-No cabecalho do post.md use novidade: Release para o primeiro lancamento publico de um projeto, ou novidade: Update para uma atualizacao. A etiqueta pixelada e inclinada aparece no site e no VPK. Omita o campo para posts sem lancamento.
+No cabeçalho do post.md, use novidade: Release para o primeiro lançamento público de um projeto, ou novidade: Update para uma atualização. A etiqueta pixelada aparece no site e no VPK.
+
+Destaque automático: a home do site e a Wolff's Store seguem a ocorrência mais recente. Para Update/Release, considera-se a atualização do post (data e hora do último commit, ou o campo atualizado_em); para os demais posts, considera-se a publicação. Assim, atualizar um port lançado meses antes pode trazê-lo para a home. Não sobrescreva a data de publicação original. Para republicações históricas que não devem tomar a home, use destaque_home: false; a publicação permanece nas listas.
 
 ## Compatibilidade do instalador da Wolff's Store v1.0
 

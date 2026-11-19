@@ -1,4 +1,4 @@
-"""Check SAGE 2019 v0.62 and YouTube on Vita v0.34 catalog integrity."""
+"""Check SAGE 2019 v0.64 and YouTube on Vita v0.34 catalog integrity."""
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -9,17 +9,20 @@ sys.path.insert(0,str(ROOT / "tools"))
 import build, store
 
 class PostsTests(unittest.TestCase):
-    def test_pizza_v062_keeps_existing_artwork_and_ids(self):
+    def test_pizza_v064_keeps_existing_artwork_and_ids(self):
         p=build.load_post("pizza")
-        self.assertEqual(p["version_label"], "v0.62")
+        self.assertEqual(p["version_label"], "v0.64")
         self.assertEqual(p["date"].isoformat(),"2026-11-14")
         self.assertEqual(p["cover"],"posts/pizza/capa.png")
         d=next(d for d in p["downloads"] if d["tipo"]=="vpk")
-        self.assertEqual(d["tag"],"v0.62")
+        self.assertEqual(d["tag"],"v0.64")
         self.assertEqual(d["titleids"],["PTSAGE001"])
-        self.assertIn("v0.62",d["nome"])
+        self.assertIn("v0.64",d["nome"])
         self.assertEqual(len(p["shots"]),6)
-        self.assertIn("BC3",p["secs"][0]["items"][0] if p["secs"] and p["secs"][0]["items"] else p["about"])
+        content=" ".join(str(section) for section in p["secs"])
+        self.assertIn("BC3",content)
+        self.assertIn("obj_taunteffect",content)
+        self.assertIn("analógico esquerdo",content)
 
     def test_youtube_v034_has_new_cover_shots_and_safeguards(self):
         p=build.load_post("youtube-on-vita")
