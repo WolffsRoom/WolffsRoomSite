@@ -845,13 +845,20 @@ class Component extends DCLogic {
   // The newest post has chronological rank 1 and starts in the center.
   var deck = document.querySelector('.wr-deck');
   var deckItems = deck ? Array.from(deck.querySelectorAll('.wr-deck-card')) : [];
-  var deckCenter = deckItems.length >= 5 ? 2 : 0;
+  var deckCenter = 0; /* chronological 1, not DOM position 3 */
+
   function drawDeck() {
     if (!deckItems.length) return;
     var total = deckItems.length;
     deckItems.forEach(function (item, i) {
       var delta = (i - deckCenter + total) % total;
       if (delta > Math.floor(total / 2)) delta -= total;
+      // Initial fan only: 4 · 3 · 1 · 2 · 5.
+      // Afterwards, arrows navigate true chronological order.
+      if (deckCenter === 0 && total >= 5) {
+        const debut = {0:0, 1:1, 2:-1, 3:-2, 4:2};
+        delta = Object.prototype.hasOwnProperty.call(debut,i) ? debut[i] : 100;
+      }
       var narrow = window.matchMedia('(max-width: 520px)').matches;
       var limit = narrow ? 1 : 2;
       var pos = delta >= -limit && delta <= limit ? String(delta) : 'away';

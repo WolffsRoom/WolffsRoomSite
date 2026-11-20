@@ -410,7 +410,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Apps/Mods', 'traducoes': 'Traduções', 'journal': 'Journal'},
         'groups': {'Em andamento': 'Em desenvolvimento', 'Finalizado': 'Finalizados', 'Próximos': 'Próximos', 'Outras equipes': 'Outras equipes'}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas novidades...', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas novidades...', 'other_releases': 'Outros lançamentos', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
         'explore_more': 'Explore outros trabalhos finalizados ou em desenvolvimento...', 'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -420,7 +420,7 @@ UI = {
         'groups': {'Em andamento': 'In development', 'Finalizado': 'Completed', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest updates...', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'explore_more': 'Explore other completed and in-development projects...', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest updates...', 'other_releases': 'Other releases', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'explore_more': 'Explore other completed and in-development projects...', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -986,34 +986,55 @@ def home_html(posts, order, feat, mosaic):
     btns = '\n'.join(
         f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}" data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'
         for n, (c, t) in enumerate(CATS, 1))
-    # Opening cards: 4 3 1 2 5, where 1 (latest) is initially front/center.
-    # Additional entries can be reached through the slider controls.
-    latest_ids = [k for k in order if not posts[k].get('poll')][:12]
-    visual_order = ([latest_ids[i] for i in (3, 2, 0, 1, 4)]
-                    + latest_ids[5:] if len(latest_ids) >= 5 else latest_ids)
-    deck_cards = '\n'.join(deck_card(posts[k], i, latest_ids.index(k) + 1) for i, k in enumerate(visual_order))
+    # Latest 3: restore the traditional flat post cards.
+    # The carousel is for OTHER entries only, with no duplicated posts.
+    all_recent = [k for k in order if not posts[k].get('poll')]
+    latest_ids = all_recent[:3]
+    older_ids = all_recent[3:15]  # up to 12 additional releases/projects
+    latest_cards = '\n'.join(card(posts[k]) for k in latest_ids)
     latest = ('<div class="dc-if" data-if="on0">\n'
-              '<section class="wr-latest" aria-label="' + e(UI['en']['latest3'])
-              + '" style="display:flex;flex-direction:column;align-items:center;gap:24px">\n'
+              '<section class="wr-latest wr-latest-three" aria-label="Recent updates" '
+              'style="display:flex;flex-direction:column;align-items:center;gap:24px">\n'
               f'<h2 style="margin:0;{DF}font-size:16px;line-height:1.6;font-weight:400;'
               'text-transform:uppercase;text-align:center;color:#c4c4c4">'
               + T(e(UI['pt']['latest3']), e(UI['en']['latest3'])) + '</h2>\n'
-              '<div class="wr-deck" role="region" aria-roledescription="carousel" '
-              'aria-label="Recent projects / Projetos recentes" tabindex="0">\n'
-              '<div class="wr-deck-stage">' + deck_cards + '</div>\n'
-              '<div class="wr-deck-controls">'
-              '<button type="button" class="wr-deck-arrow" data-deck-dir="-1" '
-              'aria-label="Carta anterior / Previous card">◀</button>'
-              '<span class="wr-deck-counter" aria-live="polite">01 / '
-              + str(len(visual_order)) + '</span>'
-              '<button type="button" class="wr-deck-arrow" data-deck-dir="1" '
-              'aria-label="Próxima carta / Next card">▶</button>'
-              '</div></div></section>\n</div>\n')
+              '<div class="wr-grid wr-latest-three-grid" style="display:grid;'
+              'grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;width:100%">'
+              + latest_cards + '</div>\n</section>\n</div>\n')
+    # Show remaining posts as layered cards: 4 3 1 2 5, center = newest
+    # of the remaining group. Keep original carousel interactions unchanged.
+    # Cards remain in chronological order in the DOM and for keyboard users.
+    # CSS/JS fan out the first five as 4,3,1,2,5 on opening, without breaking
+    # the next-arrow progression 01 -> 02 -> 03 -> ... .
+    visual_order = older_ids
+    deck_cards = '\n'.join(
+        deck_card(posts[k], i, i + 1)
+        for i, k in enumerate(visual_order))
+    if older_ids:
+        others = ('<div class="dc-if" data-if="on0">\n'
+                  '<section class="wr-other-releases" aria-label="Other releases" '
+                  'style="display:flex;flex-direction:column;align-items:center;gap:24px">\n'
+                  f'<h2 style="margin:0;{DF}font-size:16px;line-height:1.6;font-weight:400;'
+                  'text-transform:uppercase;text-align:center;color:#c4c4c4">'
+                  + T(e(UI['pt']['other_releases']), e(UI['en']['other_releases'])) + '</h2>\n'
+                  '<div class="wr-deck" role="region" aria-roledescription="carousel" '
+                  'aria-label="Outros lançamentos / Other releases" tabindex="0">\n'
+                  '<div class="wr-deck-stage">' + deck_cards + '</div>\n'
+                  '<div class="wr-deck-controls">'
+                  '<button type="button" class="wr-deck-arrow" data-deck-dir="-1" '
+                  'aria-label="Carta anterior / Previous card">◀</button>'
+                  '<span class="wr-deck-counter" aria-live="polite">01 / '
+                  + str(len(visual_order)) + '</span>'
+                  '<button type="button" class="wr-deck-arrow" data-deck-dir="1" '
+                  'aria-label="Próxima carta / Next card">▶</button>'
+                  '</div></div></section>\n</div>\n')
+    else:
+        others = ''
     explore = ('<div class="dc-if" data-if="on0">'
                f'<p class="wr-explore-prompt" style="margin:0;text-align:center;'
                f'color:#c4c4c4;{DF}font-size:16px;line-height:1.7">'
                + U('explore_more') + '</p></div>\n')
-    nav = latest + explore + ('<div class="dc-if" data-if="on0">\n'
+    nav = latest + others + explore + ('<div class="dc-if" data-if="on0">\n'
            f'<nav class="wr-nav" aria-label="Categories" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px">\n{btns}\n</nav>\n</div>\n')
     peeks = ''
     for n, (c, t) in enumerate(CATS, 1):

@@ -33,17 +33,35 @@ class LocalFiltersDeckTests(unittest.TestCase):
             self.assertGreater(fragment.find('data-act="goHome"'),
                                fragment.find('data-wr-section-cat="'+cat+'"'))
 
-    def test_five_initial_cards_center_latest_and_arrows(self):
+    def test_three_latest_cards_followed_by_older_carousel(self):
         html = build.home_html(self.posts, self.order, build.choose_feature(self.posts, self.order), [])
-        self.assertIn('class="wr-deck"', html)
+        self.assertIn('wr-latest-three-grid', html)
+        self.assertIn('class="wr-other-releases"', html)
+        self.assertIn('Outros lançamentos', html)
+        self.assertIn('Other releases', html)
         self.assertIn('data-deck-dir="-1"', html)
         self.assertIn('data-deck-dir="1"', html)
         self.assertIn('class="wr-explore-prompt"', html)
-        # Latest chronological ranks in DOM: 4,3,1,2,5.
-        order = re.findall(r'class="wr-deck-card"[^>]*data-deck-rank="([0-9]+)"', html)
-        self.assertEqual(order[:5], ['4','3','1','2','5'])
-        self.assertEqual(len(order), 12)
-        self.assertLess(html.index('class="wr-deck"'),
+        chronological = [k for k in self.order if not self.posts[k].get('poll')]
+        latest = html[html.index('class="wr-grid wr-latest-three-grid"'):
+                      html.index('class="wr-other-releases"')]
+        deck = html[html.index('class="wr-other-releases"'):
+                    html.index('class="wr-explore-prompt"')]
+        for slug in chronological[:3]:
+            self.assertIn('data-act="open_'+slug+'"', latest)
+            self.assertNotIn('data-act="open_'+slug+'"', deck)
+        for slug in chronological[3:15]:
+            self.assertIn('data-act="open_'+slug+'"', deck)
+        self.assertEqual(latest.count('class="wr-card '), 3)
+        self.assertEqual(deck.count('class="wr-deck-card"'), 12)
+        ranks = re.findall(r'class="wr-deck-card"[^>]*data-deck-rank="([0-9]+)"', deck)
+        self.assertEqual(ranks[:5], ['1','2','3','4','5'])
+        template = (ROOT/'tools/template.html').read_text('utf-8')
+        self.assertIn('var deckCenter = 0;', template)
+        self.assertIn('const debut = {0:0, 1:1, 2:-1, 3:-2, 4:2}', template)
+        self.assertLess(html.index('class="wr-grid wr-latest-three-grid"'),
+                        html.index('class="wr-other-releases"'))
+        self.assertLess(html.index('class="wr-other-releases"'),
                         html.index('class="wr-explore-prompt"'))
         self.assertLess(html.index('class="wr-explore-prompt"'),
                         html.index('class="wr-nav"'))
