@@ -22,12 +22,16 @@ fontes:
   Port original de HctrRB: https://github.com/HctrRB/pokeemerald-vita-3ds
   Página do port PT-BR: https://wolffsroom.github.io/WolffsRoomSite/#pokemon-emerald
 ---
-A **atualização do Pokémon Emerald 3D Voxel em português brasileiro (PT-BR)** para o **PlayStation Vita** está em andamento, com base na **versão v0.5.8**.
+E aí pessoal! Wolff aqui
 
-A imagem desta notícia mostra o visual voxel 3D do jogo durante o desenvolvimento da atualização.
+Estou trabalhando agora na **atualização do Pokémon Emerald 3D Voxel (PTBR)**, com base na última **versão v0.5.8**.
+
+Segue uma espiadinha no visual da nova versão.
+
+Em breve será disponibilizada na Wolff's Room e aqui na Wolff's Store.
+
+Vita means life!
 
 ## Estado atual
 
 Esta publicação é um **aviso de desenvolvimento**, não um anúncio de lançamento. A edição PT-BR da v0.5.8 ainda está sendo preparada e **não há um novo VPK disponibilizado nesta notícia**.
-
-As informações de download já publicadas para versões anteriores permanecem na [página do projeto](https://wolffsroom.github.io/WolffsRoomSite/#pokemon-emerald).

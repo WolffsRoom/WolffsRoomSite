@@ -14,12 +14,16 @@ fontes:
   Original port by HctrRB: https://github.com/HctrRB/pokeemerald-vita-3ds
   PT-BR project page: https://wolffsroom.github.io/WolffsRoomSite/#pokemon-emerald
 ---
-The **Brazilian Portuguese (PT-BR) update** for **Pokémon Emerald 3D Voxel** on **PlayStation Vita** is currently in development, targeting **v0.5.8**.
+Hey everyone! Wolff here.
 
-The screenshot shown in this post highlights the game's 3D voxel visual style during this update's development.
+I'm now working on the **Pokémon Emerald 3D Voxel (PT-BR) update**, based on the latest **v0.5.8 release**.
+
+Here's a sneak peek at how the new version looks.
+
+Coming soon to Wolff's Room and here on Wolff's Store.
+
+Vita means life!
 
 ## Current status
 
-This is a **development progress announcement**, not a release. The PT-BR v0.5.8 update **is not yet available for download**, and this article does not provide a new VPK.
-
-Previously published downloads remain listed on the [existing project page](https://wolffsroom.github.io/WolffsRoomSite/#pokemon-emerald).
+This post is a **development progress notice**, not a release announcement. The PT-BR v0.5.8 update is still being prepared and **there is no new VPK available in this news post**.

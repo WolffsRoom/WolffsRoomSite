@@ -758,7 +758,7 @@ def article(p0, lang):
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'
             '<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center">\n'
             f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{e(p["tag"])} · {e(p["status"])}</span>\n'
-            '<button class="wr-btn" type="button" data-act="back_' + p['slug'] + '" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + e(ui['back']) + '</button>\n'
+            '<button class="wr-btn wr-back-standard" type="button" data-act="back_' + p['slug'] + '" style="min-height: 48px; padding: 10px 18px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; box-shadow: 4px 4px 0 #363636; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + '<span aria-hidden="true">◀</span> ' + e(ui['back']) + '</button>\n'
             '</div>\n'
             f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-align: center; text-shadow: 4px 4px 0 #3a3a3a; border-bottom: 4px solid #2e2e2e; padding-bottom: 16px">{e(p["title"])}</h1>\n'
              + date_line +
@@ -983,12 +983,14 @@ def home_html(posts, order, feat, mosaic):
         f'<p style="margin: 0; color: #c4c4c4; max-width: 640px">{F(p, "feature_text", inline)}</p>\n'
         '<div class="wr-feat-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
         '</div>\n</div>\n</section>\n</div>\n')
+    latest_news = next((k for k in order if posts[k]['cat'] == 'journal'
+                        and posts[k]['subcat'] == 'news'), '')
     btns = '\n'.join(
-        f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}" data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'
+        f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}"' + (f' data-wr-journal-news="{e(latest_news)}"' if c == 'journal' and latest_news else '') + f' data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'
         for n, (c, t) in enumerate(CATS, 1))
     # Latest 3: restore the traditional flat post cards.
     # The carousel is for OTHER entries only, with no duplicated posts.
-    all_recent = [k for k in order if not posts[k].get('poll')]
+    all_recent = [k for k in order if not posts[k].get('poll') and posts[k]['cat'] != 'journal']
     latest_ids = all_recent[:3]
     older_ids = all_recent[3:15]  # up to 12 additional releases/projects
     latest_cards = '\n'.join(card(posts[k]) for k in latest_ids)

@@ -42,7 +42,7 @@ class LocalFiltersDeckTests(unittest.TestCase):
         self.assertIn('data-deck-dir="-1"', html)
         self.assertIn('data-deck-dir="1"', html)
         self.assertIn('class="wr-explore-prompt"', html)
-        chronological = [k for k in self.order if not self.posts[k].get('poll')]
+        chronological = [k for k in self.order if not self.posts[k].get('poll') and self.posts[k]['cat'] != 'journal']
         latest = html[html.index('class="wr-grid wr-latest-three-grid"'):
                       html.index('class="wr-other-releases"')]
         deck = html[html.index('class="wr-other-releases"'):
@@ -52,6 +52,10 @@ class LocalFiltersDeckTests(unittest.TestCase):
             self.assertNotIn('data-act="open_'+slug+'"', deck)
         for slug in chronological[3:15]:
             self.assertIn('data-act="open_'+slug+'"', deck)
+        for slug in (k for k in self.order if self.posts[k]['cat'] == 'journal'):
+            self.assertNotIn('data-act="open_'+slug+'"', latest)
+            self.assertNotIn('data-act="open_'+slug+'"', deck)
+        self.assertIn('data-wr-journal-news=', html)
         self.assertEqual(latest.count('class="wr-card '), 3)
         self.assertEqual(deck.count('class="wr-deck-card"'), 12)
         ranks = re.findall(r'class="wr-deck-card"[^>]*data-deck-rank="([0-9]+)"', deck)

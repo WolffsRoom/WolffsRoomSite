@@ -286,6 +286,12 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
   .wr-poll-question{font-size:16px}
   .wr-poll-options>div{padding:12px!important}
 }
+/* Journal news indicator only; respects reduced-motion and persists read state. */
+.wr-nav .wr-cat.wr-journal-unread{color:#ffd83c!important;border-color:#b89825!important}
+@keyframes wr-journal-pulse{0%,100%{color:#ffd83c;border-color:#b89825}50%{color:#b79a35;border-color:#665a31}}
+.wr-root.wr-pbdone .wr-nav .wr-cat.wr-journal-unread{animation:wr-journal-pulse 2.8s ease-in-out infinite!important}
+@media(prefers-reduced-motion:reduce){.wr-root .wr-nav .wr-cat.wr-journal-unread{animation:none!important}}
+.wr-back-standard:hover,.wr-back-standard:focus-visible{background:#fff!important;color:#0b0b0b!important;border-color:#fff!important}
 </style>
 <style>
 .dc-if{display:contents}
@@ -818,8 +824,22 @@ class Component extends DCLogic {
       history.pushState(null, '', h ? '#' + h : location.pathname + location.search);
       if (window.__wrGoTop) window.scrollTo(0, 0);
     }
+    var newsControl = document.querySelector('[data-wr-journal-news]');
+    if (newsControl) {
+      var latestNews = newsControl.getAttribute('data-wr-journal-news');
+      var lastRead = '';
+      try { lastRead = localStorage.getItem('wr-journal-news-seen') || ''; } catch (e) {}
+      newsControl.classList.toggle('wr-journal-unread', latestNews !== lastRead);
+    }
     rendering = false;
   }
+  document.addEventListener('click', function (ev) {
+    var journalControl = ev.target.closest('[data-wr-journal-news]');
+    if (journalControl) {
+      try { localStorage.setItem('wr-journal-news-seen', journalControl.getAttribute('data-wr-journal-news')); } catch (e) {}
+      journalControl.classList.remove('wr-journal-unread');
+    }
+  });
   document.addEventListener('click', function (ev) {
     var el = ev.target.closest('[data-act]');
     if (!el) return;
