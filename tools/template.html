@@ -153,6 +153,127 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-btn:focus-visible,.wr-card:focus-visible,.wr-link:focus-visible{outline:4px solid #ffffff;outline-offset:3px}
 @media (max-width:640px){.wr-nav{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
 @media (max-width:560px){main h1{font-size:16px !important}.wr-grid{grid-template-columns:repeat(1,minmax(0,1fr)) !important}.wr-nav{grid-template-columns:repeat(1,minmax(0,1fr)) !important}.wr-pad{padding-left:28px !important;padding-right:28px !important}.wr-logo{font-size:16px !important}}
+
+/* LOCAL-ONLY · original layout preserved: sections filters and five-card deck */
+.wr-filter-panel{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;padding:4px 0 18px;border-bottom:3px solid #303030}
+.wr-filter-btn{background:#111;color:#dadada;border:3px solid #666;padding:12px 15px;min-height:48px;cursor:pointer;font:400 13px/1.5 'WR Start 2P','Pixelify Sans',monospace;text-transform:uppercase;box-sizing:border-box}
+.wr-filter-btn:hover,.wr-filter-btn:focus-visible{border-color:#fff;color:#fff;outline:none}
+.wr-filter-btn[aria-pressed=true]{background:#fff;border-color:#fff;color:#0b0b0b;box-shadow:4px 4px 0 #454545}
+.wr-filter-count{color:inherit;opacity:.75;font-size:11px}
+.wr-filter-section[hidden]{display:none!important}
+.wr-category-back{margin-top:20px}
+.wr-explore-prompt{padding:6px 14px 16px}
+/* Keep the exploration caption hidden until the entire Home introduction ends. */
+.wr-root:not(.wr-pbdone) .wr-explore-prompt{visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+.wr-root.wr-pbdone .wr-explore-prompt{visibility:visible;opacity:1;animation:none}
+@keyframes wr-explore-reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.wr-root.wr-home-returning:not(.wr-pbdone) .wr-explore-prompt{visibility:hidden!important}
+@media(prefers-reduced-motion:reduce){.wr-root.wr-pbdone .wr-explore-prompt{animation:none}}
+
+.wr-deck{width:100%;max-width:1110px;margin:0 auto;outline:none}
+.wr-deck:focus-visible{outline:3px dashed #fff;outline-offset:6px}
+.wr-deck-stage{height:355px;position:relative;overflow:hidden;isolation:isolate;box-sizing:border-box}
+.wr-deck-card{position:absolute;top:26px;left:50%;width:clamp(225px,29vw,318px);box-sizing:border-box;background:#101010;color:#fff;border:4px solid #5a5a5a;text-decoration:none;display:flex;flex-direction:column;min-height:300px;box-shadow:7px 9px 0 rgba(0,0,0,.82);transform-origin:50% 45%;transform:translateX(-50%) translateY(10px) scale(.7);opacity:0;visibility:hidden;filter:grayscale(.3);pointer-events:none;z-index:0;transition:left .38s cubic-bezier(.2,.8,.2,1),transform .38s cubic-bezier(.2,.8,.2,1),opacity .32s ease,filter .28s ease,box-shadow .28s ease}
+.wr-deck-card[data-wr-pos="0"]{left:50%;z-index:6;transform:translateX(-50%) scale(1);opacity:1;filter:none;visibility:visible;pointer-events:auto;border-color:#e8e8e8}
+.wr-deck-card[data-wr-pos="-1"]{left:32%;z-index:4;transform:translateX(-50%) scale(.86);opacity:.88;filter:brightness(.75);visibility:visible;pointer-events:auto}
+.wr-deck-card[data-wr-pos="1"]{left:68%;z-index:4;transform:translateX(-50%) scale(.86);opacity:.88;filter:brightness(.75);visibility:visible;pointer-events:auto}
+.wr-deck-card[data-wr-pos="-2"]{left:16%;z-index:2;transform:translateX(-50%) scale(.69);opacity:.36;filter:grayscale(.38) brightness(.65);visibility:visible;pointer-events:auto}
+.wr-deck-card[data-wr-pos="2"]{left:84%;z-index:2;transform:translateX(-50%) scale(.69);opacity:.36;filter:grayscale(.38) brightness(.65);visibility:visible;pointer-events:auto}
+.wr-deck-card[data-wr-pos="away"]{visibility:hidden;pointer-events:none;opacity:0}
+/* Only the center card gets a prominent border, scaling and white outline. */
+.wr-deck-card[data-wr-pos="0"]:hover,.wr-deck-card[data-wr-pos="0"]:focus-visible{z-index:15;opacity:1;filter:none;transform:translateX(-50%) translateY(-20px) scale(1.04);border-color:#fff;box-shadow:9px 14px 0 #050505;outline:3px solid #fff;outline-offset:3px}
+/* Side cards stay dimmed and under the central card: they lift only slightly. */
+.wr-deck-card:is([data-wr-pos="-1"],[data-wr-pos="1"]):is(:hover,:focus-visible){z-index:5;opacity:.9;filter:brightness(.80);transform:translateX(-50%) translateY(-10px) scale(.86);border-color:#777;box-shadow:7px 10px 0 rgba(0,0,0,.78);outline:none}
+.wr-deck-card:is([data-wr-pos="-2"],[data-wr-pos="2"]):is(:hover,:focus-visible){z-index:3;opacity:.44;filter:grayscale(.35) brightness(.72);transform:translateX(-50%) translateY(-6px) scale(.70);border-color:#666;box-shadow:6px 8px 0 rgba(0,0,0,.72);outline:none}
+.wr-deck-cover{aspect-ratio:16/9;overflow:hidden;background:#080808;display:flex;align-items:center;justify-content:center;border-bottom:4px solid #303030}
+.wr-deck-cover>img{width:100%!important;aspect-ratio:16/9;object-fit:cover;display:block}
+.wr-deck-cover>div{width:100%;min-height:100%;box-sizing:border-box}
+.wr-deck-info{display:flex;flex-direction:column;gap:9px;padding:13px 15px 16px;min-height:116px;box-sizing:border-box}
+.wr-deck-tag{font-size:12px;color:#aaa;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr-deck-info>strong{font:400 14px/1.55 'WR Start 2P','Pixelify Sans',monospace;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wr-deck-meta{margin-top:auto;color:#c8c8c8;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wr-deck-controls{display:flex;justify-content:center;align-items:center;gap:22px}
+.wr-deck-arrow{min-width:48px;min-height:48px;padding:9px;background:#101010;border:4px solid #777;color:#fff;cursor:pointer;font:400 18px/1 'WR Start 2P','Pixelify Sans',monospace}
+.wr-deck-arrow:hover,.wr-deck-arrow:focus-visible{background:#fff;color:#0b0b0b;border-color:#fff;outline:none}
+.wr-deck-counter{font:400 14px/1.4 'WR Start 2P','Pixelify Sans',monospace;color:#bcbcbc;min-width:92px;text-align:center}
+@media(max-width:720px){
+ .wr-filter-panel{gap:8px}
+ .wr-filter-btn{font-size:11px;padding:8px 9px;min-height:42px}
+ .wr-deck-stage{height:336px}
+ .wr-deck-card{width:clamp(205px,72vw,290px);min-height:276px;top:23px}
+ /* Pull the outer cards inward to keep shadows inside the carousel. */
+ .wr-deck-card[data-wr-pos="-1"]{left:30%}
+ .wr-deck-card[data-wr-pos="1"]{left:70%}
+ .wr-deck-card[data-wr-pos="-2"]{left:18%;transform:translateX(-50%) scale(.59)}
+ .wr-deck-card[data-wr-pos="2"]{left:82%;transform:translateX(-50%) scale(.59)}
+ .wr-deck-card:is([data-wr-pos="-2"],[data-wr-pos="2"]):is(:hover,:focus-visible){transform:translateX(-50%) translateY(-6px) scale(.60)}
+ .wr-deck-info{padding:10px 12px;gap:7px;min-height:105px}
+ .wr-deck-info>strong{font-size:12px}
+ .wr-deck-tag,.wr-deck-meta{font-size:11px}
+}
+/* On narrow phones, the two outermost cards cannot fully fit without
+   obscuring the center. Show a clean three-card fan instead. */
+@media(max-width:520px){
+ .wr-deck-card[data-wr-pos="-1"]{left:34%;transform:translateX(-50%) scale(.75)}
+ .wr-deck-card[data-wr-pos="1"]{left:66%;transform:translateX(-50%) scale(.75)}
+ .wr-deck-card:is([data-wr-pos="-1"],[data-wr-pos="1"]):is(:hover,:focus-visible){transform:translateX(-50%) translateY(-10px) scale(.75)}
+ .wr-deck-card:is([data-wr-pos="-2"],[data-wr-pos="2"]){visibility:hidden;opacity:0;pointer-events:none}
+}
+@media(prefers-reduced-motion:reduce){.wr-deck-card{transition:none}}
+
+
+/* LOCAL preview: centered bilingual poll detail, keep the original footer. */
+.wr-featured-poll-title .wr-poll-headline,
+.wr-poll-title .wr-poll-headline{
+  display:block;text-align:center;font-size:clamp(22px,3vw,34px);line-height:1.5;
+}
+.wr-featured-poll-title .wr-poll-subline,
+.wr-poll-title .wr-poll-subline{
+  display:block;text-align:center;font-size:clamp(13px,2vw,22px);
+  line-height:1.65;margin-top:6px;font-weight:400;
+}
+.wr-poll-detail{
+  width:100%;max-width:760px;margin:0 auto;box-sizing:border-box;
+  display:flex;flex-direction:column;align-items:center;gap:25px;
+  text-align:center;padding:20px 18px 28px;
+}
+.wr-poll-title{margin:0;line-height:1.55;font-weight:400;text-shadow:4px 4px 0 #303030}
+.wr-poll-question{margin:0;max-width:690px;font-size:18px;line-height:1.75;color:#ddd}
+.wr-poll-options{width:100%;max-width:640px;display:flex;flex-direction:column;gap:12px;
+  align-items:stretch;text-align:center}
+.wr-poll-options>div{box-sizing:border-box;width:100%;text-align:center;justify-content:center}
+.wr-poll-options>div>span{display:inline-block;margin-right:9px;color:#aaa}
+.wr-poll-deadline{margin:0;font-size:14px;color:#aaa;line-height:1.6}
+.wr-poll-detail>.wr-vitabtn{align-self:center!important;max-width:100%;
+  min-height:52px;line-height:1.5;white-space:normal}
+/* Match the original site's white pixel-action buttons, including typography. */
+.wr-poll-detail>.wr-poll-back{
+  align-self:center;display:inline-flex;justify-content:center;align-items:center;
+  width:auto;min-width:230px;max-width:100%;min-height:52px;
+  box-sizing:border-box;margin:4px auto 0;padding:14px 22px;
+  border:4px solid #fff;border-radius:0;
+  background:#fff;color:#0b0b0b;cursor:pointer;
+  font:400 14px/1.5 'WR Start 2P','Press Start 2P','Pixelify Sans',monospace;
+  text-transform:uppercase;text-align:center;white-space:normal;
+  box-shadow:5px 5px 0 #424242;
+  transition:background .12s steps(2,end),color .12s steps(2,end),transform .12s steps(2,end);
+}
+.wr-poll-detail>.wr-poll-back:hover{
+  border-color:#fff;background:#171717;color:#fff;
+  transform:translateY(-3px);box-shadow:5px 8px 0 #424242;
+}
+.wr-poll-detail>.wr-poll-back:focus-visible{
+  border-color:#fff;outline:4px solid #fff;outline-offset:4px;
+  background:#171717;color:#fff;
+}
+.wr-poll-detail>.wr-poll-back:active{
+  transform:translate(3px,3px);box-shadow:2px 2px 0 #424242;
+}
+@media(max-width:600px){
+  .wr-poll-detail{padding:4px 0 24px;gap:19px}
+  .wr-poll-question{font-size:16px}
+  .wr-poll-options>div{padding:12px!important}
+}
 </style>
 <style>
 .dc-if{display:contents}
@@ -699,6 +820,75 @@ class Component extends DCLogic {
     fn();
     if (hashFor(comp.state) !== before) window.scrollTo(0, 0);
   });
+
+  // Category-specific filters, in the original section layout.
+  document.addEventListener('click', function (ev) {
+    var control = ev.target.closest('[data-wr-filter-cat]');
+    if (!control) return;
+    ev.preventDefault();
+    var cat = control.getAttribute('data-wr-filter-cat');
+    var key = control.getAttribute('data-wr-filter-key');
+    document.querySelectorAll('[data-wr-filter-cat]').forEach(function (btn) {
+      if (btn.getAttribute('data-wr-filter-cat') === cat) {
+        btn.setAttribute('aria-pressed', String(btn.getAttribute('data-wr-filter-key') === key));
+      }
+    });
+    document.querySelectorAll('[data-wr-section-cat]').forEach(function (section) {
+      if (section.getAttribute('data-wr-section-cat') === cat) {
+        section.hidden = key !== 'all' && section.getAttribute('data-wr-section-key') !== key;
+      }
+    });
+    comp.beep('tick');
+  });
+
+  // Five overlapping cards (4 3 1 2 5 on first load), remaining posts via arrows.
+  // The newest post has chronological rank 1 and starts in the center.
+  var deck = document.querySelector('.wr-deck');
+  var deckItems = deck ? Array.from(deck.querySelectorAll('.wr-deck-card')) : [];
+  var deckCenter = deckItems.length >= 5 ? 2 : 0;
+  function drawDeck() {
+    if (!deckItems.length) return;
+    var total = deckItems.length;
+    deckItems.forEach(function (item, i) {
+      var delta = (i - deckCenter + total) % total;
+      if (delta > Math.floor(total / 2)) delta -= total;
+      var narrow = window.matchMedia('(max-width: 520px)').matches;
+      var limit = narrow ? 1 : 2;
+      var pos = delta >= -limit && delta <= limit ? String(delta) : 'away';
+      item.setAttribute('data-wr-pos', pos);
+      item.setAttribute('aria-hidden', pos === 'away' ? 'true' : 'false');
+      item.tabIndex = pos === 'away' ? -1 : 0;
+      item.inert = pos === 'away';
+      if (pos === '0') item.setAttribute('aria-current', 'true');
+      else item.removeAttribute('aria-current');
+    });
+    var display = deck.querySelector('.wr-deck-counter');
+    if (display) {
+      var rank = Number(deckItems[deckCenter].getAttribute('data-deck-rank') || 1);
+      display.textContent = String(rank).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    }
+  }
+  function moveDeck(dir) {
+    if (deckItems.length < 2) return;
+    deckCenter = (deckCenter + dir + deckItems.length) % deckItems.length;
+    drawDeck();
+    comp.beep('tick');
+  }
+  document.addEventListener('click', function (ev) {
+    var control = ev.target.closest('[data-deck-dir]');
+    if (!control) return;
+    ev.preventDefault();
+    moveDeck(Number(control.getAttribute('data-deck-dir')) || 1);
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+    if (!deck || !deck.contains(document.activeElement)) return;
+    ev.preventDefault();
+    moveDeck(ev.key === 'ArrowRight' ? 1 : -1);
+  });
+  drawDeck();
+  window.addEventListener('resize', drawDeck, { passive: true });
+
   document.addEventListener('mouseover', function (ev) {
     var el = ev.target.closest('[data-hover]');
     if (!el || (ev.relatedTarget && el.contains(ev.relatedTarget))) return;

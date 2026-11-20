@@ -334,6 +334,16 @@ def load_english(folder, p):
             en[dst] = str(meta[src])
     if meta.get('chamada') or meta.get('resumo'):
         en['feature_text'] = str(meta.get('chamada') or meta.get('resumo'))
+    # Poll localization. Portuguese fields are from post.md, English from post.en.md.
+    if p.get('poll'):
+        if meta.get('pergunta'):
+            en['poll_question'] = str(meta['pergunta']).strip()
+        if 'opcoes' in meta:
+            opts = meta['opcoes']
+            if (not isinstance(opts, list) or len(opts) != len(p['poll']['options']) or
+                    any(not isinstance(x, str) or not x.strip() or len(x) > 110 for x in opts)):
+                raise PostError('post.en.md: poll options must match original options')
+            en['poll_options'] = [x.strip() for x in opts]
     if meta.get('barras'):
         en['bars'] = parse_bars(meta['barras'])
     if meta.get('ficha'):
@@ -400,8 +410,8 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Apps/Mods', 'traducoes': 'Traduções', 'journal': 'Journal'},
         'groups': {'Em andamento': 'Em desenvolvimento', 'Finalizado': 'Finalizados', 'Próximos': 'Próximos', 'Outras equipes': 'Outras equipes'}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas três novidades...', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
-        'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas novidades...', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
+        'explore_more': 'Explore outros trabalhos finalizados ou em desenvolvimento...', 'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
     },
@@ -410,7 +420,7 @@ UI = {
         'groups': {'Em andamento': 'In development', 'Finalizado': 'Completed', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest three updates...', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest updates...', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'explore_more': 'Explore other completed and in-development projects...', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -760,15 +770,26 @@ def article(p0, lang):
             '</div>\n</article>\n')
 
 
+def poll_heading(title):
+    """Accessible two-line heading in the active locale."""
+    segments = str(title).split(' — ', 1)
+    if len(segments) == 1:
+        return e(str(title))
+    return ('<span class="wr-poll-headline">' + e(segments[0]) + '</span>'
+            '<span class="wr-poll-subline">' + e(segments[1]) + '</span>')
+
+
 def poll_article(p, lang):
     info = p['poll']
-    title = e(V(p, lang)['title'])
-    question = e(info['question'])
+    locale = V(p, lang)
+    title = poll_heading(locale['title'])
+    question = e(locale.get('poll_question') or info['question'])
+    translated_options = locale.get('poll_options') or info['options']
     ended = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).replace(tzinfo=None) >= datetime.datetime.fromisoformat(info['ends_at'])
     options = ''
     counts = info.get('counts')
     total = sum(counts) if counts else 0
-    for i, option in enumerate(info['options']):
+    for i, option in enumerate(translated_options):
         label = e(option)
         if ended and counts:
             pct = round(counts[i] * 100 / total) if total else 0
@@ -780,17 +801,18 @@ def poll_article(p, lang):
                         f'<span style="color:#aaa">○</span> {label}</div>')
     availability = (T('Enquete encerrada.', 'Poll closed.') if ended else
                     T('Disponível somente pela loja', 'Available only through the Store'))
-    action = (f'<button class="wr-btn wr-vitabtn" type="button" data-act="openVita" style="position:static;z-index:auto;width:auto;height:auto;display:inline-block;align-self:flex-start;border:4px solid #fff;background:#fff;color:#000;padding:14px;cursor:pointer;{DF}">{availability}</button>'
+    action = (f'<button class="wr-btn wr-vitabtn" type="button" data-act="openVita" style="position:static;z-index:auto;width:auto;height:auto;display:inline-block;align-self:center;border:4px solid #fff;background:#fff;color:#000;padding:14px;cursor:pointer;{DF}">{availability}</button>'
               if not ended else f'<p>{availability}</p>')
     published = T('Encerra em', 'Ends on')
-    return (f'<article data-l="{lang}" class="wr-poll-detail" style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px">'
-            '<button class="wr-btn" type="button" data-act="goHome" style="align-self:flex-start;padding:12px 22px;border:3px solid #777;background:#111;color:#fff;cursor:pointer">'
-            + T('Voltar', 'Back') + '</button>'
-            f'<h1 style="{DF};font-size:23px;line-height:1.6;margin:0">{title}</h1>'
-            f'<p style="font-size:17px;color:#ddd">{question}</p>'
-            f'<div style="display:flex;flex-direction:column;gap:12px">{options}</div>'
-            f'<p style="color:#aaa">{published}: {e(info["ends_at"].replace("T", " "))}</p>'
-            + action + '</article>')
+    return (f'<article data-l="{lang}" class="wr-poll-detail">'
+            f'<h1 class="wr-poll-title" style="{DF}">{title}</h1>'
+            f'<p class="wr-poll-question">{question}</p>'
+            f'<div class="wr-poll-options">{options}</div>'
+            f'<p class="wr-poll-deadline">{published}: {e(info["ends_at"].replace("T", " "))}</p>'
+            + action
+            + '<button class="wr-btn wr-poll-back" type="button" data-act="goHome">'
+            + T('Voltar ao início', 'Back to home') + '</button>'
+            + '</article>')
 
 
 def news_article(p, lang):
@@ -831,6 +853,7 @@ def detail(p):
 
 
 def lists_html(posts, order):
+    """Existing category pages with local-only section filters and bottom return."""
     out = ''
     for n, (cid, _t) in enumerate(CATS, 1):
         body = ''
@@ -843,23 +866,50 @@ def lists_html(posts, order):
             sections = [(g, T(e(UI['pt']['groups'][g]), e(UI['en']['groups'][g])),
                          [k for k in order if posts[k]['cat'] == cid and posts[k]['group'] == g])
                         for g in groups]
+        filter_bar = ('<div class="wr-filter-panel" role="group" aria-label="'
+                      + e('Filtrar seções de ' + UI['pt']['cats'][cid]) + '">'
+                      '<button class="wr-filter-btn" type="button" data-wr-filter-cat="'
+                      + e(cid) + '" data-wr-filter-key="all" aria-pressed="true">'
+                      + T('Todos', 'All') + '</button>')
         for key, heading_text, ids in sections:
-            body += ('<div style="display: flex; flex-direction: column; gap: 28px">\n'
-                     f'<h2 id="{cid}-{key}" style="margin: 0; {DF} font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">{heading_text} <span style="color: #8a8a8a">({len(ids)})</span></h2>\n')
+            filter_bar += (f'<button class="wr-filter-btn" type="button" '
+                           f'data-wr-filter-cat="{e(cid)}" data-wr-filter-key="{e(key)}" '
+                           f'aria-pressed="false">{heading_text} '
+                           f'<span class="wr-filter-count">({len(ids)})</span></button>')
+            body += (f'<div class="wr-filter-section" data-wr-section-cat="{e(cid)}" '
+                     f'data-wr-section-key="{e(key)}" style="display:flex;flex-direction:column;gap:28px">'
+                     f'<h2 id="{e(cid)}-{e(key)}" style="margin:0;{DF}font-size:16px;'
+                     f'line-height:1.5;font-weight:400;text-transform:uppercase;'
+                     f'text-align:center;color:#c4c4c4">{heading_text} '
+                     f'<span style="color:#8a8a8a">({len(ids)})</span></h2>\n')
             if ids:
-                body += '<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">\n' + '\n'.join(card(posts[i]) for i in ids) + '\n</div>\n'
+                body += ('<div class="wr-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px">\n'
+                         + '\n'.join(card(posts[i]) for i in ids) + '\n</div>\n')
             else:
-                body += f'<p style="margin: 0; text-align: center; color: #8a8a8a">{U("nothing")}</p>\n'
+                body += f'<p style="margin:0;text-align:center;color:#8a8a8a">{U("nothing")}</p>\n'
             body += '</div>\n'
+        filter_bar += '</div>'
         if cid in ('ports', 'ferramentas'):
-            body += (f'<a class="wr-btn" href="{WEB_GITHUB}" target="_blank" rel="noopener" style="align-self: center; min-height: 48px; box-sizing: border-box; padding: 12px 20px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; text-decoration: none; text-align: center; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase">' + U('repos') + '</a>\n')
+            body += (f'<a class="wr-btn" href="{WEB_GITHUB}" target="_blank" rel="noopener" '
+                     f'style="align-self:center;min-height:48px;box-sizing:border-box;padding:12px 20px;'
+                     f'border:4px solid #8a8a8a;background:#0b0b0b;color:#fff;'
+                     f'text-decoration:none;text-align:center;{DF}font-size:16px;'
+                     f'line-height:1.6;text-transform:uppercase">' + U('repos') + '</a>\n')
+        back = ('<button class="wr-btn wr-category-back" type="button" data-act="goHome" '
+                f'style="align-self:center;min-height:48px;padding:12px 22px;'
+                f'border:4px solid #fff;background:#fff;color:#0b0b0b;{DF}'
+                f'font-size:16px;line-height:1.5;text-transform:uppercase;cursor:pointer">'
+                + U('back_home') + '</button>\n')
         title = T(e(UI['pt']['cats'][cid]), e(UI['en']['cats'][cid]))
         out += ('\n<div class="dc-if" data-if="on' + str(n) + '">\n'
-                f'<section aria-label="{e(UI["en"]["cats"][cid])}" style="display: flex; flex-direction: column; gap: 44px">\n'
-                '<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; border-bottom: 4px solid #2e2e2e; padding-bottom: 12px">\n'
-                f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-shadow: 4px 4px 0 #3a3a3a">{title}</h1>\n'
-                '<button class="wr-btn" type="button" data-act="goHome" style="min-height: 44px; padding: 8px 16px; border: 4px solid #8a8a8a; background: #0b0b0b; color: #ffffff; ' + DF + ' font-size: 16px; line-height: 1.6; text-transform: uppercase; cursor: pointer">' + U('back_home') + '</button>\n'
-                '</div>\n' + body + '</section>\n</div>\n')
+                f'<section aria-label="{e(UI["en"]["cats"][cid])}" '
+                'style="display:flex;flex-direction:column;gap:44px">\n'
+                '<div style="display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:center;'
+                'align-items:center;border-bottom:4px solid #2e2e2e;padding-bottom:12px">\n'
+                f'<h1 style="margin:0;{DF}font-size:32px;line-height:1.5;font-weight:400;'
+                f'text-transform:uppercase;text-align:center;text-shadow:4px 4px 0 #3a3a3a">'
+                + title + '</h1></div>\n'
+                + filter_bar + '\n' + body + back + '</section>\n</div>\n')
     return out
 
 
@@ -876,6 +926,22 @@ def kicker_words(text):
         out.append('<span class="wr-word">' + spans + '</span>')
         i += 1  # o espaço também conta no tempo da digitação
     return ' '.join(out)
+
+
+def deck_card(p, pos, chronological_rank):
+    """Small overlapping-card preview; clicking preserves the existing detail route."""
+    title = F(p, 'title')
+    status = F(p, 'status')
+    version = e(p.get('version_label') or '')
+    return (f'<a class="wr-deck-card" data-deck-index="{pos}" data-deck-rank="{chronological_rank}" href="#{e(p["slug"])}" '
+            f'data-act="open_{e(p["slug"])}" aria-hidden="true" tabindex="-1" '
+            f'aria-label="{e(V(p, "en")["title"])}" data-wr-pos="away">'
+            f'<div class="wr-deck-cover">{pic(p)}</div>'
+            '<div class="wr-deck-info">'
+            f'<span class="wr-deck-tag">{F(p, "tag")}</span>'
+            f'<strong>{title}</strong>'
+            f'<span class="wr-deck-meta">{version} · {status}</span>'
+            '</div></a>')  # no visible descriptions until a project is opened
 
 
 def home_html(posts, order, feat, mosaic):
@@ -912,7 +978,7 @@ def home_html(posts, order, feat, mosaic):
         '<button class="wr-start" type="button" data-act="startIntro"><span>&#9654; ' + U('start') + '</span><small>' + U('click') + '</small></button>\n</div>\n' +
         '<div class="wr-feat-info" style="display: flex; flex-direction: column; align-items: center; gap: 14px">\n'
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")} · {F(p, "status")}</span>\n'
-        f'<h1 style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title")}</h1>\n'
+        f'<h1 class="wr-featured-title{(" wr-featured-poll-title" if p.get("poll") else "")}" style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title", poll_heading) if p.get("poll") else F(p, "title")}</h1>\n'
         + feat_author +
         f'<p style="margin: 0; color: #c4c4c4; max-width: 640px">{F(p, "feature_text", inline)}</p>\n'
         '<div class="wr-feat-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
@@ -920,15 +986,35 @@ def home_html(posts, order, feat, mosaic):
     btns = '\n'.join(
         f'<button class="wr-btn wr-sh-s wr-cat" type="button" data-hover="hov" data-act="pick{n}" data-b-aria-expanded="pk{n}" style="min-height: 64px; padding: 12px; border: 4px solid #8a8a8a; background: #141414; color: #ffffff; {DF} font-size: 16px; line-height: 1.5; text-transform: uppercase; cursor: pointer">{T(e(UI["pt"]["cats"][c]), e(UI["en"]["cats"][c]))}</button>'
         for n, (c, t) in enumerate(CATS, 1))
-    # as três novidades mais recentes, antes dos botões de categoria
-    latest3 = '\n'.join(card(posts[i]) for i in [k for k in order if not posts[k].get('poll')][:3])
+    # Opening cards: 4 3 1 2 5, where 1 (latest) is initially front/center.
+    # Additional entries can be reached through the slider controls.
+    latest_ids = [k for k in order if not posts[k].get('poll')][:12]
+    visual_order = ([latest_ids[i] for i in (3, 2, 0, 1, 4)]
+                    + latest_ids[5:] if len(latest_ids) >= 5 else latest_ids)
+    deck_cards = '\n'.join(deck_card(posts[k], i, latest_ids.index(k) + 1) for i, k in enumerate(visual_order))
     latest = ('<div class="dc-if" data-if="on0">\n'
-              '<section class="wr-latest" aria-label="' + e(UI['en']['latest3']) + '" style="display: flex; flex-direction: column; gap: 24px">\n'
-              f'<h2 style="margin: 0; {DF} font-size: 16px; line-height: 1.5; font-weight: 400; text-transform: uppercase; text-align: center; color: #c4c4c4">' + T(e(UI['pt']['latest3']), e(UI['en']['latest3'])) + '</h2>\n'
-              f'<div class="wr-grid" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px">\n{latest3}\n</div>\n'
-              '</section>\n</div>\n')
-    nav = latest + ('<div class="dc-if" data-if="on0">\n'
-           f'<nav class="wr-nav" aria-label="Categories" style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px">\n{btns}\n</nav>\n</div>\n')
+              '<section class="wr-latest" aria-label="' + e(UI['en']['latest3'])
+              + '" style="display:flex;flex-direction:column;align-items:center;gap:24px">\n'
+              f'<h2 style="margin:0;{DF}font-size:16px;line-height:1.6;font-weight:400;'
+              'text-transform:uppercase;text-align:center;color:#c4c4c4">'
+              + T(e(UI['pt']['latest3']), e(UI['en']['latest3'])) + '</h2>\n'
+              '<div class="wr-deck" role="region" aria-roledescription="carousel" '
+              'aria-label="Recent projects / Projetos recentes" tabindex="0">\n'
+              '<div class="wr-deck-stage">' + deck_cards + '</div>\n'
+              '<div class="wr-deck-controls">'
+              '<button type="button" class="wr-deck-arrow" data-deck-dir="-1" '
+              'aria-label="Carta anterior / Previous card">◀</button>'
+              '<span class="wr-deck-counter" aria-live="polite">01 / '
+              + str(len(visual_order)) + '</span>'
+              '<button type="button" class="wr-deck-arrow" data-deck-dir="1" '
+              'aria-label="Próxima carta / Next card">▶</button>'
+              '</div></div></section>\n</div>\n')
+    explore = ('<div class="dc-if" data-if="on0">'
+               f'<p class="wr-explore-prompt" style="margin:0;text-align:center;'
+               f'color:#c4c4c4;{DF}font-size:16px;line-height:1.7">'
+               + U('explore_more') + '</p></div>\n')
+    nav = latest + explore + ('<div class="dc-if" data-if="on0">\n'
+           f'<nav class="wr-nav" aria-label="Categories" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px">\n{btns}\n</nav>\n</div>\n')
     peeks = ''
     for n, (c, t) in enumerate(CATS, 1):
         ids = [k for k in order if posts[k]['cat'] == c]
@@ -954,7 +1040,7 @@ def make_mosaic(p, out_dir):
     except ImportError:
         print('aviso: Pillow não instalado; a animação de mosaico fica desligada')
         return []
-    im = Image.open(os.path.join(ROOT, 'content', p['cover'])).convert('RGB')
+    im = Image.open(os.path.join(p['folder'], os.path.basename(p['cover']))).convert('RGB')
     res = []
     widths = (12, 20, 32, 48, 72, 112, 176, 288)
     for k, w in enumerate(widths):
