@@ -1,16 +1,16 @@
 ---
-titulo: 'Youtube - Unofficial client for PS Vita (alpha)'
+titulo: YouTube on Vita
 categoria: ferramentas
 subcategoria: apps
 grupo: Em andamento
 data: '2026-11-17 23:20'
-atualizado_em: 2026-11-18
-tag: Client não oficial · YouTube · PS Vita
-status: Alpha v0.34 · Testes no Vita real
+atualizado_em: '2026-11-20 18:55'
+tag: YouTube on TV · Cobalt · PS Vita
+status: v0.58 · First Release
 novidade: Release
-versao: v0.34
-resumo: Interface original do YouTube on TV no PS Vita, com login, toque e reprodução H.264/AAC em até 720p.
-chamada: YouTube no PS Vita real, com a experiência Starboard 15, controle por toque e vídeo até 720p.
+versao: v0.58
+resumo: O YouTube on TV original no PS Vita, com login, touch, áudio, vídeo até 720p e Add-ons nativos.
+chamada: Chegou o YouTube on Vita v0.58! Primeira versão pública, com downloads Full e Lite.
 capa: capa.png
 capturas:
   - captura-1.png
@@ -20,58 +20,74 @@ capturas:
   - captura-5.png
   - captura-6.png
   - captura-7.png
+  - addons-home.png
+  - addons-player.png
+  - addons-download.png
+  - addons-settings.png
+  - addons-display.png
 ficha:
-  Version: Alpha v0.34 (experimental)
-  Platform: Starboard 15 / VitaGL (renderizador GXM direto planejado)
-  Controls: Botões e gestos na tela sensível ao toque
-  Video: H.264 até 720p, até 60 fps
-  Status: Em testes no hardware real
-  Title ID: YTVCB0001
-  Plugin recomendado: CapUnlocker (4 núcleos de CPU; opcional)
+  Version: v0.58 · First Release
+  Platform: PlayStation Vita / Vita3K
+  Engine: Cobalt / Starboard 15 / VitaGL
+  Video: H.264 / AAC · até 720p
+  Controls: Botões, toque e microfone nativo
+  Builds: Full (RAM estendida) / Lite (menor uso de RAM)
+  Title IDs: YTVCB0001 (Full) / YTVCB0002 (Lite)
 links:
-  Somente na Wolff's Store: https://wolffsroom.github.io/WolffsRoomSite/
+  YouTube Full - Download recomendado: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube.vpk
+  YouTube Lite - Menos RAM: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube-Lite.vpk
+  Release v0.58 no GitHub: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.58
 fontes:
-  GitHub - YouTubeOnVita: https://github.com/WolffsRoom/YouTubeOnVita
+  Repositório e README: https://github.com/WolffsRoom/YouTubeOnVita
 downloads:
   - tipo: vpk
-    nome: Youtube - Unofficial client for PS Vita (alpha) v0.34
-    url: https://drive.google.com/file/d/1PCtp1lwV3l4IUajHxlI6wJBF7YDhIprf/view?usp=sharing
-    arquivo: YouTubeVita_v0.34.vpk
-    versao: '0.34'
+    nome: YouTube Full (normal) - Recomendado
+    url: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube.vpk
+    arquivo: YouTube.vpk
+    versao: '0.58'
     titleid: YTVCB0001
-    aviso_plugin: CapUnlocker
-    app_min: '1.0.3'
+    tamanho: 21954021
+    instrucoes: https://github.com/WolffsRoom/YouTubeOnVita#download
+  - tipo: vpk
+    nome: YouTube Lite - Menor uso de RAM
+    url: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube-Lite.vpk
+    arquivo: YouTube-Lite.vpk
+    versao: '0.58'
+    titleid: YTVCB0002
+    tamanho: 21954225
+    instrucoes: https://github.com/WolffsRoom/YouTubeOnVita#download
 ---
 
-Cliente experimental não oficial do YouTube para PlayStation Vita, utilizando a **interface genuína YouTube on TV (Starboard 15)**. A versão alpha v0.34 já funciona no PS Vita real e no Vita3K, superando as limitações dos primeiros testes da v0.22.
+E aí, pessoal! Wolff aqui.
 
-## O que já funciona nos testes
+O **YouTube on Vita v0.58** chegou à sua **primeira versão pública**! O projeto traz a interface original do **YouTube on TV** para o PlayStation Vita, utilizando Cobalt e integração com os recursos nativos do console.
 
-- A interface genuína do YouTube on TV roda no PS Vita real e no Vita3K.
-- Navegação fluida, renderizando em até 60 FPS no hardware.
-- D-pad e botões físicos, além de gestos na tela: tocar para selecionar, deslizar para rolar e tocar com dois dedos para voltar.
-- Reprodução por hardware de H.264/AAC de 240p a 720p, incluindo fluxos de 60 fps.
-- Login e configurações persistem entre sessões.
-- Controles do player: pausar/retomar e legendas.
-- Utiliza os quatro núcleos da CPU quando o plugin CapUnlocker está instalado.
+## O que oferece
 
-## Status alpha e limitações
+- **YouTube de verdade:** navegação, pesquisa, login e player da interface de TV.
+- **Controles nativos:** botões físicos, touchscreen e suporte ao microfone para recursos de voz compatíveis.
+- **Reprodução de vídeo:** H.264/AAC, até 720p e suporte a vídeos de até 60 FPS quando disponíveis e compatíveis.
+- **Add-ons:** capturas de tela, temporizador, tela preta ou escurecida, ajustes de desempenho e sons de navegação.
+- **Downloads:** vídeos em MP4 e músicas em MP3, com capas quadradas nos novos arquivos de áudio.
+- **Sessão protegida:** comunicação HTTPS e armazenamento local criptografado dos dados de sessão.
 
-**Esta é uma versão experimental, não estável.** Problemas conhecidos: sombras de texto sobre vídeos e miniaturas podem aparecer como caixas escuras, a visualização de letras em videoclipes musicais não reproduz, e ainda podem ocorrer travamentos ocasionais (em investigação). Não há suporte a 1080p, pois o decodificador de vídeo disponibilizado a aplicativos no Vita tem limite de 720p. Controles de velocidade, VP9/AV1 e conteúdos protegidos também não são suportados.
+## Cobalt e desempenho
 
-## Instalação
+**Sobre o FPS da interface:** o Cobalt evita redesenhar telas paradas desnecessariamente. Por isso, contadores de FPS podem indicar valores baixos nos menus, mesmo sem lentidão perceptível. Esse comportamento também ajuda a economizar energia.
 
-- Instale a alpha v0.34 **somente pelo download integrado da Wolff's Store**, disponibilizado para o PS Vita. O link do arquivo está no catálogo da loja.
-- **CapUnlocker é recomendado, mas não obrigatório.** Com ele instalado e ativado no taiHEN, o aplicativo pode utilizar todos os quatro núcleos da CPU. A loja exibe esse aviso antes da instalação.
-- Reinicie o console após configurar o plugin, se necessário.
-- Não é necessário um PC ou servidor auxiliar para acessar a interface do app.
+A reprodução também foi testada com o Vita configurado a **222 MHz de CPU / 111 MHz de GPU**, com resultado satisfatório no conteúdo testado.
 
-## Observações
+## Qual versão baixar?
 
-O login via QR Code, a persistência da sessão e o áudio durante a reprodução já foram validados em testes no Vita real. O projeto permanece em fase alpha e pode apresentar instabilidade.
+As duas versões possuem ícones próprios na LiveArea e podem ser instaladas pelo **VitaShell**. Nenhum PC ou servidor auxiliar é necessário para usar o YouTube.
 
-## Créditos
+- **YouTube Full — recomendado:** o YouTube.vpk utiliza RAM estendida para favorecer a reprodução de vídeos.
+- **YouTube Lite — menos RAM:** o YouTube-Lite.vpk utiliza o perfil de memória normal, mais adequado para manter outros aplicativos abertos em segundo plano.
 
-- Port para PS Vita: Wolff's Room
-- Interface: YouTube on TV / Starboard 15 (Cobalt)
-- Renderização: VitaGL; backend GXM direto planejado
+## Limitações conhecidas
+
+O **AdBlock é parcial** e não bloqueia todos os anúncios do YouTube. Alguns vídeos podem ter restrições de formato ou conteúdo. Travamentos ocasionais ao trocar vídeos em HD, especialmente durante downloads, continuam em investigação.
+
+Para instruções de compilação, detalhes sobre o login e mais imagens, acesse o [README do projeto](https://github.com/WolffsRoom/YouTubeOnVita).
+
+**Vita means life!**

@@ -1,52 +1,55 @@
 ---
-titulo: 'Youtube - Unofficial client for PS Vita (alpha)'
-tag: Unofficial YouTube client · PS Vita
-status: Alpha v0.34 · Real hardware testing
-resumo: Genuine YouTube on TV interface on PS Vita, with sign-in, touch controls and H.264/AAC playback up to 720p.
-chamada: YouTube on real PS Vita hardware, powered by Starboard 15 with touch input and video up to 720p.
+titulo: YouTube on Vita
+tag: YouTube on TV · Cobalt · PS Vita
+status: v0.58 · First Release
+resumo: The genuine YouTube on TV experience on PS Vita, with sign-in, touch controls, native Add-ons and video playback up to 720p.
+chamada: YouTube on Vita v0.58 is here! The first public release, available in Full and Lite editions.
 ficha:
-  Version: Alpha v0.34 (experimental)
-  Platform: Starboard 15 / VitaGL (a direct GXM renderer is planned)
-  Controls: Buttons and touchscreen gestures
-  Video: H.264 up to 720p, up to 60 fps
-  Status: Testing on real hardware
-  Title ID: YTVCB0001
-  Recommended plugin: CapUnlocker (four CPU cores; optional)
+  Version: v0.58 · First Release
+  Platform: PlayStation Vita / Vita3K
+  Engine: Cobalt / Starboard 15 / VitaGL
+  Video: H.264 / AAC · up to 720p
+  Controls: Buttons, touchscreen and built-in microphone
+  Builds: Full (extended RAM) / Lite (lower RAM usage)
+  Title IDs: YTVCB0001 (Full) / YTVCB0002 (Lite)
 links:
-  Wolff's Store (PS Vita): https://wolffsroom.github.io/WolffsRoomSite/
+  YouTube Full - Recommended download: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube.vpk
+  YouTube Lite - Lower RAM usage: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube-Lite.vpk
+  GitHub Release v0.58: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.58
 fontes:
-  GitHub - YouTubeOnVita: https://github.com/WolffsRoom/YouTubeOnVita
+  Repository and README: https://github.com/WolffsRoom/YouTubeOnVita
 ---
 
-An experimental, unofficial YouTube client for the PlayStation Vita, bringing the **genuine YouTube on TV interface (Starboard 15)** to both real hardware and Vita3K. Alpha v0.34 replaces the earlier v0.22 testing-only status.
+Hey everyone! Wolff here.
 
-## What currently works in testing
+**YouTube on Vita v0.58** is here as its **first public release**! This port brings the genuine **YouTube on TV** experience to PlayStation Vita using Cobalt and the console's native features.
 
-- The genuine YouTube on TV interface runs on real PS Vita hardware and in Vita3K.
-- Smooth navigation: the interface renders at up to 60 fps on hardware.
-- D-pad and buttons, plus touchscreen gestures: tap to select, swipe to scroll, two-finger tap to go back.
-- Hardware H.264/AAC playback from 240p to 720p, including 60 fps streams.
-- Sign-in and settings are saved between sessions.
-- Player controls: pause/resume and captions.
-- Uses all four CPU cores when the CapUnlocker plugin is installed.
+## Features
 
-## Alpha status and limitations
+- **Real YouTube interface:** browsing, search, account sign-in and TV player controls.
+- **Native input:** physical buttons, touchscreen and microphone integration for supported voice features.
+- **Video playback:** H.264/AAC up to 720p, with support for up to 60 FPS when the video and device allow it.
+- **Add-ons:** screenshots, sleep timer, black/dimmed screen, performance settings and navigation sounds.
+- **Downloads:** MP4 video and MP3 audio, with square artwork on newly downloaded songs.
+- **Session protection:** HTTPS connections and encrypted local session storage.
 
-**This is experimental software, not a stable release.** Known issues: text shadows over videos and thumbnails show as dark boxes, the lyrics view of music videos does not play, and an occasional crash can still happen (under investigation). 1080p is not available because the Vita's video decoder is limited to 720p for apps. Playback speed controls, VP9/AV1 and protected content are not supported.
+## Cobalt and performance
 
-## Installation
+**About interface FPS:** Cobalt does not need to redraw an unchanged screen. An FPS counter may show low values in static menus even when navigation is responsive, helping save processing work and battery life.
 
-- Download and install alpha v0.34 **through Wolff's Store on PS Vita only**. The file link is provided in the Store catalog, not as a separate web download button.
-- **CapUnlocker is recommended, not required.** When enabled in taiHEN, it allows the app to use all four CPU cores. The Store displays a warning before installation.
-- Restart your Vita after enabling the plugin when necessary.
-- No companion PC or server is required to access the app's interface.
+Playback has also been tested at **222 MHz CPU / 111 MHz GPU**, with satisfactory results for the tested content.
 
-## Notes
+## Which version should I download?
 
-QR sign-in, login persistence and playback audio have been verified in testing on a real PS Vita. This remains an alpha release and occasional crashes are still being investigated.
+Install either VPK using **VitaShell**. The two editions have separate LiveArea bubbles. No PC or companion server is needed.
 
-## Credits
+- **YouTube Full — recommended:** YouTube.vpk uses extended RAM for video playback.
+- **YouTube Lite — lower memory usage:** YouTube-Lite.vpk uses normal RAM for better compatibility with suspended background apps.
 
-- PS Vita port: Wolff's Room
-- Interface: YouTube on TV / Starboard 15 (Cobalt)
-- Rendering: VitaGL (direct GXM backend planned)
+## Known limitations
+
+**AdBlock is partial** and cannot remove every YouTube ad. Some videos are restricted by their encoding or content. Occasional crashes while switching HD videos, especially during downloads, are still being investigated.
+
+For build instructions, Google sign-in details and more screenshots, see the [project README](https://github.com/WolffsRoom/YouTubeOnVita).
+
+**Vita means life!**

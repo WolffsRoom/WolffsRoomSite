@@ -1,4 +1,4 @@
-"""Check SAGE 2019 v0.64 and YouTube on Vita v0.34 catalog integrity."""
+"""Check SAGE 2019 v0.64 and YouTube on Vita v0.58 release integrity."""
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -24,41 +24,54 @@ class PostsTests(unittest.TestCase):
         self.assertIn("obj_taunteffect",content)
         self.assertIn("analógico esquerdo",content)
 
-    def test_youtube_v034_has_new_cover_shots_and_safeguards(self):
+    def test_youtube_v058_release_has_new_cover_shots_and_both_downloads(self):
         p=build.load_post("youtube-on-vita")
-        self.assertEqual(p["title"],"Youtube - Unofficial client for PS Vita (alpha)")
+        self.assertEqual(p["title"],"YouTube on Vita")
         self.assertEqual(p["cover"],"posts/youtube-on-vita/capa.png")
-        self.assertEqual(len(p["shots"]),7)
-        self.assertEqual(p["updated"].isoformat(),"2026-11-18")
-        self.assertEqual(p["version_label"],"v0.34")
-        d=p["downloads"][0]
-        self.assertEqual(d["aviso_plugin"],"CapUnlocker")
-        self.assertEqual(d["app_min"],"1.0.3")
-        self.assertEqual(d["titleids"],["YTVCB0001"])
-        self.assertTrue(d["url"].startswith("https://drive.google.com/file/d/"))
-        self.assertNotIn("drive.google.com",str(p["links"]))
+        self.assertEqual(len(p["shots"]),12)
+        self.assertEqual(p["updated"].isoformat(),"2026-11-20")
+        self.assertEqual(p["version_label"],"v0.58")
+        self.assertEqual(p["news_kind"],"Release")
+        self.assertEqual(p["date"].isoformat(),"2026-11-17")
+        self.assertEqual(len(p["downloads"]),2)
+        self.assertEqual(
+            [x["titleids"] for x in p["downloads"]],
+            [["YTVCB0001"],["YTVCB0002"]])
+        self.assertEqual([x["arquivo"] for x in p["downloads"]],
+                         ["YouTube.vpk","YouTube-Lite.vpk"])
+        self.assertTrue(all(x["app_min"] == "" for x in p["downloads"]))
+        self.assertTrue(all(x["url"].startswith(
+            "https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/")
+            for x in p["downloads"]))
+        self.assertEqual([x["tamanho"] for x in p["downloads"]],
+                         [21954021,21954225])
+        self.assertIn("YouTube Full", str(p["links"]))
+        self.assertIn("YouTube Lite", str(p["links"]))
         en=build.V(p,"en")
-        self.assertIn("Alpha status and limitations",str(en["secs"]))
-        self.assertIn("60 fps",str(en["secs"]))
+        self.assertIn("Cobalt and performance",str(en["secs"]))
+        self.assertIn("720p",str(en["secs"]))
         self.assertIn("sign-in",str(en["secs"]).lower())
 
-    def test_v103_feed_only_receives_youtube(self):
+    def test_all_store_feeds_receive_normal_and_lite_downloads(self):
         posts={s:build.load_post(s) for s in ("pizza","youtube-on-vita")}
         with TemporaryDirectory() as out:
             with patch.object(store,"app_release",return_value=None):
                 store.write_store(posts,list(posts),"youtube-on-vita",build.GROUPS,out)
-            legacy=json.loads((Path(out)/"store.json").read_text("utf-8"))
-            v1=json.loads((Path(out)/"store-v1.json").read_text("utf-8"))
-            new=json.loads((Path(out)/"store-v103.json").read_text("utf-8"))
-            for data in (legacy,v1):
+            for filename in ("store.json","store-v1.json","store-v103.json","store-v105.json"):
+                data=json.loads((Path(out)/filename).read_text("utf-8"))
                 y=next(p for p in data["posts"] if p["slug"]=="youtube-on-vita")
-                self.assertFalse(y["downloads"])
-            y=next(p for p in new["posts"] if p["slug"]=="youtube-on-vita")
-            self.assertEqual(len(y["downloads"]),1)
-            d=y["downloads"][0]
-            self.assertEqual(d["aviso_plugin"],"CapUnlocker")
-            self.assertTrue(d["url"].startswith("https://drive.usercontent.google.com/download"))
-            self.assertEqual(d["titleids"],["YTVCB0001"])
+                self.assertTrue(y["destaque"])
+                self.assertEqual(len(y["downloads"]),2)
+                full,lite=y["downloads"]
+                self.assertEqual(full["titleids"],["YTVCB0001"])
+                self.assertEqual(lite["titleids"],["YTVCB0002"])
+                self.assertEqual([x["arquivo"] for x in y["downloads"]],
+                                 ["YouTube.vpk","YouTube-Lite.vpk"])
+                self.assertEqual([x["tamanho"] for x in y["downloads"]],
+                                 [21954021,21954225])
+                self.assertTrue(all(
+                    x["url"].startswith("https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/")
+                    for x in y["downloads"]))
 
 if __name__ == "__main__":
     unittest.main()

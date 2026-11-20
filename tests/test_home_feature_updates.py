@@ -1,5 +1,6 @@
 """Recent Updates/Releases drive both site and Vita home, not original post age."""
 import datetime
+import re
 import shutil
 import sys
 import tempfile
@@ -43,13 +44,16 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         }
         self.assertEqual(build.choose_feature(sample,build.order_posts(sample)),"sage")
 
-    def test_new_port_update_becomes_feature_without_promoting_news(self):
+    def test_youtube_first_release_becomes_feature_without_promoting_news(self):
         posts,order=build.load_all()
-        # The newest actual port Update leads; Journal/News remains readable
-        # but cannot be treated as a new release.
-        self.assertEqual(order[0],"pokemon-emerald")
+        # First public YouTube release now leads; Pokémon's update remains
+        # available and Journal/News must not claim the launch slot.
+        self.assertEqual(order[0],"youtube-on-vita")
+        self.assertIn("pokemon-emerald", order)
         self.assertIn("pokemon-emerald-voxel-ptbr-058", order)
-        self.assertEqual(build.choose_feature(posts,order),"pokemon-emerald")
+        self.assertEqual(build.choose_feature(posts,order),"youtube-on-vita")
+        self.assertEqual(posts["youtube-on-vita"]["version_label"],"v0.58")
+        self.assertEqual(posts["youtube-on-vita"]["news_kind"],"Release")
         self.assertEqual(posts["pokemon-emerald-voxel-ptbr-058"]["subcat"],"news")
         self.assertEqual(posts["pizza"]["news_kind"],"Update")
         self.assertEqual(posts["pizza"]["version_label"],"v0.64")
@@ -64,8 +68,10 @@ class HomeFeatureUpdateTests(unittest.TestCase):
             shutil.copytree(ROOT/"content/posts/youtube-on-vita",dest)
             p=dest/"post.md"
             content=p.read_text("utf-8")
-            content=content.replace("atualizado_em: 2026-11-18",
-                                    "atualizado_em: '2026-11-18 14:25'\ndestaque_home: false",1)
+            content,n=re.subn(r"^atualizado_em:.*$",
+                "atualizado_em: '2026-11-18 14:25'\ndestaque_home: false",
+                content,count=1,flags=re.MULTILINE)
+            self.assertEqual(n,1)
             p.write_text(content,encoding="utf-8")
             with patch.object(build,"CONTENT",tempdir),patch.object(build,"post_last_commit_at",return_value=None):
                 item=build.load_post("youtube-on-vita")
