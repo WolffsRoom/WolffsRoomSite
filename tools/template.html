@@ -661,6 +661,7 @@ class Component extends DCLogic {
   function stateFromHash() {
     var h = decodeURIComponent((location.hash || '').slice(1));
     if (h === 'reviews') h = 'journal'; /* old links remain valid */
+    if (h === 'godot-v03') h = 'godot'; /* consolidated article */
     if (h && ('p_' + h) in vals) return { post: h };
     if (CATS.indexOf(h) !== -1) return { view: h, post: null };
     return { view: 'inicio', post: null };

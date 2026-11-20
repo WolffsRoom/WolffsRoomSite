@@ -16,7 +16,7 @@ class JournalAndPollTests(unittest.TestCase):
   expected={"darkest":"modificacoes","dd-touchonvita":"plugins",
     "fm":"apps","file-manager":"apps","shinokai":"apps",
     "youtube-on-vita":"apps","godot":"ferramentas",
-    "godot-v03":"ferramentas","ystool":"ferramentas","horizon":"modificacoes"}
+    "ystool":"ferramentas","horizon":"modificacoes"}
   for slug,subcat in expected.items():
    self.assertEqual(posts[slug]["cat"],"ferramentas")
    self.assertEqual(posts[slug]["subcat"],subcat)
