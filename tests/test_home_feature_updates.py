@@ -43,10 +43,13 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         }
         self.assertEqual(build.choose_feature(sample,build.order_posts(sample)),"sage")
 
-    def test_real_sage_v064_becomes_site_and_store_feature(self):
+    def test_latest_news_becomes_feature_without_changing_sage_history(self):
         posts,order=build.load_all()
-        self.assertEqual(order[0],"pizza")
+        self.assertEqual(order[0],"pokemon-emerald-voxel-ptbr-058")
+        # News leads the chronological card list, while the featured banner still
+        # prioritizes an actual Release/Update.
         self.assertEqual(build.choose_feature(posts,order),"pizza")
+        self.assertEqual(posts["pokemon-emerald-voxel-ptbr-058"]["subcat"],"news")
         self.assertEqual(posts["pizza"]["news_kind"],"Update")
         self.assertEqual(posts["pizza"]["version_label"],"v0.64")
         self.assertGreater(posts["pizza"]["activity_when"],

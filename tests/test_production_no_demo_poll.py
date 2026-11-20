@@ -11,7 +11,7 @@ class NoFakePollProductionTests(unittest.TestCase):
   posts,order=build.load_all()
   self.assertNotIn("enquete-demo-local",posts)
   self.assertNotIn("enquete-demo-local",order)
-  self.assertEqual(len(posts),33)
+  self.assertEqual(len(posts),34)
   self.assertFalse(any(p.get("poll") for p in posts.values()))
   self.assertEqual(build.choose_feature(posts,order),"pizza")
 
