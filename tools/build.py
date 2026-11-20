@@ -840,8 +840,11 @@ def news_article(p, lang):
         media.append(f'<a href="{e(url)}" target="_blank" rel="noopener">'
                      + T('Assistir vídeo no YouTube', 'Watch video on YouTube') + '</a>')
     return (f'<article data-l="{lang}" class="wr-journal-news" style="max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:18px;border:4px solid #555;padding:24px;background:#0e0e0e">'
-            '<button type="button" data-act="goHome" style="align-self:flex-start;background:#222;color:#fff;border:2px solid #777;padding:8px 18px;cursor:pointer">'
-            + T('Voltar', 'Back') + '</button>'
+             f'<button class="wr-btn wr-back-standard wr-journal-back" type="button" data-act="goHome" '
+             f'style="align-self:flex-start;box-sizing:border-box;min-height:48px;background:#141414;'
+             f'color:#fff;border:4px solid #8a8a8a;box-shadow:4px 4px 0 #363636;'
+             f'padding:10px 18px;cursor:pointer;{DF}font-size:16px;line-height:1.5;text-transform:uppercase">'
+             + '<span aria-hidden="true">◀</span> ' + T('Voltar', 'Back') + '</button>'
             f'<h1 style="{DF};font-size:20px;line-height:1.6;margin:0">{e(q["title"])}</h1>'
             f'<p style="color:#aaa;margin:0">{e(p["date"].isoformat())}</p>'
             + content + ''.join(media) + '</article>')
