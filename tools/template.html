@@ -170,6 +170,18 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-root.wr-home-returning:not(.wr-pbdone) .wr-explore-prompt{visibility:hidden!important}
 @media(prefers-reduced-motion:reduce){.wr-root.wr-pbdone .wr-explore-prompt{animation:none}}
 
+/* Hide BOTH the Other releases heading and its entire slider until the
+   initial Home introduction finishes (pbDone at 5.4s). display:none also
+   prevents keyboard access and any off-screen cards flashing through while
+   the opening typewriter / CRT animation is still active. */
+.wr-root:not(.wr-pbdone) .wr-other-releases{display:none!important}
+.wr-root.wr-pbdone .wr-other-releases{
+  animation:wr-pop .32s steps(4,end) both;
+}
+@media(prefers-reduced-motion:reduce){
+  .wr-root.wr-pbdone .wr-other-releases{animation:none!important}
+}
+
 .wr-deck{width:100%;max-width:1110px;margin:0 auto;outline:none}
 .wr-deck:focus-visible{outline:3px dashed #fff;outline-offset:6px}
 .wr-deck-stage{height:355px;position:relative;overflow:hidden;isolation:isolate;box-sizing:border-box}

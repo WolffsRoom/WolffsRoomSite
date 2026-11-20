@@ -66,6 +66,18 @@ class LocalFiltersDeckTests(unittest.TestCase):
         self.assertLess(html.index('class="wr-explore-prompt"'),
                         html.index('class="wr-nav"'))
 
+    def test_other_releases_hidden_until_home_intro_completes(self):
+        css = (ROOT / "tools/template.html").read_text("utf-8")
+        self.assertIn(
+            ".wr-root:not(.wr-pbdone) .wr-other-releases{display:none!important}",
+            css)
+        self.assertIn(".wr-root.wr-pbdone .wr-other-releases{", css)
+        self.assertIn("animation:wr-pop .32s steps(4,end) both", css)
+        self.assertIn("self.setState({ pbDone: true })", css)
+        # A public CSS transition must not alter the three traditional cards.
+        self.assertNotIn(
+            ".wr-root:not(.wr-pbdone) .wr-latest-three{display:none!important}", css)
+
     def test_actions_and_hover_lift_only_in_template(self):
         template = (ROOT/'tools/template.html').read_text('utf-8')
         for part in ('[data-wr-filter-cat]', '[data-wr-section-cat]',
