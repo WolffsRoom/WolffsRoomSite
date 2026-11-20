@@ -23,7 +23,7 @@ class JournalAndPollTests(unittest.TestCase):
   for slug in ("p4g","god-of-war-ragnarok"):
    self.assertEqual(posts[slug]["cat"],"journal")
    self.assertEqual(posts[slug]["subcat"],"reviews")
-  self.assertEqual(build.choose_feature(posts,order),"pizza")
+  self.assertEqual(build.choose_feature(posts,order),"pokemon-emerald")
 
  def _fixture(self,td,now,days=None):
   f=Path(td)/"vote-test"
@@ -64,7 +64,7 @@ class JournalAndPollTests(unittest.TestCase):
    self.assertEqual(build.choose_feature(posts,order),"vote-test")
    poll["poll"]["starts_at"]=(now-datetime.timedelta(days=1)).replace(tzinfo=None).isoformat()
    poll["poll"]["ends_at"]=(now+datetime.timedelta(days=2)).replace(tzinfo=None).isoformat()
-   self.assertEqual(build.choose_feature(posts,order),"pizza")
+   self.assertEqual(build.choose_feature(posts,order),"pokemon-emerald")
 
  def test_compact_news_media(self):
   posts,_=build.load_all()

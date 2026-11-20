@@ -43,12 +43,13 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         }
         self.assertEqual(build.choose_feature(sample,build.order_posts(sample)),"sage")
 
-    def test_latest_news_becomes_feature_without_changing_sage_history(self):
+    def test_new_port_update_becomes_feature_without_promoting_news(self):
         posts,order=build.load_all()
-        self.assertEqual(order[0],"pokemon-emerald-voxel-ptbr-058")
-        # News leads the chronological card list, while the featured banner still
-        # prioritizes an actual Release/Update.
-        self.assertEqual(build.choose_feature(posts,order),"pizza")
+        # The newest actual port Update leads; Journal/News remains readable
+        # but cannot be treated as a new release.
+        self.assertEqual(order[0],"pokemon-emerald")
+        self.assertIn("pokemon-emerald-voxel-ptbr-058", order)
+        self.assertEqual(build.choose_feature(posts,order),"pokemon-emerald")
         self.assertEqual(posts["pokemon-emerald-voxel-ptbr-058"]["subcat"],"news")
         self.assertEqual(posts["pizza"]["news_kind"],"Update")
         self.assertEqual(posts["pizza"]["version_label"],"v0.64")
