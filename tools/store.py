@@ -227,7 +227,12 @@ def write_store(posts, order, feat, groups, out_dir):
             'autor': latin(p.get('author') or ''),
             'autor_url': p.get('author_url') or '',
             'novidade': p.get('news_kind') or '',
-            'enquete': p.get('poll') or None,
+            'enquete': ({**p['poll'],
+                         'question_pt': p['poll']['question'],
+                         'options_pt': p['poll']['options'],
+                         'question_en': (p.get('en') or {}).get('poll_question', p['poll']['question']),
+                         'options_en': (p.get('en') or {}).get('poll_options', p['poll']['options'])}
+                        if p.get('poll') else None),
             'downloads': [],
         }
         if p['cover']:

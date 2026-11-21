@@ -1,5 +1,5 @@
 ---
-titulo: "NEW POLL! — What should we bring to PS Vita next?"
+titulo: "NOVA ENQUETE! — O que devemos trazer ao PS Vita?"
 categoria: journal
 subcategoria: enquetes
 grupo: Em andamento
@@ -7,15 +7,15 @@ data: "2026-11-20 22:25"
 tag: "Poll · Wolff's Room · PS Vita"
 status: "Enquete aberta"
 resumo: "A comunidade decide qual projeto a Wolff's Room deve explorar a seguir no PS Vita."
-chamada: "Four ideas. One choice. You decide."
+chamada: "Quatro ideias. Uma escolha. Você decide."
 capa: capa.png
-pergunta: "Vote for the project you want to see next!"
+pergunta: "Em qual projeto você gostaria de votar?"
 duracao_dias: 3
 opcoes:
-  - New Browser for Vita
-  - Reddit Vita
-  - Internet Archive Vita
-  - GameFAQs Vita
+  - Novo navegador para PS Vita
+  - Reddit para PS Vita
+  - Internet Archive para PS Vita
+  - GameFAQs para PS Vita
 ---
 **NEW POLL!** What should we bring to PS Vita next?
 

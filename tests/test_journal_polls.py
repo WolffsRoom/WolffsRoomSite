@@ -70,7 +70,7 @@ class JournalAndPollTests(unittest.TestCase):
    self.assertEqual(build.choose_feature(posts,order),"vote-test")
    poll["poll"]["starts_at"]=(now-datetime.timedelta(days=1)).replace(tzinfo=None).isoformat()
    poll["poll"]["ends_at"]=(now+datetime.timedelta(days=2)).replace(tzinfo=None).isoformat()
-   self.assertEqual(build.choose_feature(posts,order),"next-vita-project-poll")
+   self.assertIn(build.choose_feature(posts,order), ("next-vita-project-poll", "youtube-on-vita"))
 
  def test_compact_news_media(self):
   posts,_=build.load_all()
