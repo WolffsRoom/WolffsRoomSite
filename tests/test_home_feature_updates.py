@@ -62,6 +62,27 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         self.assertEqual(posts["pizza"]["date"].isoformat(),"2026-11-14")
         self.assertEqual(posts["pizza"]["updated"].isoformat(),"2026-11-18")
 
+    def test_home_recent_cards_exclude_main_feature_and_keep_order(self):
+        posts = {
+            "main": {"cat": "ferramentas", "poll": None},
+            "second": {"cat": "ferramentas", "poll": None},
+            "poll": {"cat": "journal", "poll": {"id": "poll"}},
+            "third": {"cat": "ports", "poll": None},
+            "news": {"cat": "journal", "poll": None},
+            "fourth": {"cat": "ports", "poll": None},
+        }
+        order = ["main", "second", "poll", "third", "news", "fourth"]
+        self.assertEqual(build.home_recent_posts(posts, order, "main"),
+                         ["second", "third", "fourth"])
+        self.assertEqual(build.home_recent_posts(posts, order, "poll"),
+                         ["main", "second", "third", "fourth"])
+
+    def test_latest_and_releases_localization(self):
+        self.assertEqual(build.UI["pt"]["latest3"], "Confira também outras novidades...")
+        self.assertEqual(build.UI["en"]["latest3"], "Check out more updates...")
+        self.assertEqual(build.UI["pt"]["other_releases"], "Explore outros lançamentos")
+        self.assertEqual(build.UI["en"]["other_releases"], "Explore other releases")
+
     def test_manual_update_timestamp_and_home_opt_out(self):
         with tempfile.TemporaryDirectory() as tempdir:
             dest=Path(tempdir)/"youtube-on-vita"
