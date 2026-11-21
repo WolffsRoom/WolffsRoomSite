@@ -11,7 +11,7 @@ class NoFakePollProductionTests(unittest.TestCase):
   posts,order=build.load_all()
   self.assertNotIn("enquete-demo-local",posts)
   self.assertNotIn("enquete-demo-local",order)
-  self.assertEqual(len(posts),35)
+  self.assertEqual(len(posts), len(list((ROOT / "content/posts").glob("*/post.md"))))
   self.assertTrue(posts["next-vita-project-poll"].get("poll"))
   self.assertIn(build.choose_feature(posts,order), ("next-vita-project-poll", "youtube-on-vita"))
 

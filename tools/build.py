@@ -63,6 +63,8 @@ def parse_markdown(body):
             cur = {'title': text[3:].strip(), 'items': [], 'paras': [], 'blocks': []}
             secs.append(cur)
         elif not text:
+            if cur is None and about and about[-1] != '':
+                about.append('')
             continue
         elif cur is None:
             about.append(text)
@@ -76,7 +78,18 @@ def parse_markdown(body):
         else:
             cur['paras'].append(text)
             cur['blocks'].append(('p', text))
-    return ' '.join(about), secs
+    paragraphs = []
+    current = []
+    for line in about:
+        if line == '':
+            if current:
+                paragraphs.append(' '.join(current))
+                current = []
+        else:
+            current.append(line)
+    if current:
+        paragraphs.append(' '.join(current))
+    return '\n\n'.join(paragraphs), secs
 
 
 def inline(text):
@@ -772,7 +785,10 @@ def article(p0, lang):
         f'{updated_date}</p>\n'
     )
     hero = (f'<div class="wr-sh-s" style="border: 4px solid #ffffff; background: #000000">\n{pic(p0, lang)}\n</div>\n' if p['cover'] else '')
-    about = f'<p style="margin: 0; color: #e0e0e0; font-size: 19px">{inline(p["about"])}</p>\n' if p['about'] else ''
+    about = ''.join(
+        f'<p style="margin:0 0 20px;color:#e0e0e0;font-size:19px;line-height:1.8">{inline(part)}</p>\n'
+        for part in p['about'].split('\n\n') if part.strip()
+    )
     return (f'<article lang="{"en" if lang == "en" else "pt-BR"}" data-l="{lang}" aria-label="{e(p["title"])}" style="display: flex; flex-direction: column; gap: 28px">\n'
             '<div style="display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center">\n'
             f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{e(p["tag"])} · {e(p["status"])}</span>\n'
@@ -865,7 +881,10 @@ def poll_article(p, lang):
 def news_article(p, lang):
     q = V(p, lang)
     media = []
-    content = '<p style="margin:0;line-height:1.75">' + inline(q['about']) + '</p>' if q.get('about') else ''
+    content = ''.join(
+        '<p style="margin:0 0 20px;line-height:1.8">' + inline(part) + '</p>'
+        for part in q.get('about', '').split('\n\n') if part.strip()
+    )
     for sec in q.get('secs') or []:
         content += f'<h2 style="{DF};font-size:16px">{e(sec["title"])}</h2>'
         for block in sec.get('blocks') or []:
