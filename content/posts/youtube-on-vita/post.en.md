@@ -4,7 +4,7 @@ tag: YouTube on TV · Cobalt · PS Vita
 status: v0.58 · First Release
 resumo: YouTube on Vita — unofficial YouTube client for PS Vita. The real YouTube on TV experience, brought to PlayStation Vita through Cobalt. Available in Full and Lite editions.
 chamada: |-
-  **YouTube on Vita — *Unofficial YouTube client for PS Vita***
+  **YouTube on Vita - *Unofficial YouTube client for PS Vita***
 
   The real YouTube on TV experience, brought to PlayStation Vita through Cobalt.
 
