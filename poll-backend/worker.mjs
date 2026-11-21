@@ -67,6 +67,11 @@ export class PollRoom {
   const q=await req.json();
   const key="voter/"+q.voter;
   if(q.mode==="status"){
+    /* Recover a pending GitHub audit even if a prior alarm was interrupted.
+     * This never adds a vote; it only retries an existing durable audit item. */
+    const pending=await this.state.storage.list({prefix:"audit/",limit:1});
+    if(pending.size && !(await this.state.storage.getAlarm()))
+      await this.state.storage.setAlarm(Date.now()+1000);
     const found=await this.state.storage.get(key);
     return send({answered:found!==undefined,choice:q.closed&&found?found.choice:null,closed:q.closed,ends_at:q.ends_at});
   }
@@ -103,7 +108,7 @@ export class PollRoom {
                "User-Agent":"WolffsRoom-Polls"},
       body:body?JSON.stringify(body):undefined
     });
-    if(!resp.ok)throw new Error("GitHub "+resp.status);
+    if(!resp.ok)throw new Error("GitHub "+resp.status+": "+(await resp.text()).slice(0,220));
     return resp.json();
   };
   try{
@@ -120,7 +125,9 @@ export class PollRoom {
         {body:"Vote: option "+(vote.choice+1)+" at "+new Date(vote.time).toISOString()});
       await this.state.storage.delete(key);
     }
-  }catch(e){console.error("Poll audit retry:",String(e));}
+  }catch(e){
+    console.error("Poll audit retry:",String(e).slice(0,300));
+  }
   if((await this.state.storage.list({prefix:"audit/",limit:1})).size)
     await this.state.storage.setAlarm(Date.now()+60000);
  }
