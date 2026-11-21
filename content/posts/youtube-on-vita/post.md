@@ -11,7 +11,7 @@ novidade: Release
 versao: v0.58
 resumo: YouTube on Vita — cliente não oficial do YouTube para PS Vita. A experiência real do YouTube on TV através do Cobalt. Disponível nas versões Full e Lite.
 chamada: |-
-  **YouTube on Vita — *Cliente não oficial do YouTube para PS Vita***
+  **YouTube on Vita - *Cliente não oficial do YouTube para PS Vita***
 
   A experiência real do YouTube on TV, trazida ao PlayStation Vita através do Cobalt.
 
