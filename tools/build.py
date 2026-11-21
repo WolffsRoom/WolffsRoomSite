@@ -83,7 +83,8 @@ def inline(text):
     """Escapa o texto e converte [texto](url) e **negrito**."""
     out = e(text)
     out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', lambda m: f'<a href="{drive_direct(vita_github_url(html.unescape(m.group(2)))).replace("&", "&amp;")}" target="_blank" rel="noopener">{m.group(1)}</a>', out)
-    out = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', out)
+    out = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', out)
+    out = re.sub(r'(?<!\*)\*([^*\n]+)\*(?!\*)', r'<em>\1</em>', out)
     return out
 
 
@@ -1029,7 +1030,7 @@ def home_html(posts, order, feat, mosaic):
         f'<span style="color: #a8a8a8; letter-spacing: 1px; text-transform: uppercase">{F(p, "tag")} · {F(p, "status")}</span>\n'
         f'<h1 class="wr-featured-title{(" wr-featured-poll-title" if p.get("poll") else "")}" style="margin: 0; {DF} font-size: 32px; line-height: 1.4; font-weight: 400; text-shadow: 4px 4px 0 #3a3a3a">{F(p, "title", poll_heading) if p.get("poll") else F(p, "title")}</h1>\n'
         + feat_author +
-        f'<p style="margin: 0; color: #c4c4c4; max-width: 640px">{F(p, "feature_text", inline)}</p>\n'
+        f'<p style="margin: 0; color: #c4c4c4; max-width: 640px; line-height: 1.7">{F(p, "feature_text", lambda text: inline(text).replace(chr(10), "<br>"))}</p>\n'
         '<div class="wr-feat-actions" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 6px">\n' + buttons + '</div>\n'
         '</div>\n</div>\n</section>\n</div>\n')
     latest_news = next((k for k in order if posts[k]['cat'] == 'journal'
