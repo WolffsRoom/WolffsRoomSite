@@ -1205,7 +1205,13 @@ def build():
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
     page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_icon())
     from store import SITE_URL
-    page = page.replace('<!--OGIMAGE-->', SITE_URL + 'assets/CapaSite.png')
+    # Version the image URL so social scrapers request the new bytes rather
+    # than reusing the previous image cached for this site's OG metadata.
+    cover_path = os.path.join(ROOT, 'assets', 'CapaSite.png')
+    import hashlib
+    cover_version = hashlib.sha256(open(cover_path, 'rb').read()).hexdigest()[:12]
+    page = page.replace('<!--OGIMAGE-->',
+                        SITE_URL + 'assets/CapaSite.png?v=' + cover_version)
     page = page.replace('<!--OGURL-->', SITE_URL)
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
     write_share_pages(posts)
