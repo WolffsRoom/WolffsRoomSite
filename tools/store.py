@@ -151,6 +151,75 @@ def app_release():
     return None
 
 
+# ------------------------------------------------------------------ cumulative GitHub release downloads
+
+_GITHUB_REPO_URL = re.compile(
+    r'https?://(?:www\.)?github\.com/([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+)(?:[/#?]|$)',
+    re.IGNORECASE)
+
+
+def github_project_repo(p):
+    """Only count a repository tied to the project's release/download links.
+
+    Do not count unrelated GitHub references from sources/credits.
+    Explicit release downloads take priority over generic links.
+    """
+    candidates = []
+    for d in p.get('downloads') or []:
+        if d.get('repo'):
+            candidates.append(d['repo'])
+        for url in [d.get('url'), *(d.get('alternativas') or [])]:
+            match = _GITHUB_REPO_URL.match(url or '')
+            if match and '/releases' in (url or ''):
+                candidates.append('/'.join(match.groups()))
+    for _, url in p.get('links') or []:
+        match = _GITHUB_REPO_URL.match(url or '')
+        if match:
+            candidates.append('/'.join(match.groups()))
+    for repo in candidates:
+        if repo and re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repo):
+            return repo
+    return None
+
+
+def github_total_downloads(repo):
+    """Sum asset.download_count across all published releases, not just latest.
+
+    None signals an unavailable/incomplete count: never misreport it as zero.
+    """
+    if not repo:
+        return None
+    total = 0
+    for page in range(1, 51):
+        releases = _api(f'/repos/{repo}/releases?per_page=100&page={page}')
+        if not isinstance(releases, list):
+            return None
+        for release in releases:
+            if release.get('draft'):
+                continue
+            for asset in release.get('assets') or []:
+                count = asset.get('download_count')
+                if not isinstance(count, int) or count < 0:
+                    return None
+                total += count
+        if len(releases) < 100:
+            return total
+    return None  # too many pages: fail closed instead of reporting partial sums
+
+
+def populate_download_totals(posts):
+    """Cache per repository for one build; share the same totals site/Vita."""
+    counts = {}
+    for post in posts.values():
+        repo = github_project_repo(post)
+        if not repo:
+            post['github_downloads_total'] = None
+            continue
+        if repo.lower() not in counts:
+            counts[repo.lower()] = github_total_downloads(repo)
+        post['github_downloads_total'] = counts[repo.lower()]
+
+
 # ------------------------------------------------------------------ imagens
 
 def _fit(img, size, style, pixel):
@@ -227,6 +296,7 @@ def write_store(posts, order, feat, groups, out_dir):
             'autor': latin(p.get('author') or ''),
             'autor_url': p.get('author_url') or '',
             'novidade': p.get('news_kind') or '',
+            'github_downloads_total': p.get('github_downloads_total'),
             'enquete': ({**p['poll'],
                          'question_pt': p['poll']['question'],
                          'options_pt': p['poll']['options'],

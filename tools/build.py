@@ -705,6 +705,16 @@ def article(p0, lang):
                         f'<span style="color: #a8a8a8">{e(label)}. {e(ui["video_note"])}</span>\n')
     side = ''
     # Downloads are the first sidebar section for both ports and translations.
+    if not p['links'] and p.get('downloads') and p0.get('github_downloads_total') is not None:
+        from store import github_project_repo
+        repository = github_project_repo(p0)
+        if repository:
+            side += (f'<div class="wr-sh-s" style="{BOX}">\\n'
+                     f'<h2 style="{H2}">{e(ui["links"])}</h2>'
+                     f'<a class="wr-btn" href="https://github.com/{e(repository)}/releases" '
+                     'target="_blank" rel="noopener" style="display:block;text-align:center;'
+                     f'border:4px solid #fff;padding:14px;text-decoration:none;{DF}">'
+                     f'{e("GitHub releases")}</a></div>\\n')
     if p['links']:
         download_links = ''
         for i, (lab, url) in enumerate(p['links']):
@@ -724,6 +734,13 @@ def article(p0, lang):
                                    f'text-decoration: none; text-align: center; {DF} font-size: 16px; '
                                    f'line-height: 1.6; text-transform: uppercase">{e(lab)}</a>\n')
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["links"])}</h2>\n{download_links}</div>\n'
+    if p0.get('github_downloads_total') is not None and (p['links'] or p.get('downloads')):
+        total = f"{p0['github_downloads_total']:,}".replace(',', '.')
+        label = 'Total de downloads' if lang == 'pt' else 'Total downloads'
+        side += (f'<div class="wr-sh-s wr-gh-download-count" style="{BOX};text-align:center">'
+                 f'<span style="display:block;color:#aaa;font-size:14px;margin-bottom:12px">{label}</span>'
+                 f'<strong style="{DF}font-size:clamp(17px,2vw,23px);color:#fff">{total}</strong>'
+                 '</div>\n')
     if p['meta']:
         rows = '\n'.join(f'<div style="display: flex; flex-wrap: wrap; justify-content: space-between; column-gap: 16px; row-gap: 2px; border-bottom: 4px solid #2e2e2e; padding-bottom: 8px"><dt style="flex: 0 0 auto; color: #a8a8a8">{e(k)}</dt><dd style="margin: 0 0 0 auto; flex: 0 1 auto; text-align: right; font-weight: 700">{inline(v)}</dd></div>' for k, v in p['meta'])
         side += f'<div class="wr-sh-s" style="{BOX}">\n<h2 style="{H2}">{e(ui["info"])}</h2>\n<dl style="margin: 0; display: flex; flex-direction: column; gap: 8px">\n{rows}\n</dl>\n</div>\n'
@@ -1187,6 +1204,9 @@ def build():
     # A date-only original publication never outranks a newer Update/Release.
     # For historical items explicitly set destaque_home: false.
     feat = choose_feature(posts, order)
+    # Only GitHub release asset downloads are verifiable (not Drive/MediaFire).
+    from store import populate_download_totals
+    populate_download_totals(posts)
 
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
