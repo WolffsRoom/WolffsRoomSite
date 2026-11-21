@@ -48,15 +48,10 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         posts,order=build.load_all()
         # First public YouTube release now leads; Pokémon's update remains
         # available and Journal/News must not claim the launch slot.
-        self.assertEqual(order[0],"next-vita-project-poll")
-        self.assertIn("youtube-on-vita", order)
+        self.assertEqual(order[0],"youtube-on-vita")
         self.assertIn("pokemon-emerald", order)
         self.assertIn("pokemon-emerald-voxel-ptbr-058", order)
-        today=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3)))
-        poll=posts["next-vita-project-poll"]["poll"]
-        is_first_day=today.date().isoformat()==poll["starts_at"][:10] and today.replace(tzinfo=None)<D.fromisoformat(poll["ends_at"])
-        self.assertEqual(build.choose_feature(posts,order),
-                         "next-vita-project-poll" if is_first_day else "youtube-on-vita")
+        self.assertEqual(build.choose_feature(posts,order),"youtube-on-vita")
         self.assertEqual(posts["youtube-on-vita"]["version_label"],"v0.58")
         self.assertEqual(posts["youtube-on-vita"]["news_kind"],"Release")
         self.assertEqual(posts["pokemon-emerald-voxel-ptbr-058"]["subcat"],"news")

@@ -23,8 +23,7 @@ class JournalAndPollTests(unittest.TestCase):
   for slug in ("p4g","god-of-war-ragnarok"):
    self.assertEqual(posts[slug]["cat"],"journal")
    self.assertEqual(posts[slug]["subcat"],"reviews")
-  self.assertEqual(build.choose_feature(posts,order),
-   "next-vita-project-poll" if datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).date()==datetime.date(2026,11,20) else "youtube-on-vita")
+  self.assertEqual(build.choose_feature(posts,order),"youtube-on-vita")
 
  def _fixture(self,td,now,days=None):
   f=Path(td)/"vote-test"
@@ -60,13 +59,12 @@ class JournalAndPollTests(unittest.TestCase):
     poll=build.load_post("vote-test")
    self.assertEqual(poll["poll"]["days"],5)
    posts,order=build.load_all()
-   fallback=build.choose_feature(posts,order)
    posts["vote-test"]=poll
    order=build.order_posts(posts)
    self.assertEqual(build.choose_feature(posts,order),"vote-test")
    poll["poll"]["starts_at"]=(now-datetime.timedelta(days=1)).replace(tzinfo=None).isoformat()
    poll["poll"]["ends_at"]=(now+datetime.timedelta(days=2)).replace(tzinfo=None).isoformat()
-   self.assertEqual(build.choose_feature(posts,order),fallback)
+   self.assertEqual(build.choose_feature(posts,order),"youtube-on-vita")
 
  def test_compact_news_media(self):
   posts,_=build.load_all()
@@ -87,8 +85,7 @@ class JournalAndPollTests(unittest.TestCase):
    self.assertEqual(data["enquetes_api"],"")
    self.assertEqual(next(p for p in data["posts"] if p["slug"]=="dd-touchonvita")["subcategoria"],"plugins")
    self.assertEqual(next(p for p in data["posts"] if p["slug"]=="p4g")["subcategoria"],"reviews")
-   published=json.loads((Path(td)/"polls.json").read_text("utf-8"))["polls"]
-   self.assertEqual([p["id"] for p in published],["next-vita-project-poll"])
+   self.assertEqual(json.loads((Path(td)/"polls.json").read_text("utf-8"))["polls"],[])
 
 if __name__=="__main__":
  unittest.main()

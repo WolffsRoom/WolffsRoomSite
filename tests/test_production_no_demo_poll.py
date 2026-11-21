@@ -11,16 +11,9 @@ class NoFakePollProductionTests(unittest.TestCase):
   posts,order=build.load_all()
   self.assertNotIn("enquete-demo-local",posts)
   self.assertNotIn("enquete-demo-local",order)
-  self.assertEqual(len(posts),35)
-  actual=[slug for slug,p in posts.items() if p.get("poll")]
-  self.assertEqual(actual,["next-vita-project-poll"])
-  poll=posts[actual[0]]["poll"]
-  self.assertEqual(poll["options"],[
-   "New Browser for Vita", "Reddit Vita",
-   "Internet Archive Vita", "GameFAQs Vita"])
-  self.assertEqual(poll["days"],3)
-  self.assertEqual(poll["id"],"next-vita-project-poll")
-  self.assertEqual(poll["starts_at"][:10],"2026-11-20")
+  self.assertEqual(len(posts),34)
+  self.assertFalse(any(p.get("poll") for p in posts.values()))
+  self.assertEqual(build.choose_feature(posts,order),"youtube-on-vita")
 
  def test_no_demo_script_or_fake_post_in_production(self):
   template=(ROOT/"tools/template.html").read_text("utf-8")
