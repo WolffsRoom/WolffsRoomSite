@@ -9,8 +9,13 @@ tag: YouTube on TV · Cobalt · PS Vita
 status: v0.58 · First Release
 novidade: Release
 versao: v0.58
-resumo: O YouTube on TV original no PS Vita, com login, touch, áudio, vídeo até 720p e Add-ons nativos.
-chamada: Chegou o YouTube on Vita v0.58! Primeira versão pública, com downloads Full e Lite.
+resumo: YouTube on Vita — cliente não oficial do YouTube para PS Vita. A experiência real do YouTube on TV através do Cobalt. Disponível nas versões Full e Lite.
+chamada: |-
+  **YouTube on Vita — *Cliente não oficial do YouTube para PS Vita***
+
+  A experiência real do YouTube on TV, trazida ao PlayStation Vita através do Cobalt.
+
+  Disponível em duas versões: Full e Lite.
 capa: capa.png
 capturas:
   - captura-1.png
