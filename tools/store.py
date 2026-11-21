@@ -47,6 +47,8 @@ def latin(s):
     s = str(s or '')
     s = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', r'\1', s)
     s = re.sub(r'\*\*([^*]+)\*\*', r'\1', s)
+    # Native Vita text uses Latin-1 rather than Markdown styling.
+    s = s.replace('**', '').replace('*', '')
     out = []
     for ch in s:
         ch = LATIN.get(ch, ch)
