@@ -471,7 +471,7 @@ def news_flag(p):
 def card(p):
     by = (f'<span class="wr-by" style="display:block; color:#c2c2c2; {DF} font-size:12px; font-weight:400; line-height:1.65; overflow-wrap:anywhere; text-align:left">by: {e(p["author"])}</span>\n'
           if p.get("author") else "")
-    return ('<a class="wr-card wr-sh-s" href="#' + p['slug'] + '" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
+    return ('<a class="wr-card wr-sh-s" href="posts/' + p['slug'] + '/" data-act="open_' + p['slug'] + '" style="display: flex; flex-direction: column; border: 4px solid #5a5a5a; background: #0e0e0e; color: #ffffff; text-decoration: none">\n'
             '<div style="position: relative; border-bottom: 4px solid #2e2e2e; background: #0b0b0b">\n' + pic(p) +
             ('<span style="position: absolute; top: 8px; right: 8px" title="Native trophies (NoTrpDrm)">' + trophy_badge('pt', 2, False) + '</span>' if p.get('trophies') else '') +
             '\n</div>\n'
@@ -803,7 +803,32 @@ def poll_article(p, lang):
                     T('Disponível somente pela loja', 'Available only through the Store'))
     action = (f'<button class="wr-btn wr-vitabtn" type="button" data-act="openVita" style="position:static;z-index:auto;width:auto;height:auto;display:inline-block;align-self:center;border:4px solid #fff;background:#fff;color:#000;padding:14px;cursor:pointer;{DF}">{availability}</button>'
               if not ended else f'<p>{availability}</p>')
-    published = T('Encerra em', 'Ends on')
+    if not ended:
+        ends_at = datetime.datetime.fromisoformat(info['ends_at']).replace(
+            tzinfo=datetime.timezone(datetime.timedelta(hours=-3)))
+        remaining = max(0, int((ends_at - datetime.datetime.now(
+            datetime.timezone(datetime.timedelta(hours=-3)))).total_seconds() // 60))
+        days, rest = divmod(remaining, 1440)
+        hours, minutes = divmod(rest, 60)
+        if lang == 'pt':
+            words = ('dia' if days == 1 else 'dias',
+                     'hora' if hours == 1 else 'horas',
+                     'minuto' if minutes == 1 else 'minutos')
+        else:
+            words = ('day' if days == 1 else 'days',
+                     'hour' if hours == 1 else 'hours',
+                     'minute' if minutes == 1 else 'minutes')
+        countdown = (
+            f'<div class="wr-poll-countdown" data-wr-poll-countdown '
+            f'data-ends-at="{e(info["ends_at"] + "-03:00", quote=True)}" '
+            f'data-locale="{lang}" role="timer" aria-live="off">'
+            f'<span class="wr-poll-countdown-label">{T("Encerra em:", "Ends in:")}</span>'
+            f'<strong class="wr-poll-countdown-value" data-wr-poll-time>'
+            f'{days:02d} {words[0]} {hours:02d} {words[1]} {minutes:02d} {words[2]}'
+            '</strong></div>'
+        )
+    else:
+        countdown = f'<p class="wr-poll-deadline">{T("Enquete encerrada.", "Poll closed.")}</p>'
     return (f'<article data-l="{lang}" class="wr-poll-detail">'
             f'<h1 class="wr-poll-title" style="{DF}">{title}</h1>'
             f'<p class="wr-poll-question">{question}</p>'
@@ -812,7 +837,7 @@ def poll_article(p, lang):
                f'line-height:0;box-sizing:border-box">{pic(p, lang)}</div>'
                if p.get('cover') else '')
             + f'<div class="wr-poll-options">{options}</div>'
-            f'<p class="wr-poll-deadline">{published}: {e(info["ends_at"].replace("T", " "))}</p>'
+            + countdown
             + action
             + '<button class="wr-btn wr-poll-back" type="button" data-act="goHome">'
             + T('Voltar ao início', 'Back to home') + '</button>'
@@ -940,7 +965,7 @@ def deck_card(p, pos, chronological_rank):
     title = F(p, 'title')
     status = F(p, 'status')
     version = e(p.get('version_label') or '')
-    return (f'<a class="wr-deck-card" data-deck-index="{pos}" data-deck-rank="{chronological_rank}" href="#{e(p["slug"])}" '
+    return (f'<a class="wr-deck-card" data-deck-index="{pos}" data-deck-rank="{chronological_rank}" href="posts/{e(p["slug"])}/" '
             f'data-act="open_{e(p["slug"])}" aria-hidden="true" tabindex="-1" '
             f'aria-label="{e(V(p, "en")["title"])}" data-wr-pos="away">'
             f'<div class="wr-deck-cover">{pic(p)}</div>'
@@ -1121,6 +1146,41 @@ def post_date_html(day, lang):
     return f'<time datetime="{day.isoformat()}">{label}</time>'
 
 
+def write_share_pages(posts):
+    """Generate crawlable per-post Open Graph URLs with client-side redirect."""
+    from store import SITE_URL
+    for slug, post in posts.items():
+        folder = os.path.join(OUT, 'posts', slug)
+        os.makedirs(folder, exist_ok=True)
+        image = SITE_URL + (post['cover'] or 'assets/CapaSite.png')
+        title = str(V(post, 'en')['title'])
+        desc = str(V(post, 'en').get('desc') or title)
+        url = SITE_URL + 'posts/' + slug + '/'
+        target = SITE_URL + '#' + slug
+        esc = lambda value: e(str(value), quote=True)
+        content = (
+            '<!doctype html><html lang="en"><head><meta charset="utf-8">\n'
+            f'<title>{esc(title)}</title>\n'
+            f'<link rel="canonical" href="{esc(url)}">\n'
+            f'<meta name="description" content="{esc(desc)}">\n'
+            '<meta property="og:type" content="article">\n'
+            f'<meta property="og:url" content="{esc(url)}">\n'
+            f'<meta property="og:title" content="{esc(title)}">\n'
+            f'<meta property="og:description" content="{esc(desc)}">\n'
+            f'<meta property="og:image" content="{esc(image)}">\n'
+            '<meta name="twitter:card" content="summary_large_image">\n'
+            f'<meta name="twitter:title" content="{esc(title)}">\n'
+            f'<meta name="twitter:description" content="{esc(desc)}">\n'
+            f'<meta name="twitter:image" content="{esc(image)}">\n'
+            '</head><body>'
+            f'<p><a href="{esc(target)}">View post on Wolff\'s Room</a></p>'
+            f'<script>location.replace({json.dumps(target)});</script>'
+            '</body></html>\n'
+        )
+        with open(os.path.join(folder, 'index.html'), 'w', encoding='utf-8') as out:
+            out.write(content)
+
+
 def build():
     posts, order = load_all()
     # Homepage and Vita Store use the same event-based featured post.
@@ -1144,8 +1204,11 @@ def build():
     page = open(TEMPLATE, encoding='utf-8').read()
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
     page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_icon())
-    page = page.replace('<!--OGIMAGE-->', posts[feat]['cover'] or 'assets/favicon.png')
+    from store import SITE_URL
+    page = page.replace('<!--OGIMAGE-->', SITE_URL + 'assets/CapaSite.png')
+    page = page.replace('<!--OGURL-->', SITE_URL)
     open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(page)
+    write_share_pages(posts)
     open(os.path.join(OUT, '.nojekyll'), 'w').write('')
     import store  # catálogo do app Wolff's Store (PS Vita)
     store.write_store(posts, order, feat, GROUPS, OUT)

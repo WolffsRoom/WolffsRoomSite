@@ -3,12 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Stable asset base when the browser URL changes to /posts/slug/ via History API. -->
+<base id="wr-base" href="/">
+<script>document.getElementById('wr-base').href=location.pathname.indexOf('/WolffsRoomSite/')===0?'/WolffsRoomSite/':'/';</script>
 <title>Wolff's Room – Translations, Mods and much more.</title>
 <script>(function(){var l='en';try{l=localStorage.getItem('wr-lang')||'en'}catch(e){}if(l==='pt'){document.documentElement.lang='pt-BR';document.title="Wolff's Room – Traduções, Modificações e muito mais.";}})();</script>
 <meta name="description" content="Wolff's Room — translations, ports and tools for PlayStation Vita.">
 <meta property="og:title" content="Wolff's Room – Translations, Mods and much more.">
 <meta property="og:description" content="Wolff's Room — translations, ports and tools for PlayStation Vita.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="<!--OGURL-->">
 <meta property="og:image" content="<!--OGIMAGE-->">
+<meta property="og:image:width" content="840">
+<meta property="og:image:height" content="500">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="<!--OGIMAGE-->">
 <meta name="theme-color" content="#060606">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preload" href="assets/fonts/WRStart2P-Regular.woff2" as="font" type="font/woff2" crossorigin>
@@ -256,6 +265,11 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-poll-options>div{box-sizing:border-box;width:100%;text-align:center;justify-content:center}
 .wr-poll-options>div>span{display:inline-block;margin-right:9px;color:#aaa}
 .wr-poll-deadline{margin:0;font-size:14px;color:#aaa;line-height:1.6}
+.wr-poll-countdown{display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:12px;width:100%;margin:4px auto 8px}
+.wr-poll-countdown-label{display:block;font-size:14px;line-height:1.7;color:#aaa}
+.wr-poll-countdown-value{display:block;font-family:'WR Start 2P','Press Start 2P','Pixelify Sans',monospace;font-size:clamp(16px,2.35vw,24px);line-height:1.8;color:#fff;font-weight:400;text-align:center}
+@media(max-width:600px){.wr-poll-countdown-value{font-size:clamp(13px,3.4vw,18px)}}
+
 .wr-poll-detail>.wr-vitabtn{align-self:center!important;max-width:100%;
   min-height:52px;line-height:1.5;white-space:normal}
 /* Match the original site's white pixel-action buttons, including typography. */
@@ -797,8 +811,16 @@ class Component extends DCLogic {
     if (st.view && st.view !== 'inicio') return st.view;
     return '';
   }
+  // Real /posts/slug/ URLs allow each shared link to have its own cover.
+  // The existing #slug links still work for bookmarks and redirects.
+  var rootPath = location.pathname.indexOf('/WolffsRoomSite/') === 0
+      ? '/WolffsRoomSite/' : '/';
   function stateFromHash() {
     var h = decodeURIComponent((location.hash || '').slice(1));
+    if (!h) {
+      var match = location.pathname.match(/\/posts\/([a-z0-9-]+)\/?$/);
+      if (match) h = match[1];
+    }
     if (h === 'reviews') h = 'journal'; /* old links remain valid */
     if (h === 'godot-v03') h = 'godot'; /* consolidated article */
     if (h && ('p_' + h) in vals) return { post: h };
@@ -820,8 +842,11 @@ class Component extends DCLogic {
       el.className = (el.getAttribute('data-bbase') + ' ' + (vals[el.getAttribute('data-bclass')] || '')).trim();
     });
     var h = hashFor(comp.state);
-    if (mounted && ('#' + h) !== (location.hash || '#') && !(h === '' && !location.hash)) {
-      history.pushState(null, '', h ? '#' + h : location.pathname + location.search);
+    var wanted = h && ('p_' + h) in vals
+      ? rootPath + 'posts/' + h + '/'
+      : (h ? rootPath + '#' + h : rootPath);
+    if (mounted && wanted !== location.pathname + location.hash) {
+      history.pushState(null, '', wanted);
       if (window.__wrGoTop) window.scrollTo(0, 0);
     }
     var newsControl = document.querySelector('[data-wr-journal-news]');
@@ -833,6 +858,11 @@ class Component extends DCLogic {
     }
     rendering = false;
   }
+  // The address-bar URL and right-click "Copy link" must use the same
+  // shareable per-post path; fragment-only URLs have one global OG preview.
+  document.querySelectorAll('a[href^="posts/"]').forEach(function (link) {
+    link.href = rootPath + link.getAttribute('href');
+  });
   document.addEventListener('click', function (ev) {
     var journalControl = ev.target.closest('[data-wr-journal-news]');
     if (journalControl) {
@@ -949,6 +979,30 @@ class Component extends DCLogic {
     host.appendChild(bub);
     setTimeout(function () { bub.remove(); paw.classList.remove('wr-barking'); }, 950);
   });
+  function refreshPollCountdowns() {
+    document.querySelectorAll('[data-wr-poll-countdown]').forEach(function (timer) {
+      var target = Date.parse(timer.getAttribute('data-ends-at'));
+      var label = timer.querySelector('[data-wr-poll-time]');
+      if (!label || !Number.isFinite(target)) return;
+      var pt = timer.getAttribute('data-locale') === 'pt';
+      var remaining = Math.max(0, Math.ceil((target - Date.now()) / 60000));
+      if (remaining === 0) {
+        timer.querySelector('.wr-poll-countdown-label').textContent = pt ? 'Enquete encerrada.' : 'Poll closed.';
+        label.textContent = '';
+        return;
+      }
+      var d = Math.floor(remaining / 1440);
+      var h = Math.floor((remaining % 1440) / 60);
+      var m = remaining % 60;
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+      var plural = function (num, singular, plural) { return num === 1 ? singular : plural; };
+      label.textContent = pad(d) + ' ' + plural(d, pt ? 'dia' : 'day', pt ? 'dias' : 'days')
+        + ' ' + pad(h) + ' ' + plural(h, pt ? 'hora' : 'hour', pt ? 'horas' : 'hours')
+        + ' ' + pad(m) + ' ' + plural(m, pt ? 'minuto' : 'minute', pt ? 'minutos' : 'minutes');
+    });
+  }
+  refreshPollCountdowns();
+  setInterval(refreshPollCountdowns, 30000);
   window.addEventListener('popstate', function () {
     var old = comp.state.post || comp.state.view || 'inicio';
     var next = stateFromHash();
