@@ -410,7 +410,7 @@ UI = {
         'cats': {'ports': 'Ports', 'ferramentas': 'Apps/Mods', 'traducoes': 'Traduções', 'journal': 'Journal'},
         'groups': {'Em andamento': 'Em desenvolvimento', 'Finalizado': 'Finalizados', 'Próximos': 'Próximos', 'Outras equipes': 'Outras equipes'}, 'nothing': 'Nada por aqui ainda.', 'back': 'Voltar', 'back_home': 'Voltar ao início',
         'repos': 'Todos os repositórios no GitHub', 'shots': 'Capturas de tela', 'video': 'Vídeo', 'watch': 'Assistir no YouTube',
-        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira as últimas novidades...', 'other_releases': 'Outros lançamentos', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
+        'video_note': 'O vídeo abre no YouTube.', 'info': 'Detalhes', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Clock recomendado', 'latest3': 'Confira também outras novidades...', 'other_releases': 'Explore outros lançamentos', 'trophies': 'Troféus nativos', 'total': 'Total', 'progress': 'Progresso',
         'explore_more': 'Explore outros trabalhos finalizados ou em desenvolvimento...', 'latest': 'Últimos em', 'see_all': 'Ver todos', 'details': 'Ver detalhes', 'github': 'Ver no GitHub',
         'start': 'Pressione start', 'click': 'Clique para começar', 'kicker': 'O que será que o Wolff está fazendo...?',
         'cover_of': 'Capa de', 'shot_of': 'Captura de tela de', 'open': 'Abrir', 'video_default': 'Vídeo do projeto',
@@ -420,7 +420,7 @@ UI = {
         'groups': {'Em andamento': 'In development', 'Finalizado': 'Completed', 'Próximos': 'Upcoming', 'Outras equipes': 'Other teams'},
         'nothing': 'Nothing here yet.', 'back': 'Back', 'back_home': 'Back to home', 'repos': 'All repositories on GitHub',
         'shots': 'Screenshots', 'video': 'Video', 'watch': 'Watch on YouTube', 'video_note': 'The video opens on YouTube.',
-        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out the latest updates...', 'other_releases': 'Other releases', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'explore_more': 'Explore other completed and in-development projects...', 'latest': 'Latest in', 'see_all': 'See all',
+        'info': 'Details', 'links': 'Downloads', 'sources': 'Source', 'clock': 'Recommended clock', 'latest3': 'Check out more updates...', 'other_releases': 'Explore other releases', 'trophies': 'Native trophies', 'total': 'Total', 'progress': 'Progress', 'explore_more': 'Explore other completed and in-development projects...', 'latest': 'Latest in', 'see_all': 'See all',
         'details': 'See details', 'github': 'View on GitHub', 'start': 'Press start', 'click': 'Click to begin',
         'kicker': 'What could Wolff be up to...?', 'cover_of': 'Cover of', 'shot_of': 'Screenshot of', 'open': 'Open',
         'video_default': 'Project video',
@@ -1039,7 +1039,7 @@ def home_html(posts, order, feat, mosaic):
         for n, (c, t) in enumerate(CATS, 1))
     # Latest 3: restore the traditional flat post cards.
     # The carousel is for OTHER entries only, with no duplicated posts.
-    all_recent = [k for k in order if not posts[k].get('poll') and posts[k]['cat'] != 'journal']
+    all_recent = [k for k in order if k != feat and not posts[k].get('poll') and posts[k]['cat'] != 'journal']
     latest_ids = all_recent[:3]
     older_ids = all_recent[3:15]  # up to 12 additional releases/projects
     latest_cards = '\n'.join(card(posts[k]) for k in latest_ids)
@@ -1069,7 +1069,7 @@ def home_html(posts, order, feat, mosaic):
                   'text-transform:uppercase;text-align:center;color:#c4c4c4">'
                   + T(e(UI['pt']['other_releases']), e(UI['en']['other_releases'])) + '</h2>\n'
                   '<div class="wr-deck" role="region" aria-roledescription="carousel" '
-                  'aria-label="Outros lançamentos / Other releases" tabindex="0">\n'
+                  'aria-label="Explore outros lançamentos / Explore other releases" tabindex="0">\n'
                   '<div class="wr-deck-stage">' + deck_cards + '</div>\n'
                   '<div class="wr-deck-controls">'
                   '<button type="button" class="wr-deck-arrow" data-deck-dir="-1" '
