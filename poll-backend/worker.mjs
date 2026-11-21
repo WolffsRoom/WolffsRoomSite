@@ -27,18 +27,21 @@ export default {
   const path=new URL(req.url).pathname;
   if(path==="/health")return send({ok:true});
   const results=path.startsWith("/api/v1/results/");
+  const admin=path.startsWith("/api/v1/admin/summary/");
   const vote=path==="/api/v1/vote",status=path==="/api/v1/status";
-  if(!results&&!vote&&!status)return send({error:"not_found"},404);
-  if((results&&req.method!=="GET")||(!results&&req.method!=="POST"))
+  if(!results&&!vote&&!status&&!admin)return send({error:"not_found"},404);
+  if(admin&&(!env.ADMIN_TOKEN||req.headers.get("Authorization")!=="Bearer "+env.ADMIN_TOKEN))
+    return send({error:"unauthorized"},401);
+  if(((results||admin)&&req.method!=="GET")||(!results&&!admin&&req.method!=="POST"))
     return send({error:"method"},405);
   if(!env.POLL_STATE||!env.VOTER_SALT||!env.GITHUB_TOKEN)
     return send({error:"not_configured"},503);
   let body={};
-  if(!results){
+  if(!results&&!admin){
     if(Number(req.headers.get("content-length")||0)>2048)return send({error:"too_large"},413);
     try{body=await req.json();}catch{return send({error:"json"},400);}
   }
-  const id=results?path.split("/").pop():body.poll;
+  const id=(results||admin)?path.split("/").pop():body.poll;
   if(!validId(id))return send({error:"poll"},400);
   let poll;
   try{poll=await pollInfo(id);}catch{return send({error:"catalog"},503);}
@@ -54,10 +57,10 @@ export default {
     return send({error:"choice"},400);
   const name=env.POLL_STATE.idFromName(id);
   const service=env.POLL_STATE.get(name);
-  const payload={mode:results?"results":vote?"vote":"status",id,
+  const payload={mode:admin?"admin-summary":results?"results":vote?"vote":"status",id,
     count:poll.options.length,choice:body.choice,closed:now>=end,
     ends_at:poll.ends_at,
-    voter:results?null:await voterKey(body.device,id,env.VOTER_SALT)};
+    voter:(results||admin)?null:await voterKey(body.device,id,env.VOTER_SALT)};
   return service.fetch("https://durable.internal/",{method:"POST",headers:HDR,body:JSON.stringify(payload)});
  }
 };
@@ -74,6 +77,15 @@ export class PollRoom {
       await this.state.storage.setAlarm(Date.now()+1000);
     const found=await this.state.storage.get(key);
     return send({answered:found!==undefined,choice:q.closed&&found?found.choice:null,closed:q.closed,ends_at:q.ends_at});
+  }
+  if(q.mode==="admin-summary"){
+    const counts=await Promise.all(Array.from({length:q.count},(_,i)=>this.state.storage.get("count/"+i)));
+    const items=counts.map(n=>Number(n||0));
+    const pending=await this.state.storage.list({prefix:"audit/",limit:100});
+    const issue=await this.state.storage.get("issue/"+q.id);
+    return send({poll:q.id,total:items.reduce((a,b)=>a+b,0),
+      counts:items,queued_audit_events:pending.size,
+      issue_number:issue||null,closed:q.closed});
   }
   if(q.mode==="results"){
     const counts=await Promise.all(Array.from({length:q.count},(_,i)=>this.state.storage.get("count/"+i)));
