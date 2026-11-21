@@ -83,7 +83,7 @@ def inline(text):
     """Escapa o texto e converte [texto](url) e **negrito**."""
     out = e(text)
     out = re.sub(r'\[([^\]]+)\]\((https?://[^)\s]+)\)', lambda m: f'<a href="{drive_direct(vita_github_url(html.unescape(m.group(2)))).replace("&", "&amp;")}" target="_blank" rel="noopener">{m.group(1)}</a>', out)
-    out = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', out)
+    out = re.sub(r'\*\*(.+?)\*\*(?!\*)', r'<strong>\1</strong>', out)
     out = re.sub(r'(?<!\*)\*([^*\n]+)\*(?!\*)', r'<em>\1</em>', out)
     return out
 
