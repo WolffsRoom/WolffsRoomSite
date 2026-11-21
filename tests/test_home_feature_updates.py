@@ -83,6 +83,19 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         self.assertEqual(build.UI["pt"]["other_releases"], "Explore outros lançamentos")
         self.assertEqual(build.UI["en"]["other_releases"], "Explore other releases")
 
+    def test_youtube_hero_description_localized_and_styled(self):
+        posts, _ = build.load_all()
+        post = posts["youtube-on-vita"]
+        pt = build.V(post, "pt")["feature_text"]
+        en = build.V(post, "en")["feature_text"]
+        self.assertIn("Cliente não oficial", pt)
+        self.assertIn("Unofficial YouTube client", en)
+        self.assertIn("Full e Lite", pt)
+        self.assertIn("Full and Lite", en)
+        self.assertIn("<strong>", build.inline(en))
+        self.assertIn("<em>", build.inline(en))
+        self.assertIn("The real YouTube on TV experience", en)
+
     def test_manual_update_timestamp_and_home_opt_out(self):
         with tempfile.TemporaryDirectory() as tempdir:
             dest=Path(tempdir)/"youtube-on-vita"
