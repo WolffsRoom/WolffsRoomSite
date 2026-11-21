@@ -351,6 +351,12 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 .wr-snd[aria-expanded="true"]{border-color:#ffffff}
 /* botão do PS Vita (acima do idioma) e modal da Wolff's Store */
 .wr-vitabtn{position:fixed;bottom:168px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
+.wr-poll-float{position:fixed;bottom:244px;right:16px;z-index:51;width:64px;height:64px;padding:5px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated;text-decoration:none}
+.wr-poll-float[hidden]{display:none!important}
+.wr-poll-float:hover{border-color:#ffffff}
+.wr-poll-float:active{transform:translate(4px,4px)}
+.wr-poll-float:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.wr-poll-float img{display:block;max-width:100%;max-height:100%;object-fit:contain;image-rendering:pixelated}
 .wr-vitabtn:hover{border-color:#ffffff}
 .wr-vitabtn:active{transform:translate(4px,4px)}
 .wr-vitabtn:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
@@ -424,6 +430,7 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <button class="wr-sm" type="button" data-act="toggleMus" data-hover="hov" data-b-aria-pressed="musOn" data-b-aria-label="musLabel" data-b-title="musLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="5" y="1" width="1" height="6"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="2"/><rect x="3" y="6" width="2" height="1"/><rect x="2" y="7" width="4" height="2"/><rect x="3" y="9" width="2" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span></button>
 <button class="wr-sm" type="button" data-act="toggleSfx" data-hover="hov" data-b-aria-pressed="sfxOn" data-b-aria-label="sfxLabel" data-b-title="sfxLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="4" y="0" width="2" height="3"/><rect x="4" y="7" width="2" height="3"/><rect x="0" y="4" width="3" height="2"/><rect x="7" y="4" width="3" height="2"/><rect x="3" y="3" width="4" height="4"/><rect x="1" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span></button>
 </div>
+<!--ACTIVEPOLLBTN-->
 <button class="wr-vitabtn" type="button" data-act="openVita" data-hover="hov" data-b-aria-label="vitaLabel" data-b-title="vitaLabel"><!--VITAICON--></button>
 <!--VITAMODAL-->
 <button class="wr-langbtn" type="button" data-act="toggleLang" data-hover="hov" data-b-aria-label="langLabel" data-b-title="langLabel"><span data-l="en">EN</span><span data-l="pt">PT</span></button>
@@ -758,6 +765,7 @@ class Component extends DCLogic {
         document.title = v === 'en' ? "Wolff's Room – Translations, Mods and much more." : "Wolff's Room – Traduções, Modificações e muito mais.";
         self.beep('tick');
         self.setState({ lang: v });
+        if (typeof refreshActivePollButton === 'function') refreshActivePollButton();
       },
       vitaOpen: !!st.vitaOpen,
       qrOpen: !!st.qrOpen,
@@ -1006,6 +1014,29 @@ class Component extends DCLogic {
   }
   refreshPollCountdowns();
   setInterval(refreshPollCountdowns, 30000);
+  // Keep the floating poll shortcut current even without a Pages rebuild.
+  // Only the newest poll within its scheduled start/end is shown.
+  function refreshActivePollButton() {
+    var now = Date.now(), active = null, latest = -Infinity;
+    document.querySelectorAll('[data-wr-open-poll]').forEach(function (btn) {
+      var from = Date.parse(btn.getAttribute('data-poll-start'));
+      var until = Date.parse(btn.getAttribute('data-poll-end'));
+      btn.hidden = true;
+      if (Number.isFinite(from) && Number.isFinite(until) &&
+          from <= now && now < until && from > latest) {
+        active = btn; latest = from;
+      }
+    });
+    if (!active) return;
+    var en = document.documentElement.lang === 'en';
+    var label = en ? 'Vote in the active poll' : 'Votar na enquete aberta';
+    active.setAttribute('aria-label', label);
+    active.setAttribute('title', label);
+    active.hidden = false;
+  }
+  refreshActivePollButton();
+  setInterval(refreshActivePollButton, 30000);
+
   window.addEventListener('popstate', function () {
     var old = comp.state.post || comp.state.view || 'inicio';
     var next = stateFromHash();

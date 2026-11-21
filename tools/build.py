@@ -1225,6 +1225,30 @@ def write_share_pages(posts):
             out.write(content)
 
 
+def floating_poll_buttons(posts, order):
+    """Provide every configured poll to a live client-side availability check.
+
+    No hard-coded poll ID. The newest currently active poll is displayed.
+    Dates are local Brazil times, explicitly converted to UTC-03:00.
+    """
+    from store import SITE_URL
+    buttons = []
+    for slug in order:
+        poll = posts[slug].get('poll')
+        if not poll:
+            continue
+        buttons.append(
+            f'<a class="wr-poll-float" href="{SITE_URL}posts/{e(slug)}/" '
+            f'data-act="open_{e(slug)}" data-wr-open-poll '
+            f'data-poll-start="{e(poll["starts_at"])}-03:00" '
+            f'data-poll-end="{e(poll["ends_at"])}-03:00" '
+            'aria-label="Open active poll" title="Open active poll" hidden>'
+            '<img src="assets/polls/CaixaWhite.png" alt="" aria-hidden="true" '
+            'width="46" height="46"></a>'
+        )
+    return ''.join(buttons)
+
+
 def build():
     posts, order = load_all()
     # Homepage and Vita Store use the same event-based featured post.
@@ -1251,6 +1275,7 @@ def build():
     page = open(TEMPLATE, encoding='utf-8').read()
     page = page.replace('<!--MAIN-->', main).replace('/*CATS*/{}', cats)
     page = page.replace('<!--VITAMODAL-->', vita_modal()).replace('<!--VITAICON-->', vita_icon())
+    page = page.replace('<!--ACTIVEPOLLBTN-->', floating_poll_buttons(posts, order))
     from store import SITE_URL
     # Version the image URL so social scrapers request the new bytes rather
     # than reusing the previous image cached for this site's OG metadata.
