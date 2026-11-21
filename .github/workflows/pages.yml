@@ -29,6 +29,8 @@ jobs:
       - name: Gerar o site (e o store.json do app do Vita)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Public HTTPS Worker URL set as a repository variable after deployment.
+          WOLFFS_POLL_API_URL: ${{ vars.WOLFFS_POLL_API_URL }}
         run: python tools/build.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

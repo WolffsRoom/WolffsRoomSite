@@ -807,7 +807,11 @@ def poll_article(p, lang):
     return (f'<article data-l="{lang}" class="wr-poll-detail">'
             f'<h1 class="wr-poll-title" style="{DF}">{title}</h1>'
             f'<p class="wr-poll-question">{question}</p>'
-            f'<div class="wr-poll-options">{options}</div>'
+            + (f'<div class="wr-poll-cover" style="width:100%;max-width:640px;'
+               f'align-self:center;border:4px solid #5a5a5a;background:#000;'
+               f'line-height:0;box-sizing:border-box">{pic(p, lang)}</div>'
+               if p.get('cover') else '')
+            + f'<div class="wr-poll-options">{options}</div>'
             f'<p class="wr-poll-deadline">{published}: {e(info["ends_at"].replace("T", " "))}</p>'
             + action
             + '<button class="wr-btn wr-poll-back" type="button" data-act="goHome">'

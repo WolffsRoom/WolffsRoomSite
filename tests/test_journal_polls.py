@@ -50,6 +50,12 @@ class JournalAndPollTests(unittest.TestCase):
    self.assertIn('data-act="openVita"',html)
    self.assertIn("Disponível somente pela loja",html)
    self.assertNotIn("Enviar resposta",html)
+   # A poll post with a cover renders it centered above the options.
+   poll["cover"] = "posts/vote-test/capa.png"
+   html = build.poll_article(poll,"pt")
+   self.assertIn('class="wr-poll-cover"',html)
+   self.assertLess(html.index('class="wr-poll-cover"'),
+                   html.index('class="wr-poll-options"'))
 
  def test_duration_home_first_day_only(self):
   now=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3)))
