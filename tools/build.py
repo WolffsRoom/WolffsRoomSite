@@ -994,6 +994,13 @@ def deck_card(p, pos, chronological_rank):
             '</div></a>')  # no visible descriptions until a project is opened
 
 
+def home_recent_posts(posts, order, feat):
+    """Home cards exclude the featured post; no duplicates with the carousel."""
+    return [slug for slug in order
+            if slug != feat and not posts[slug].get('poll')
+            and posts[slug]['cat'] != 'journal']
+
+
 def home_html(posts, order, feat, mosaic):
     p = posts[feat]
     # The featured GitHub button opens the project repository, never an
@@ -1040,7 +1047,7 @@ def home_html(posts, order, feat, mosaic):
         for n, (c, t) in enumerate(CATS, 1))
     # Latest 3: restore the traditional flat post cards.
     # The carousel is for OTHER entries only, with no duplicated posts.
-    all_recent = [k for k in order if k != feat and not posts[k].get('poll') and posts[k]['cat'] != 'journal']
+    all_recent = home_recent_posts(posts, order, feat)
     latest_ids = all_recent[:3]
     older_ids = all_recent[3:15]  # up to 12 additional releases/projects
     latest_cards = '\n'.join(card(posts[k]) for k in latest_ids)
