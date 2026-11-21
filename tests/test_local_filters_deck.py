@@ -37,12 +37,14 @@ class LocalFiltersDeckTests(unittest.TestCase):
         html = build.home_html(self.posts, self.order, build.choose_feature(self.posts, self.order), [])
         self.assertIn('wr-latest-three-grid', html)
         self.assertIn('class="wr-other-releases"', html)
-        self.assertIn('Outros lançamentos', html)
-        self.assertIn('Other releases', html)
+        self.assertIn('Explore outros lançamentos', html)
+        self.assertIn('Explore other releases', html)
         self.assertIn('data-deck-dir="-1"', html)
         self.assertIn('data-deck-dir="1"', html)
         self.assertIn('class="wr-explore-prompt"', html)
-        chronological = [k for k in self.order if not self.posts[k].get('poll') and self.posts[k]['cat'] != 'journal']
+        featured = build.choose_feature(self.posts, self.order)
+        chronological = build.home_recent_posts(self.posts, self.order, featured)
+        self.assertNotIn(featured, chronological)
         latest = html[html.index('class="wr-grid wr-latest-three-grid"'):
                       html.index('class="wr-other-releases"')]
         deck = html[html.index('class="wr-other-releases"'):
