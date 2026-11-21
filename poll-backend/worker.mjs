@@ -52,7 +52,7 @@ export default {
     return send({error:"dates"},503);
   if(results&&now<end)return send({error:"not_finished",ends_at:poll.ends_at},403);
   if(vote&&(now<start||now>=end))return send({error:"closed"},403);
-  if(!results&&!validHash(body.device))return send({error:"device_hash"},400);
+  if((vote||status)&&!validHash(body.device))return send({error:"device_hash"},400);
   if(vote&&(!Number.isInteger(body.choice)||body.choice<0||body.choice>=poll.options.length))
     return send({error:"choice"},400);
   const name=env.POLL_STATE.idFromName(id);
