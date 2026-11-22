@@ -28,6 +28,9 @@ capturas:
 - captura-5.png
 - captura-6.png
 - captura-7.png
+- captura-8.png
+- captura-9.png
+- captura-10.png
 - addons-home.png
 - addons-player.png
 - addons-download.png
