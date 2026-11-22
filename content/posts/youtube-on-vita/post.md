@@ -31,11 +31,14 @@ capturas:
 - captura-8.png
 - captura-9.png
 - captura-10.png
-- addons-home.png
-- addons-player.png
-- addons-download.png
-- addons-settings.png
-- addons-display.png
+capturas_addons:
+- 1-home.png
+- 2-player-settings.png
+- 3-download.png
+- 4-downloads.png
+- 5-settings.png
+- 6-screen-and-info.png
+- 7-no-internet.png
 ficha:
   Version: v0.65 · Update
   Platform: PlayStation Vita / Vita3K

@@ -315,6 +315,7 @@ def load_post(slug):
         'trophies': bool(meta.get('trofeus')),
         'cover': img(meta.get('capa')), 'cover_style': str(meta.get('capa_estilo') or 'cobrir'),
         'pixel': bool(meta.get('pixelado')), 'shots': [img(s) for s in (meta.get('capturas') or [])],
+        'addon_shots': [img(s) for s in (meta.get('capturas_addons') or [])],
         'video': vid,
         'feature': bool(meta.get('destaque')), 'feature_text': str(meta.get('chamada') or meta.get('resumo') or ''),
         'folder': folder,
@@ -701,6 +702,30 @@ def article(p0, lang):
     if p['shots'] and p.get('subcat') != 'reviews':
         imgs = '\n'.join(f'<div class="wr-shot" style="border: 4px solid #5a5a5a; background: #000000; line-height: 0"><img src="{s}" alt="{e(ui["shot_of"] + " " + p["title"])}" loading="lazy" style="width: 100%; height: auto; display: block"></div>' for s in p['shots'])
         secs += section(ui['shots'], f'<div class="wr-shots" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">\n{imgs}\n</div>\n')
+    if p.get('addon_shots') and p.get('subcat') != 'reviews':
+        addon_labels = {
+            '1-home.png': ('Menu principal', 'Main menu'),
+            '2-player-settings.png': ('Configurações do player', 'Player settings'),
+            '3-download.png': ('Opções de download', 'Download options'),
+            '4-downloads.png': ('Downloads', 'Downloads'),
+            '5-settings.png': ('Configurações', 'Settings'),
+            '6-screen-and-info.png': ('Tela e informações', 'Screen & Info'),
+            '7-no-internet.png': ('Sem internet', 'No internet'),
+        }
+        tiles = []
+        for src in p['addon_shots']:
+            filename = src.rsplit('/', 1)[-1]
+            pt_label, en_label = addon_labels.get(filename, (filename, filename))
+            label = pt_label if lang == 'pt' else en_label
+            tiles.append(
+                f'<figure class="wr-shot" style="margin:0; border:4px solid #5a5a5a; background:#000; min-width:0">'
+                f'<a href="{e(src)}" target="_blank" rel="noopener" style="display:block;line-height:0">'
+                f'<img src="{e(src)}" alt="{e(label)}" loading="lazy" style="width:100%;height:auto;display:block"></a>'
+                f'<figcaption style="color:#ccc;font-size:12px;text-align:center;padding:8px 4px;line-height:1.5">{e(label)}</figcaption></figure>'
+            )
+        title = 'Native Add-ons' if lang == 'en' else 'Add-ons nativos'
+        secs += section(title, '<div class="wr-shots" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">\n'
+                        + '\n'.join(tiles) + '\n</div>\n')
     if p.get('video_file'):
         label = p['video_label'] or ui['video_default']
         poster = f' poster="{p["cover"]}"' if p['cover'] else ''
