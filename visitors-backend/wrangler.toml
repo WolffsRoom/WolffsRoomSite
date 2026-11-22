@@ -1,0 +1,11 @@
+name = "wolffs-room-visitors"
+main = "worker.mjs"
+compatibility_date = "2026-11-22"
+
+[[durable_objects.bindings]]
+name = "VISITORS"
+class_name = "VisitorStats"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["VisitorStats"]
