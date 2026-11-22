@@ -1,19 +1,19 @@
 ---
 titulo: YouTube on Vita
 tag: YouTube on TV · Cobalt · PS Vita
-status: v0.65 · Release
+status: v0.65 · Update
 resumo: 'YouTube on Vita v0.65: Vertical Shorts, native controller shortcuts, aspect-ratio modes, UI sounds and improved
   playback/downloads.'
 chamada: '**YouTube on Vita — *Unofficial YouTube client for PS Vita***
 
 
-  The real YouTube on TV experience, now in **v0.65**: Vertical Shorts, new controls, aspect-ratio modes and interface
+  The real YouTube on TV experience, now in **v0.65 update**: Vertical Shorts, new controls, aspect-ratio modes and interface
   improvements.
 
 
   Full and Lite available.'
 ficha:
-  Version: v0.65 · Release
+  Version: v0.65 · Update
   Platform: PlayStation Vita / Vita3K
   Engine: Cobalt / Starboard 15 / VitaGL
   Video: H.264 / AAC · up to 720p; Full HD experimental
@@ -22,9 +22,8 @@ ficha:
   Title IDs: YTVCB0001 (Full) / YTVCB0002 (Lite)
   Requirement: kubridge v0.3.1 or newer
 links:
-  YouTube Full - Recommended download: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
-  YouTube Lite - Lower RAM usage: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
-  GitHub Release v0.65: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.65
+  YouTube: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
+  YouTube Lite: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
 fontes:
   Repository and README: https://github.com/WolffsRoom/YouTubeOnVita
 ---

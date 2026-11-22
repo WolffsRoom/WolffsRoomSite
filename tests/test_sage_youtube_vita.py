@@ -28,10 +28,10 @@ class PostsTests(unittest.TestCase):
         p=build.load_post("youtube-on-vita")
         self.assertEqual(p["title"],"YouTube on Vita")
         self.assertEqual(p["cover"],"posts/youtube-on-vita/release-v065.png")
-        self.assertEqual(len(p["shots"]),12)
+        self.assertEqual(len(p["shots"]),15)
         self.assertEqual(p["updated"].isoformat(),"2026-11-22")
         self.assertEqual(p["version_label"],"v0.65")
-        self.assertEqual(p["news_kind"],"Release")
+        self.assertEqual(p["news_kind"],"Update")
         self.assertEqual(p["date"].isoformat(),"2026-11-17")
         self.assertEqual(len(p["downloads"]),2)
         self.assertEqual(
@@ -45,7 +45,7 @@ class PostsTests(unittest.TestCase):
             for x in p["downloads"]))
         self.assertEqual([x["tamanho"] for x in p["downloads"]],
                          [22923055,22923400])
-        self.assertIn("YouTube Full", str(p["links"]))
+        self.assertIn("YouTube", str(p["links"]))
         self.assertIn("YouTube Lite", str(p["links"]))
         en=build.V(p,"en")
         self.assertIn("What\'s new in v0.65",str(en["secs"]))

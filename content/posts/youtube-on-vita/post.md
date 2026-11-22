@@ -6,15 +6,15 @@ grupo: Em andamento
 data: 2026-11-17 23:20
 atualizado_em: '2026-11-22'
 tag: YouTube on TV · Cobalt · PS Vita
-status: v0.65 · Release
-novidade: Release
+status: v0.65 · Update
+novidade: Update
 versao: v0.65
 resumo: 'YouTube on Vita v0.65: novos controles, Shorts verticais, Aspect Ratio, sons de UI e melhorias em reprodução
   e downloads.'
 chamada: '**YouTube on Vita — *Cliente não oficial para PS Vita***
 
 
-  A experiência real do YouTube on TV, agora na **Release v0.65**: Shorts, novos controles, Aspect Ratio e interface
+  A experiência real do YouTube on TV, agora na **atualização v0.65**: Shorts, novos controles, Aspect Ratio e interface
   aprimorada.
 
 
@@ -37,7 +37,7 @@ capturas:
 - addons-settings.png
 - addons-display.png
 ficha:
-  Version: v0.65 · Release
+  Version: v0.65 · Update
   Platform: PlayStation Vita / Vita3K
   Engine: Cobalt / Starboard 15 / VitaGL
   Video: H.264 / AAC · até 720p; Full HD experimental
@@ -46,9 +46,8 @@ ficha:
   Title IDs: YTVCB0001 (Full) / YTVCB0002 (Lite)
   Requirement: kubridge v0.3.1 ou superior
 links:
-  YouTube Full - Download recomendado: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
-  YouTube Lite - Menos RAM: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
-  Release v0.65 no GitHub: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.65
+  YouTube: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
+  YouTube Lite: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
 fontes:
   Repositório e README: https://github.com/WolffsRoom/YouTubeOnVita
 downloads:
@@ -72,7 +71,7 @@ downloads:
 
 E aí, pessoal! Wolff aqui.
 
-A **release v0.65 do YouTube on Vita** chegou! Desde a primeira versão pública, a experiência original do **YouTube on TV** no PlayStation Vita ganhou novos controles, recursos e otimizações.
+A **atualização v0.65 do YouTube on Vita** chegou! Desde a primeira versão pública, a experiência original do **YouTube on TV** no PlayStation Vita ganhou novos controles, recursos e otimizações.
 
 ## Novidades da v0.65
 

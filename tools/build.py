@@ -732,6 +732,7 @@ def article(p0, lang):
     if p['links']:
         download_links = ''
         for i, (lab, url) in enumerate(p['links']):
+            youtube_download = p['slug'] == 'youtube-on-vita' and lab in ('YouTube', 'YouTube Lite')
             st = ('background: #ffffff; color: #0b0b0b; border: 4px solid #ffffff'
                   if i == 0 else 'background: #0b0b0b; color: #ffffff; border: 4px solid #8a8a8a')
             if p['slug'] == 'youtube-on-vita' and url.rstrip('/') == 'https://wolffsroom.github.io/WolffsRoomSite':
@@ -743,6 +744,14 @@ def article(p0, lang):
                                    f'text-transform: uppercase; cursor: pointer">'
                                    + T(e(lab), e("Only on Wolff's Store")) + '</button>\n')
             else:
+                if youtube_download:
+                    note = (('Recommended · Full build' if lang == 'en' else 'Recomendado · Versão Full') if lab == 'YouTube' else ('Lower RAM usage · Lite build' if lang == 'en' else 'Menor uso de RAM · Versão Lite'))
+                    download_links += ('<div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px">\n'
+                                       f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" '
+                                       f'style="min-height:48px; box-sizing:border-box; padding:12px 14px; {st}; '
+                                       f'text-decoration:none; text-align:center; {DF} font-size:16px; line-height:1.6; text-transform:uppercase">{e(lab)}</a>\n'
+                                       f'<span style="color:#aaa; font-size:12px; line-height:1.5; text-align:center">{e(note)}</span></div>\n')
+                    continue
                 download_links += (f'<a class="wr-btn" href="{e(drive_direct(url))}" target="_blank" rel="noopener" '
                                    f'style="min-height: 48px; box-sizing: border-box; padding: 12px 14px; {st}; '
                                    f'text-decoration: none; text-align: center; {DF} font-size: 16px; '
