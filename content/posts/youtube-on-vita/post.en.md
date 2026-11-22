@@ -4,14 +4,14 @@ tag: YouTube on TV · Cobalt · PS Vita
 status: v0.65 · Update
 resumo: 'YouTube on Vita v0.65: Vertical Shorts, native controller shortcuts, aspect-ratio modes, UI sounds and improved
   playback/downloads.'
-chamada: '**YouTube on Vita — *Unofficial YouTube client for PS Vita***
+chamada: '**The real YouTube on TV experience, brought to PlayStation Vita through Cobalt.**
 
 
-  The real YouTube on TV experience, now in **v0.65 update**: Vertical Shorts, new controls, aspect-ratio modes and interface
-  improvements.
+  **New in v0.65:** Vertical Shorts, new controls, aspect-ratio modes and interface improvements.
 
 
-  Full and Lite available.'
+  Full and Lite versions available.'
+
 ficha:
   Version: v0.65 · Update
   Platform: PlayStation Vita / Vita3K

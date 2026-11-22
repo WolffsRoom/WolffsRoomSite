@@ -11,14 +11,14 @@ novidade: Update
 versao: v0.65
 resumo: 'YouTube on Vita v0.65: novos controles, Shorts verticais, Aspect Ratio, sons de UI e melhorias em reprodução
   e downloads.'
-chamada: '**YouTube on Vita — *Cliente não oficial para PS Vita***
+chamada: '**A verdadeira experiência do YouTube on TV, trazida ao PlayStation Vita através do Cobalt.**
 
 
-  A experiência real do YouTube on TV, agora na **atualização v0.65**: Shorts, novos controles, Aspect Ratio e interface
-  aprimorada.
+  **Novidades da v0.65:** Shorts verticais, novos controles, modos de proporção de tela e melhorias na interface.
 
 
-  Full e Lite disponíveis.'
+  Versões Full e Lite disponíveis.'
+
 capa: release-v065.png
 capturas:
 - captura-1.png
