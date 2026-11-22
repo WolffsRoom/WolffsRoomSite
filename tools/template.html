@@ -326,6 +326,27 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-visitors-stat span{font-size:14px;color:#bdbdbd}
 .wr-visitors-note{margin:14px 0 0;color:#aaa;font-size:13px;line-height:1.45}
 @media(max-width:550px){.wr-visitors-panel{right:12px;bottom:392px;width:min(320px,calc(100vw - 24px));max-width:calc(100vw - 24px)}}
+/* Collapsible lateral controls on desktop and mobile; Vita and active poll stay outside. */
+.wr-tools-toggle{position:fixed;right:16px;bottom:16px;z-index:54;width:64px;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:0;border:4px solid #5a5a5a;background:#060606;color:#fff;cursor:pointer}
+.wr-tools-toggle:hover,.wr-tools-toggle[aria-expanded="true"]{border-color:#fff}
+.wr-tools-toggle:focus-visible{outline:4px solid #fff;outline-offset:4px}
+.wr-tools-toggle:active{transform:translate(3px,3px)}
+.wr-tools-toggle .wr-hamburger-line{height:5px;width:34px;background:#fff;display:block;image-rendering:pixelated}
+body:not(.wr-tools-open) .wr-snd,body:not(.wr-tools-open) .wr-langbtn,body:not(.wr-tools-open) .wr-visitors-btn,body:not(.wr-tools-open) .wr-sndmenu,body:not(.wr-tools-open) .wr-visitors-panel{display:none!important}
+body.wr-tools-open .wr-langbtn{right:92px;bottom:16px}
+body.wr-tools-open .wr-snd{right:168px;bottom:16px}
+body.wr-tools-open .wr-visitors-btn{right:244px;bottom:16px}
+body.wr-tools-open .wr-sndmenu{right:168px;bottom:92px}
+body.wr-tools-open .wr-visitors-panel{right:16px;bottom:244px;max-width:calc(100vw - 32px)}
+@media(max-width:400px){
+  body.wr-tools-open .wr-visitors-panel{right:12px;bottom:244px;width:calc(100vw - 24px);max-width:calc(100vw - 24px)}
+}
+@media(max-width:315px){
+  body.wr-tools-open .wr-langbtn{right:16px;bottom:244px}
+  body.wr-tools-open .wr-snd{right:92px;bottom:16px}
+  body.wr-tools-open .wr-visitors-btn{right:168px;bottom:16px}
+  body.wr-tools-open .wr-sndmenu{right:92px;bottom:92px}
+}
 </style>
 <style>
 .dc-if{display:contents}
@@ -367,8 +388,8 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 .wr-sm-off{display:none;position:absolute;inset:0}
 .wr-snd[aria-expanded="true"]{border-color:#ffffff}
 /* botão do PS Vita (acima do idioma) e modal da Wolff's Store */
-.wr-vitabtn{position:fixed;bottom:168px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
-.wr-poll-float{position:fixed;bottom:244px;right:16px;z-index:51;width:64px;height:64px;padding:5px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated;text-decoration:none}
+.wr-vitabtn{position:fixed;bottom:92px;right:16px;z-index:50;width:64px;height:64px;padding:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated}
+.wr-poll-float{position:fixed;bottom:168px;right:16px;z-index:51;width:64px;height:64px;padding:5px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#060606;color:#ffffff;border:4px solid #5a5a5a;cursor:pointer;image-rendering:pixelated;text-decoration:none}
 .wr-poll-float[hidden]{display:none!important}
 .wr-poll-float:hover{border-color:#ffffff}
 .wr-poll-float:active{transform:translate(4px,4px)}
@@ -447,6 +468,9 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <button class="wr-sm" type="button" data-act="toggleMus" data-hover="hov" data-b-aria-pressed="musOn" data-b-aria-label="musLabel" data-b-title="musLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="5" y="1" width="1" height="6"/><rect x="6" y="1" width="1" height="1"/><rect x="7" y="2" width="1" height="1"/><rect x="8" y="3" width="1" height="2"/><rect x="3" y="6" width="2" height="1"/><rect x="2" y="7" width="4" height="2"/><rect x="3" y="9" width="2" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span></button>
 <button class="wr-sm" type="button" data-act="toggleSfx" data-hover="hov" data-b-aria-pressed="sfxOn" data-b-aria-label="sfxLabel" data-b-title="sfxLabel"><span class="wr-sm-ic"><svg aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="currentColor" style="display: block"><rect x="4" y="0" width="2" height="3"/><rect x="4" y="7" width="2" height="3"/><rect x="0" y="4" width="3" height="2"/><rect x="7" y="4" width="3" height="2"/><rect x="3" y="3" width="4" height="4"/><rect x="1" y="1" width="1" height="1"/><rect x="8" y="1" width="1" height="1"/><rect x="1" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/></svg><svg class="wr-sm-off" aria-hidden="true" width="40" height="40" viewBox="0 0 10 10" shape-rendering="crispEdges" fill="#ffffff"><rect x="0" y="0" width="1" height="1"/><rect x="1" y="1" width="1" height="1"/><rect x="2" y="2" width="1" height="1"/><rect x="3" y="3" width="1" height="1"/><rect x="4" y="4" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="7" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="9" y="9" width="1" height="1"/></svg></span></button>
 </div>
+<button id="wr-tools-toggle" class="wr-tools-toggle" type="button" aria-label="Open side menu" aria-expanded="false" title="Menu">
+<span class="wr-hamburger-line" aria-hidden="true"></span><span class="wr-hamburger-line" aria-hidden="true"></span><span class="wr-hamburger-line" aria-hidden="true"></span>
+</button>
 <!--ACTIVEPOLLBTN-->
 <button class="wr-vitabtn" type="button" data-act="openVita" data-hover="hov" data-b-aria-label="vitaLabel" data-b-title="vitaLabel"><!--VITAICON--></button>
 <!--VITAMODAL-->
@@ -459,7 +483,7 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 </div>
 <!-- Visitor stats: website only, not part of the PS Vita Store catalog. -->
 <button id="wr-visitors-trigger" class="wr-visitors-btn" type="button" aria-expanded="false" aria-controls="wr-visitors-panel" aria-label="Visitantes" title="Visitantes">
-<img src="assets/Peoples.png" width="44" height="44" alt="" aria-hidden="true">
+<img src="assets/visitantes.png" width="44" height="44" alt="" aria-hidden="true">
 </button>
 <section id="wr-visitors-panel" class="wr-visitors-panel" role="dialog" aria-modal="false" aria-labelledby="wr-visitors-title" hidden>
 <div class="wr-visitors-head"><strong id="wr-visitors-title"><span data-l="pt">VISITANTES</span><span data-l="en">VISITORS</span></strong><button type="button" id="wr-visitors-close" class="wr-visitors-close" aria-label="Fechar / Close">×</button></div>
@@ -471,6 +495,27 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 </div>
 <p class="wr-visitors-note" id="wr-visitors-note" aria-live="polite"><span data-l="pt">Contagem iniciada em 22/11/2026. Visitantes estimados por navegador; sem coleta de IP.</span><span data-l="en">Tracking started Nov 22, 2026. Browser-based estimates; no IP collection.</span></p>
 </section>
+<script>
+(function(){
+  "use strict";
+  var btn=document.getElementById("wr-tools-toggle");
+  if(!btn)return;
+  function openMenu(open){
+    document.body.classList.toggle("wr-tools-open",open);
+    btn.setAttribute("aria-expanded",open?"true":"false");
+    btn.setAttribute("aria-label",open?"Close side menu":"Open side menu");
+  }
+  btn.addEventListener("click",function(){openMenu(!document.body.classList.contains("wr-tools-open"));});
+  document.addEventListener("keydown",function(e){
+    if(e.key==="Escape"&&document.body.classList.contains("wr-tools-open"))openMenu(false);
+  });
+  document.addEventListener("pointerdown",function(e){
+    if(!document.body.classList.contains("wr-tools-open"))return;
+    if(e.target.closest(".wr-tools-toggle,.wr-visitors-panel,.wr-sndmenu,.wr-snd,.wr-langbtn,.wr-visitors-btn"))return;
+    openMenu(false);
+  });
+})();
+</script>
 <script>
 
 (function () {
