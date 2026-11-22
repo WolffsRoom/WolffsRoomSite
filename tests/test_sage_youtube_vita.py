@@ -1,4 +1,4 @@
-"""Check SAGE 2019 v0.64 and YouTube on Vita v0.58 release integrity."""
+"""Check SAGE 2019 v0.64 and YouTube on Vita v0.65 release integrity."""
 import json
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -24,13 +24,13 @@ class PostsTests(unittest.TestCase):
         self.assertIn("obj_taunteffect",content)
         self.assertIn("analógico esquerdo",content)
 
-    def test_youtube_v058_release_has_new_cover_shots_and_both_downloads(self):
+    def test_youtube_v065_release_has_updated_cover_shots_and_both_downloads(self):
         p=build.load_post("youtube-on-vita")
         self.assertEqual(p["title"],"YouTube on Vita")
-        self.assertEqual(p["cover"],"posts/youtube-on-vita/capa.png")
+        self.assertEqual(p["cover"],"posts/youtube-on-vita/release-v065.png")
         self.assertEqual(len(p["shots"]),12)
-        self.assertEqual(p["updated"].isoformat(),"2026-11-20")
-        self.assertEqual(p["version_label"],"v0.58")
+        self.assertEqual(p["updated"].isoformat(),"2026-11-22")
+        self.assertEqual(p["version_label"],"v0.65")
         self.assertEqual(p["news_kind"],"Release")
         self.assertEqual(p["date"].isoformat(),"2026-11-17")
         self.assertEqual(len(p["downloads"]),2)
@@ -41,14 +41,14 @@ class PostsTests(unittest.TestCase):
                          ["YouTube.vpk","YouTube-Lite.vpk"])
         self.assertTrue(all(x["app_min"] == "" for x in p["downloads"]))
         self.assertTrue(all(x["url"].startswith(
-            "https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/")
+            "https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/")
             for x in p["downloads"]))
         self.assertEqual([x["tamanho"] for x in p["downloads"]],
-                         [21954021,21954225])
+                         [22923055,22923400])
         self.assertIn("YouTube Full", str(p["links"]))
         self.assertIn("YouTube Lite", str(p["links"]))
         en=build.V(p,"en")
-        self.assertIn("Cobalt and performance",str(en["secs"]))
+        self.assertIn("What\'s new in v0.65",str(en["secs"]))
         self.assertIn("720p",str(en["secs"]))
         self.assertIn("sign-in",str(en["secs"]).lower())
 
@@ -68,9 +68,9 @@ class PostsTests(unittest.TestCase):
                 self.assertEqual([x["arquivo"] for x in y["downloads"]],
                                  ["YouTube.vpk","YouTube-Lite.vpk"])
                 self.assertEqual([x["tamanho"] for x in y["downloads"]],
-                                 [21954021,21954225])
+                                 [22923055,22923400])
                 self.assertTrue(all(
-                    x["url"].startswith("https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/")
+                    x["url"].startswith("https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/")
                     for x in y["downloads"]))
 
 if __name__ == "__main__":

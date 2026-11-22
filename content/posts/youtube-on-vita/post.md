@@ -3,96 +3,99 @@ titulo: YouTube on Vita
 categoria: ferramentas
 subcategoria: apps
 grupo: Em andamento
-data: '2026-11-17 23:20'
-atualizado_em: '2026-11-20 18:55'
+data: 2026-11-17 23:20
+atualizado_em: '2026-11-22'
 tag: YouTube on TV · Cobalt · PS Vita
-status: v0.58 · First Release
+status: v0.65 · Release
 novidade: Release
-versao: v0.58
-resumo: YouTube on Vita — cliente não oficial do YouTube para PS Vita. A experiência real do YouTube on TV através do Cobalt. Disponível nas versões Full e Lite.
-chamada: |-
-  **YouTube on Vita - *Cliente não oficial do YouTube para PS Vita***
+versao: v0.65
+resumo: 'YouTube on Vita v0.65: novos controles, Shorts verticais, Aspect Ratio, sons de UI e melhorias em reprodução
+  e downloads.'
+chamada: '**YouTube on Vita — *Cliente não oficial para PS Vita***
 
-  A experiência real do YouTube on TV, trazida ao PlayStation Vita através do Cobalt.
 
-  Disponível em duas versões: Full e Lite.
-capa: capa.png
+  A experiência real do YouTube on TV, agora na **Release v0.65**: Shorts, novos controles, Aspect Ratio e interface
+  aprimorada.
+
+
+  Full e Lite disponíveis.'
+capa: release-v065.png
 capturas:
-  - captura-1.png
-  - captura-2.png
-  - captura-3.png
-  - captura-4.png
-  - captura-5.png
-  - captura-6.png
-  - captura-7.png
-  - addons-home.png
-  - addons-player.png
-  - addons-download.png
-  - addons-settings.png
-  - addons-display.png
+- captura-1.png
+- captura-2.png
+- captura-3.png
+- captura-4.png
+- captura-5.png
+- captura-6.png
+- captura-7.png
+- addons-home.png
+- addons-player.png
+- addons-download.png
+- addons-settings.png
+- addons-display.png
 ficha:
-  Version: v0.58 · First Release
+  Version: v0.65 · Release
   Platform: PlayStation Vita / Vita3K
   Engine: Cobalt / Starboard 15 / VitaGL
-  Video: H.264 / AAC · até 720p
-  Controls: Botões, toque e microfone nativo
+  Video: H.264 / AAC · até 720p; Full HD experimental
+  Controls: Botões, analógicos, touch e microfone
   Builds: Full (RAM estendida) / Lite (menor uso de RAM)
   Title IDs: YTVCB0001 (Full) / YTVCB0002 (Lite)
+  Requirement: kubridge v0.3.1 ou superior
 links:
-  YouTube Full - Download recomendado: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube.vpk
-  YouTube Lite - Menos RAM: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube-Lite.vpk
-  Release v0.58 no GitHub: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.58
+  YouTube Full - Download recomendado: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
+  YouTube Lite - Menos RAM: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
+  Release v0.65 no GitHub: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.65
 fontes:
   Repositório e README: https://github.com/WolffsRoom/YouTubeOnVita
 downloads:
-  - tipo: vpk
-    nome: YouTube Full (normal) - Recomendado
-    url: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube.vpk
-    arquivo: YouTube.vpk
-    versao: '0.58'
-    titleid: YTVCB0001
-    tamanho: 21954021
-    instrucoes: https://github.com/WolffsRoom/YouTubeOnVita#download
-  - tipo: vpk
-    nome: YouTube Lite - Menor uso de RAM
-    url: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube-Lite.vpk
-    arquivo: YouTube-Lite.vpk
-    versao: '0.58'
-    titleid: YTVCB0002
-    tamanho: 21954225
-    instrucoes: https://github.com/WolffsRoom/YouTubeOnVita#download
+- tipo: vpk
+  nome: YouTube Full (normal) - Recomendado
+  url: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
+  arquivo: YouTube.vpk
+  versao: '0.65'
+  titleid: YTVCB0001
+  tamanho: 22923055
+  instrucoes: https://github.com/WolffsRoom/YouTubeOnVita#download
+- tipo: vpk
+  nome: YouTube Lite - Menor uso de RAM
+  url: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
+  arquivo: YouTube-Lite.vpk
+  versao: '0.65'
+  titleid: YTVCB0002
+  tamanho: 22923400
+  instrucoes: https://github.com/WolffsRoom/YouTubeOnVita#download
 ---
 
 E aí, pessoal! Wolff aqui.
 
-O **YouTube on Vita v0.58** chegou à sua **primeira versão pública**! O projeto traz a interface original do **YouTube on TV** para o PlayStation Vita, utilizando Cobalt e integração com os recursos nativos do console.
+A **release v0.65 do YouTube on Vita** chegou! Desde a primeira versão pública, a experiência original do **YouTube on TV** no PlayStation Vita ganhou novos controles, recursos e otimizações.
 
-## O que oferece
+## Novidades da v0.65
 
-- **YouTube de verdade:** navegação, pesquisa, login e player da interface de TV.
-- **Controles nativos:** botões físicos, touchscreen e suporte ao microfone para recursos de voz compatíveis.
-- **Reprodução de vídeo:** H.264/AAC, até 720p e suporte a vídeos de até 60 FPS quando disponíveis e compatíveis.
-- **Add-ons:** capturas de tela, temporizador, tela preta ou escurecida, ajustes de desempenho e sons de navegação.
-- **Downloads:** vídeos em MP4 e músicas em MP3, com capas quadradas nos novos arquivos de áudio.
-- **Sessão protegida:** comunicação HTTPS e armazenamento local criptografado dos dados de sessão.
-
-## Cobalt e desempenho
-
-**Sobre o FPS da interface:** o Cobalt evita redesenhar telas paradas desnecessariamente. Por isso, contadores de FPS podem indicar valores baixos nos menus, mesmo sem lentidão perceptível. Esse comportamento também ajuda a economizar energia.
-
-A reprodução também foi testada com o Vita configurado a **222 MHz de CPU / 111 MHz de GPU**, com resultado satisfatório no conteúdo testado.
+- **Shorts e Vertical Mode:** reprodução de vídeos verticais com navegação por gestos ao girar o Vita. Inverted screen ainda é experimental.
+- **Player:** H.264 até 720p, modos Aspect Ratio (Original, Zoom e Stretch), filtros Bilinear/Nearest e melhor compatibilidade com resoluções não convencionais.
+- **Controles:** navegação pelo analógico esquerdo, ajuste de volume/brilho pelo direito e Player settings pelo Triângulo.
+- **Interface:** nova animação de inicialização a 60 FPS, sons nativos com volume ajustável e melhorias no Add-ons.
+- **Sleep Timer:** opção de 5 minutos, contador final de 60 segundos e alertas sonoros.
+- **Downloads:** melhorias de MP3/MP4, conversão do áudio durante o download, lista paginada e aviso quando a qualidade selecionada não está disponível.
+- **Estabilidade:** otimizações de memória, renderização, reconexão de rede e preservação dos logs da sessão anterior.
 
 ## Qual versão baixar?
 
-As duas versões possuem ícones próprios na LiveArea e podem ser instaladas pelo **VitaShell**. Nenhum PC ou servidor auxiliar é necessário para usar o YouTube.
+Instale pelo **VitaShell**. As edições Full e Lite possuem ícones próprios na LiveArea e podem coexistir.
 
-- **YouTube Full — recomendado:** o YouTube.vpk utiliza RAM estendida para favorecer a reprodução de vídeos.
-- **YouTube Lite — menos RAM:** o YouTube-Lite.vpk utiliza o perfil de memória normal, mais adequado para manter outros aplicativos abertos em segundo plano.
+- **YouTube Full — recomendado:** RAM estendida para favorecer a reprodução de vídeos.
+- **YouTube Lite — menos RAM:** menor consumo de memória, útil para manter outros aplicativos em segundo plano.
+
+**Requisito:** instale o [kubridge v0.3.1 ou superior](https://github.com/bythos14/kubridge/releases/latest) em `*KERNEL` e reinicie o console. Versões antigas podem causar falhas após a animação de abertura. Você não precisa apagar as configurações ou os dados de login para atualizar.
 
 ## Limitações conhecidas
 
-O **AdBlock é parcial** e não bloqueia todos os anúncios do YouTube. Alguns vídeos podem ter restrições de formato ou conteúdo. Travamentos ocasionais ao trocar vídeos em HD, especialmente durante downloads, continuam em investigação.
+**Full HD, Inverted screen e alguns controles dos Shorts ainda são experimentais.** O AdBlock é parcial, downloads MP4 podem apresentar resolução inferior à solicitada e travamentos ocasionais ao trocar vídeos continuam em investigação. O atalho para comentários pelo Quadrado ainda está pendente.
 
-Para instruções de compilação, detalhes sobre o login e mais imagens, acesse o [README do projeto](https://github.com/WolffsRoom/YouTubeOnVita).
+Se encontrar problemas, compartilhe os logs `cobalt_boot_prev.log`, `starboard15_prev.log` e, quando disponível, o dump `.psp2dmp`.
+
+Para instruções técnicas e mais detalhes, consulte o [README do YouTube on Vita](https://github.com/WolffsRoom/YouTubeOnVita#readme).
 
 **Vita means life!**

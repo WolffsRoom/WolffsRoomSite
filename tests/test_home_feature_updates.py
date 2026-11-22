@@ -44,15 +44,15 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         }
         self.assertEqual(build.choose_feature(sample,build.order_posts(sample)),"sage")
 
-    def test_youtube_first_release_becomes_feature_without_promoting_news(self):
+    def test_youtube_release_update_becomes_feature_without_promoting_news(self):
         posts,order=build.load_all()
-        # First public YouTube release now leads; Pokémon's update remains
+        # Updated YouTube release now leads; Pokémon's update remains
         # available and Journal/News must not claim the launch slot.
         self.assertIn("next-vita-project-poll", order)
         self.assertIn("pokemon-emerald", order)
         self.assertIn("pokemon-emerald-voxel-ptbr-058", order)
         self.assertIn(build.choose_feature(posts,order),("next-vita-project-poll","youtube-on-vita"))
-        self.assertEqual(posts["youtube-on-vita"]["version_label"],"v0.58")
+        self.assertEqual(posts["youtube-on-vita"]["version_label"],"v0.65")
         self.assertEqual(posts["youtube-on-vita"]["news_kind"],"Release")
         self.assertEqual(posts["pokemon-emerald-voxel-ptbr-058"]["subcat"],"news")
         self.assertEqual(posts["pizza"]["news_kind"],"Update")

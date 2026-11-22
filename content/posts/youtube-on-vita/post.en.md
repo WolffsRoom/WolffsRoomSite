@@ -1,60 +1,63 @@
 ---
 titulo: YouTube on Vita
 tag: YouTube on TV · Cobalt · PS Vita
-status: v0.58 · First Release
-resumo: YouTube on Vita — unofficial YouTube client for PS Vita. The real YouTube on TV experience, brought to PlayStation Vita through Cobalt. Available in Full and Lite editions.
-chamada: |-
-  **YouTube on Vita - *Unofficial YouTube client for PS Vita***
+status: v0.65 · Release
+resumo: 'YouTube on Vita v0.65: Vertical Shorts, native controller shortcuts, aspect-ratio modes, UI sounds and improved
+  playback/downloads.'
+chamada: '**YouTube on Vita — *Unofficial YouTube client for PS Vita***
 
-  The real YouTube on TV experience, brought to PlayStation Vita through Cobalt.
 
-  Available in two editions: Full and Lite.
+  The real YouTube on TV experience, now in **v0.65**: Vertical Shorts, new controls, aspect-ratio modes and interface
+  improvements.
+
+
+  Full and Lite available.'
 ficha:
-  Version: v0.58 · First Release
+  Version: v0.65 · Release
   Platform: PlayStation Vita / Vita3K
   Engine: Cobalt / Starboard 15 / VitaGL
-  Video: H.264 / AAC · up to 720p
-  Controls: Buttons, touchscreen and built-in microphone
+  Video: H.264 / AAC · up to 720p; Full HD experimental
+  Controls: Buttons, analog sticks, touch and microphone
   Builds: Full (extended RAM) / Lite (lower RAM usage)
   Title IDs: YTVCB0001 (Full) / YTVCB0002 (Lite)
+  Requirement: kubridge v0.3.1 or newer
 links:
-  YouTube Full - Recommended download: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube.vpk
-  YouTube Lite - Lower RAM usage: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.58/YouTube-Lite.vpk
-  GitHub Release v0.58: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.58
+  YouTube Full - Recommended download: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube.vpk
+  YouTube Lite - Lower RAM usage: https://github.com/WolffsRoom/YouTubeOnVita/releases/download/v0.65/YouTube-Lite.vpk
+  GitHub Release v0.65: https://github.com/WolffsRoom/YouTubeOnVita/releases/tag/v0.65
 fontes:
   Repository and README: https://github.com/WolffsRoom/YouTubeOnVita
 ---
 
 Hey everyone! Wolff here.
 
-**YouTube on Vita v0.58** is here as its **first public release**! This port brings the genuine **YouTube on TV** experience to PlayStation Vita using Cobalt and the console's native features.
+**YouTube on Vita v0.65** is now available! The original **YouTube on TV** experience on PlayStation Vita now includes new controls, features and performance improvements since the first public release.
 
-## Features
+## What's new in v0.65
 
-- **Real YouTube interface:** browsing, search, account sign-in and TV player controls.
-- **Native input:** physical buttons, touchscreen and microphone integration for supported voice features.
-- **Video playback:** H.264/AAC up to 720p, with support for up to 60 FPS when the video and device allow it.
-- **Add-ons:** screenshots, sleep timer, black/dimmed screen, performance settings and navigation sounds.
-- **Downloads:** MP4 video and MP3 audio, with square artwork on newly downloaded songs.
-- **Session protection:** HTTPS connections and encrypted local session storage.
-
-## Cobalt and performance
-
-**About interface FPS:** Cobalt does not need to redraw an unchanged screen. An FPS counter may show low values in static menus even when navigation is responsive, helping save processing work and battery life.
-
-Playback has also been tested at **222 MHz CPU / 111 MHz GPU**, with satisfactory results for the tested content.
+- **Shorts and Vertical Mode:** portrait video playback with gesture navigation while holding the Vita vertically. Inverted screen mode is still experimental.
+- **Player:** H.264 playback up to 720p, Aspect Ratio modes (Original, Zoom and Stretch), Bilinear/Nearest filtering and improved support for unusual video sizes.
+- **Controls:** left analog-stick navigation, right-stick volume/brightness shortcuts and Player settings on Triangle.
+- **Interface:** complete 60 FPS startup animation, adjustable native UI sounds and refined Add-ons.
+- **Sleep Timer:** 5-minute option, final 60-second countdown and audio alerts.
+- **Downloads:** improved MP3/MP4 handling, audio conversion during downloading, paginated files and notices when a requested quality is unavailable.
+- **Stability:** improved memory/GPU handling, network reconnection and preservation of previous-session logs.
 
 ## Which version should I download?
 
-Install either VPK using **VitaShell**. The two editions have separate LiveArea bubbles. No PC or companion server is needed.
+Install using **VitaShell**. Full and Lite have separate LiveArea bubbles and can coexist.
 
-- **YouTube Full — recommended:** YouTube.vpk uses extended RAM for video playback.
-- **YouTube Lite — lower memory usage:** YouTube-Lite.vpk uses normal RAM for better compatibility with suspended background apps.
+- **YouTube Full — recommended:** extended RAM for better video playback.
+- **YouTube Lite — lower RAM usage:** better compatibility when keeping other apps in the background.
+
+**Requirement:** install [kubridge v0.3.1 or newer](https://github.com/bythos14/kubridge/releases/latest) under `*KERNEL` and reboot. Older versions may crash shortly after the startup animation. You do not need to erase the app's settings or sign-in data when updating.
 
 ## Known limitations
 
-**AdBlock is partial** and cannot remove every YouTube ad. Some videos are restricted by their encoding or content. Occasional crashes while switching HD videos, especially during downloads, are still being investigated.
+**Full HD, Inverted screen and some Shorts controls remain experimental.** AdBlock is partial, MP4 downloads may use a lower resolution than requested, and occasional crashes when switching videos are still under investigation. The Square-button comments shortcut is not implemented yet.
 
-For build instructions, Google sign-in details and more screenshots, see the [project README](https://github.com/WolffsRoom/YouTubeOnVita).
+If you encounter problems, share `cobalt_boot_prev.log`, `starboard15_prev.log` and the `.psp2dmp` dump if available.
+
+For setup and technical details, see the [YouTube on Vita README](https://github.com/WolffsRoom/YouTubeOnVita#readme).
 
 **Vita means life!**
