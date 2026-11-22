@@ -315,7 +315,7 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-visitors-btn:active{transform:translate(4px,4px)}
 .wr-visitors-btn:focus-visible,.wr-visitors-close:focus-visible{outline:4px solid #fff;outline-offset:3px}
 .wr-visitors-btn img{display:block;width:44px;height:44px;object-fit:contain;image-rendering:pixelated}
-.wr-visitors-panel{position:fixed;right:92px;bottom:320px;z-index:55;width:320px;max-width:calc(100vw - 116px);box-sizing:border-box;padding:18px;background:#0b0b0b;color:#fff;border:4px solid #fff;box-shadow:6px 6px 0 #333;font-family:'Pixelify Sans',monospace;font-size:17px}
+.wr-visitors-panel{position:fixed;left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);z-index:76;width:min(420px,calc(100vw - 32px));max-width:calc(100vw - 32px);max-height:calc(100vh - 32px);overflow-y:auto;box-sizing:border-box;padding:20px;background:#0b0b0b;color:#fff;border:4px solid #fff;box-shadow:6px 6px 0 #333;font-family:'Pixelify Sans',monospace;font-size:17px}
 .wr-visitors-panel[hidden]{display:none!important}
 .wr-visitors-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
 .wr-visitors-head strong{font-family:'WR Start 2P','Pixelify Sans',monospace;font-weight:400;line-height:1.7;font-size:13px}
@@ -325,7 +325,12 @@ dd{overflow-wrap:break-word;word-break:normal;hyphens:manual;min-width:0}
 .wr-visitors-stat b{display:block;font-family:'WR Start 2P','Pixelify Sans',monospace;font-size:15px;overflow-wrap:anywhere;margin-bottom:9px}
 .wr-visitors-stat span{font-size:14px;color:#bdbdbd}
 .wr-visitors-note{margin:14px 0 0;color:#aaa;font-size:13px;line-height:1.45}
-@media(max-width:550px){.wr-visitors-panel{right:12px;bottom:392px;width:min(320px,calc(100vw - 24px));max-width:calc(100vw - 24px)}}
+@media(max-width:550px){.wr-visitors-panel{width:calc(100vw - 24px);max-width:calc(100vw - 24px);padding:16px}}
+/* A dedicated full-screen backdrop keeps the stats modal distinct from side controls. */
+.wr-visitors-backdrop{position:fixed;inset:0;z-index:75;background:rgba(0,0,0,.74);cursor:pointer}
+.wr-visitors-backdrop[hidden]{display:none!important}
+body:not(.wr-tools-open) .wr-visitors-backdrop{display:none!important}
+.wr-visitors-panel:focus-visible{outline:4px solid #fff;outline-offset:4px}
 /* Collapsible lateral controls on desktop and mobile; Vita and active poll stay outside. */
 .wr-tools-toggle{position:fixed;right:16px;bottom:16px;z-index:54;width:64px;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:0;border:4px solid #5a5a5a;background:#060606;color:#fff;cursor:pointer}
 .wr-tools-toggle:hover,.wr-tools-toggle[aria-expanded="true"]{border-color:#fff}
@@ -337,9 +342,9 @@ body.wr-tools-open .wr-langbtn{right:92px;bottom:16px}
 body.wr-tools-open .wr-snd{right:168px;bottom:16px}
 body.wr-tools-open .wr-visitors-btn{right:244px;bottom:16px}
 body.wr-tools-open .wr-sndmenu{right:168px;bottom:92px}
-body.wr-tools-open .wr-visitors-panel{right:16px;bottom:244px;max-width:calc(100vw - 32px)}
+body.wr-tools-open .wr-visitors-panel{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%)}
 @media(max-width:400px){
-  body.wr-tools-open .wr-visitors-panel{right:12px;bottom:244px;width:calc(100vw - 24px);max-width:calc(100vw - 24px)}
+  body.wr-tools-open .wr-visitors-panel{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:calc(100vw - 24px);max-width:calc(100vw - 24px)}
 }
 @media(max-width:315px){
   body.wr-tools-open .wr-langbtn{right:16px;bottom:244px}
@@ -485,7 +490,8 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 <button id="wr-visitors-trigger" class="wr-visitors-btn" type="button" aria-expanded="false" aria-controls="wr-visitors-panel" aria-label="Visitantes" title="Visitantes">
 <img src="assets/visitantes.png" width="44" height="44" alt="" aria-hidden="true">
 </button>
-<section id="wr-visitors-panel" class="wr-visitors-panel" role="dialog" aria-modal="false" aria-labelledby="wr-visitors-title" hidden>
+<div id="wr-visitors-backdrop" class="wr-visitors-backdrop" hidden aria-hidden="true"></div>
+<section id="wr-visitors-panel" class="wr-visitors-panel" role="dialog" aria-modal="true" aria-labelledby="wr-visitors-title" tabindex="-1" hidden>
 <div class="wr-visitors-head"><strong id="wr-visitors-title"><span data-l="pt">VISITANTES</span><span data-l="en">VISITORS</span></strong><button type="button" id="wr-visitors-close" class="wr-visitors-close" aria-label="Fechar / Close">×</button></div>
 <div class="wr-visitors-stats">
 <div class="wr-visitors-stat"><b data-wr-stat="visits">—</b><span data-l="pt">Visitas totais</span><span data-l="en">Total visits</span></div>
@@ -501,17 +507,27 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
   var btn=document.getElementById("wr-tools-toggle");
   if(!btn)return;
   function openMenu(open){
+    if(!open){
+      var stats=document.getElementById("wr-visitors-panel");
+      var closeStats=document.getElementById("wr-visitors-close");
+      if(stats && !stats.hidden && closeStats) closeStats.click();
+    }
     document.body.classList.toggle("wr-tools-open",open);
     btn.setAttribute("aria-expanded",open?"true":"false");
     btn.setAttribute("aria-label",open?"Close side menu":"Open side menu");
   }
-  btn.addEventListener("click",function(){openMenu(!document.body.classList.contains("wr-tools-open"));});
+  function uiSound(type){document.dispatchEvent(new CustomEvent("wr-side-sound",{detail:type||"tick"}));}
+  btn.addEventListener("click",function(){
+    var opening=!document.body.classList.contains("wr-tools-open");
+    uiSound(opening?"tick":"back");
+    openMenu(opening);
+  });
   document.addEventListener("keydown",function(e){
-    if(e.key==="Escape"&&document.body.classList.contains("wr-tools-open"))openMenu(false);
+    if(e.key==="Escape"&&document.body.classList.contains("wr-tools-open") && document.getElementById("wr-visitors-panel").hidden)openMenu(false);
   });
   document.addEventListener("pointerdown",function(e){
     if(!document.body.classList.contains("wr-tools-open"))return;
-    if(e.target.closest(".wr-tools-toggle,.wr-visitors-panel,.wr-sndmenu,.wr-snd,.wr-langbtn,.wr-visitors-btn"))return;
+    if(e.target.closest(".wr-tools-toggle,.wr-visitors-panel,.wr-visitors-backdrop,.wr-sndmenu,.wr-snd,.wr-langbtn,.wr-visitors-btn"))return;
     openMenu(false);
   });
 })();
@@ -957,6 +973,9 @@ class Component extends DCLogic {
       journalControl.classList.remove('wr-journal-unread');
     }
   });
+  document.addEventListener('wr-side-sound', function (ev) {
+    if (comp && typeof comp.beep === 'function') comp.beep(ev.detail === 'back' ? 'back' : 'tick');
+  });
   document.addEventListener('click', function (ev) {
     var el = ev.target.closest('[data-act]');
     if (!el) return;
@@ -1145,6 +1164,7 @@ class Component extends DCLogic {
   var trigger = document.getElementById("wr-visitors-trigger");
   var panel = document.getElementById("wr-visitors-panel");
   var close = document.getElementById("wr-visitors-close");
+  var backdrop = document.getElementById("wr-visitors-backdrop");
   var note = document.getElementById("wr-visitors-note");
   if (!trigger || !panel) return;
   var labels = function (pt,en) { return document.documentElement.lang === "en" ? en : pt; };
@@ -1186,12 +1206,17 @@ class Component extends DCLogic {
       .catch(function(){if(!panel.hidden)fail();});
   }
   function toggle(show){
-    panel.hidden=!show;trigger.setAttribute("aria-expanded",show?"true":"false");
-    if(show){note.textContent=labels("Carregando estatísticas…","Loading statistics…");fetchStats(false);close.focus();}
+    if(show===!panel.hidden)return;
+    document.dispatchEvent(new CustomEvent("wr-side-sound",{detail:show?"tick":"back"}));
+    panel.hidden=!show;
+    if(backdrop)backdrop.hidden=!show;
+    trigger.setAttribute("aria-expanded",show?"true":"false");
+    if(show){note.textContent=labels("Carregando estatísticas…","Loading statistics…");fetchStats(false);panel.focus();}
     else trigger.focus();
   }
   trigger.addEventListener("click",function(){toggle(panel.hidden);});
   close.addEventListener("click",function(){toggle(false);});
+  if(backdrop)backdrop.addEventListener("click",function(){toggle(false);});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!panel.hidden)toggle(false);});
   document.addEventListener("pointerdown",function(e){
     if(!panel.hidden&&!panel.contains(e.target)&&!trigger.contains(e.target)) toggle(false);
