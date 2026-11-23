@@ -1,6 +1,6 @@
 <div align="center">
 
-<img alt="Wolff's Room" src="https://github.com/user-attachments/assets/d8994a8f-e19c-425a-b9da-3ad2088dd9a3" />
+<img alt="Wolff's Room" src="https://github.com/user-attachments/assets/a0b2f7cf-56a2-4cd6-89f0-2a5764ec9aac" />
 
 <br>
 
