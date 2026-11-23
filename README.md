@@ -1,19 +1,109 @@
-# Wolff's Room
+<div align="center">
 
-Site de projetos do Wolff's Room: ports, ferramentas, traduções e reviews para PlayStation Vita.
+<img width="774" height="70" alt="Wolff's Room" src="https://github.com/user-attachments/assets/2fd357a7-2efc-48e8-8846-766c5422ec5f" />
 
-Site publicado: https://wolffsroom.github.io/WolffsRoomSite/
+<br>
 
-**Novo post:** [abrir o formulário](https://github.com/WolffsRoom/WolffsRoomSite/issues/new?template=novo-post.yml) · guia completo em [COMO-POSTAR.md](COMO-POSTAR.md)
+**The official home of Wolff's Room projects.**
 
-## Estrutura
+*PlayStation Vita ports, homebrew, mods, translations, reviews, and more.*
 
-- `content/posts/<slug>/` — um post por pasta: `post.md` (dados e texto) e as imagens.
-- `assets/` — elementos gráficos do site (texturas, halos, ícone da pata).
-- `tools/build.py` — gera o site em `_site/` a partir dos posts.
-- `tools/template.html` — layout, estilos, sons e animações da página.
-- `tools/issue_to_post.py` — transforma uma issue do formulário em post.
-- `.github/workflows/pages.yml` — gera e publica o site a cada push na `main`.
-- `.github/workflows/novo-post.yml` — cria o post quando a issue "Novo post" é aberta.
+[**Visit Website**](https://wolffsroom.github.io/WolffsRoomSite/) · [**GitHub**](https://github.com/WolffsRoom) · [**Submit a Post**](https://github.com/WolffsRoom/WolffsRoomSite/issues/new?template=novo-post.yml)
 
-Os jogos, marcas e artes pertencem aos seus respectivos donos. Ports e traduções são projetos de fã, não oficiais.
+![Platform](https://img.shields.io/badge/Platform-PS%20Vita-FF0033?style=flat-square)
+![Hosting](https://img.shields.io/badge/Hosting-GitHub%20Pages-212121?style=flat-square&logo=github)
+![Status](https://img.shields.io/badge/Status-Online-brightgreen?style=flat-square)
+
+</div>
+
+---
+
+## Overview
+
+**Wolff's Room** is an independent project hub dedicated to the PlayStation Vita homebrew community.
+
+The website brings together game ports, homebrew applications, translations, mods, reviews, and development updates in one place.
+
+Featuring a custom **pixel-art interface**, interactive animations, UI sounds, community polls, and support for **English and Brazilian Portuguese**.
+
+### What's Inside
+
+- **Ports:**
+  - Games adapted to run on PlayStation Vita.
+- **Apps and Tools:**
+  - Homebrew applications, utilities, and plugins.
+- **Translations and Mods:**
+  - Community-driven improvements and localization projects.
+- **Journal and News**
+  - Releases, announcements, and development progress.
+- **Community Polls** — Vote on upcoming projects and ideas.
+
+---
+
+## How It Works
+
+The website is automatically generated from Markdown content using Python and deployed through GitHub Actions.
+
+```text
+      Markdown Posts + Assets
+                |
+          Python Builder
+         (tools/build.py)
+                |
+          Static Website
+             (_site/)
+                |
+          GitHub Actions
+                |
+           GitHub Pages
+                |
+           Wolff's Room
+```
+
+### Project Structure
+
+| Path | Description |
+|---|---|
+| `content/posts/<slug>/` | Individual project posts, metadata, and screenshots. |
+| `assets/` | Website graphics, fonts, textures, and audio. |
+| `tools/build.py` | Static website generator. |
+| `tools/template.html` | Layout, styles, animations, and interactive elements. |
+| `tools/issue_to_post.py` | Converts GitHub Issues into website posts. |
+| `poll-backend/` | Cloudflare Worker backend for community polls. |
+| `visitors-backend/` | Anonymous visitor statistics. |
+| `.github/workflows/pages.yml` | Automatic deployment to GitHub Pages. |
+| `.github/workflows/novo-post.yml` | Automated post creation from GitHub Issues. |
+
+---
+
+## Submit a Post
+
+Want to add a new project or update an existing post?
+
+Use the [**New Post Form**](https://github.com/WolffsRoom/WolffsRoomSite/issues/new?template=novo-post.yml).
+
+For detailed instructions, see [COMO-POSTAR.md](COMO-POSTAR.md).
+
+---
+
+## Links
+
+- **Website:** https://wolffsroom.github.io/WolffsRoomSite/
+- **GitHub:** https://github.com/WolffsRoom
+- **YouTube:** https://www.youtube.com/@WolffsRoom
+
+---
+
+## Disclaimer
+
+_Wolff's Room is an independent, unofficial fan project and is not affiliated with Sony Interactive Entertainment or the original developers and publishers._
+
+All trademarks, games, characters, and original artwork belong to their respective owners.
+
+<div align="center">
+
+---
+
+*Wolff's Room © 2026*
+
+</div>
