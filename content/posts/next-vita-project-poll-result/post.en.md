@@ -7,7 +7,6 @@ chamada: "POLL ENDED! Meet the next project chosen by the community!"
 ficha:
   Winning project: "New Browser for Vita"
   Winning votes: "16 (84.21%)"
-  Total votes: 19
   Poll closed: "November 23, 2026 at 10:25 PM (BRT)"
 fontes:
   Original poll: https://wolffsroom.github.io/WolffsRoomSite/posts/next-vita-project-poll/
@@ -20,14 +19,9 @@ Our community poll has officially ended, and you decided what Wolff's Room shoul
 
 **NEW BROWSER FOR VITA** is the winner, with **16 votes (84.21%)**!
 
-Thank you to everyone who participated. We received **19 votes** in total.
+Thank you to everyone who participated.
 
 ## Final results
-
-- **New Browser for Vita:** 16 votes (84.21%) — WINNER!
-- **Reddit Vita:** 1 vote (5.26%)
-- **Internet Archive Vita:** 1 vote (5.26%)
-- **GameFAQs Vita:** 1 vote (5.26%)
 
 ## What's next?
 

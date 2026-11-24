@@ -13,7 +13,6 @@ capa: capa.png
 ficha:
   Projeto vencedor: "New Browser for Vita"
   Votos no vencedor: "16 (84,21%)"
-  Total de votos: 19
   Encerramento: "23/11/2026 às 22h25"
 fontes:
   Enquete original: https://wolffsroom.github.io/WolffsRoomSite/posts/next-vita-project-poll/
@@ -26,14 +25,9 @@ A nossa enquete chegou ao fim e vocês decidiram qual será o próximo projeto d
 
 **NEW BROWSER FOR VITA** foi o vencedor, com **16 votos (84,21%)**!
 
-Obrigado a todos que participaram da votação. Foram **19 votos** registrados no total.
+Obrigado a todos que participaram da votação!
 
 ## Resultado final
-
-- **New Browser for Vita:** 16 votos (84,21%) — VENCEDOR!
-- **Reddit Vita:** 1 voto (5,26%)
-- **Internet Archive Vita:** 1 voto (5,26%)
-- **GameFAQs Vita:** 1 voto (5,26%)
 
 ## E agora?
 

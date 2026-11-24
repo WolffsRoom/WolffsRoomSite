@@ -25,8 +25,8 @@ class ActivePollShortcutTests(unittest.TestCase):
     def test_button_targets_actual_configured_poll(self):
         posts,order=build.load_all()
         html=build.floating_poll_buttons(posts,order)
-        self.assertIn('data-act="open_next-vita-project-poll"',html)
-        self.assertIn('href="https://wolffsroom.github.io/WolffsRoomSite/posts/next-vita-project-poll/"',html)
+        self.assertIn('data-act="open_next-vita-project-poll-result"',html)
+        self.assertIn('href="https://wolffsroom.github.io/WolffsRoomSite/posts/next-vita-project-poll-result/"',html)
         self.assertIn('data-poll-end="2026-11-23T22:25:00-03:00"',html)
         self.assertIn('assets/polls/PollBox.png',html)
         self.assertIn('assets/polls/PollPaper.png',html)

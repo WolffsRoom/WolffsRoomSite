@@ -18,6 +18,23 @@ class PollResultFeatureTests(unittest.TestCase):
         self.assertNotEqual(build.choose_feature(posts,order,before),result['slug'])
         self.assertEqual(build.choose_feature(posts,order,during),result['slug'])
         self.assertNotEqual(build.choose_feature(posts,order,after),result['slug'])
+    def test_centered_result_chart_and_cover(self):
+        item=build.load_post('next-vita-project-poll-result')
+        en=build.news_article(item,'en')
+        pt=build.news_article(item,'pt')
+        for html in (en,pt):
+            self.assertIn('class="wr-result-cover"',html)
+            self.assertIn('posts/next-vita-project-poll-result/capa.png',html)
+            self.assertIn('class="wr-result-chart"',html)
+            self.assertIn('class="wr-result-track"',html)
+            self.assertIn('New Browser for Vita',html)
+            self.assertNotIn('Total votes: 19',html)
+            self.assertNotIn('Total de votos: 19',html)
+        self.assertIn('16 votes',en)
+        self.assertIn('84.21%',en)
+        self.assertIn('1 vote',en)
+        self.assertIn('5.26%',en)
+
     def test_official_vote_counts(self):
         import json
         p=Path(__file__).resolve().parents[1]/'content/poll-results/next-vita-project-poll.json'

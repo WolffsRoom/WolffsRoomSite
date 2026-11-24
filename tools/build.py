@@ -932,6 +932,41 @@ def poll_article(p, lang):
             + '</article>')
 
 
+def poll_result_chart(lang):
+    """Centered accessible pixel-art results, backed by the closed poll snapshot."""
+    filename = os.path.join(ROOT, 'content', 'poll-results', 'next-vita-project-poll.json')
+    with open(filename, encoding='utf-8') as source:
+        counts = json.load(source)['counts']
+    if len(counts) != 4 or any(type(n) is not int or n < 0 for n in counts):
+        raise PostError('Invalid poll result counts')
+    total = sum(counts)
+    if total <= 0:
+        raise PostError('Poll result must have votes')
+    names = ('New Browser for Vita', 'Reddit Vita', 'Internet Archive Vita', 'GameFAQs Vita')
+    winner = counts.index(max(counts))
+    blocks = []
+    for idx, (name, count) in enumerate(zip(names, counts)):
+        pct = count * 100 / total
+        percent = f'{pct:.2f}' if lang == 'en' else f'{pct:.2f}'.replace('.', ',')
+        metric = (f'{count} vote' + ('s' if count != 1 else '')) if lang == 'en' else (f'{count} voto' + ('s' if count != 1 else ''))
+        winning = idx == winner
+        status = '<span class="wr-result-winner">' + ('WINNER!' if lang == 'en' else 'VENCEDOR!') + '</span>' if winning else ''
+        blocks.append(
+            '<div class="wr-result-entry' + (' wr-result-entry--winner' if winning else '') + '">'
+            f'<div class="wr-result-name">{e(name)} {status}</div>'
+            f'<div class="wr-result-track"><span class="wr-result-fill" style="width:{pct:.4f}%"></span></div>'
+            f'<div class="wr-result-metric">{e(metric)} <span aria-hidden="true">·</span> {e(percent)}%</div>'
+            '</div>'
+        )
+    title = 'FINAL RESULTS' if lang == 'en' else 'RESULTADO FINAL'
+    desc = 'Official community poll results' if lang == 'en' else 'Resultado oficial da enquete'
+    return (
+        '<section class="wr-result-chart" role="group" aria-label="' + e(desc) + '">'
+        f'<h2 class="wr-result-heading">{e(title)}</h2>'
+        + ''.join(blocks) + '</section>'
+    )
+
+
 def news_article(p, lang):
     q = V(p, lang)
     media = []
@@ -940,6 +975,9 @@ def news_article(p, lang):
         for part in q.get('about', '').split('\n\n') if part.strip()
     )
     for sec in q.get('secs') or []:
+        if p['slug'] == 'next-vita-project-poll-result' and sec['title'] in ('Final results', 'Resultado final'):
+            content += poll_result_chart(lang)
+            continue
         content += f'<h2 style="{DF};font-size:16px">{e(sec["title"])}</h2>'
         for block in sec.get('blocks') or []:
             if block[0] == 'p':
@@ -959,6 +997,13 @@ def news_article(p, lang):
         url = 'https://www.youtube.com/watch?v=' + p['video']
         media.append(f'<a href="{e(url)}" target="_blank" rel="noopener">'
                      + T('Assistir vídeo no YouTube', 'Watch video on YouTube') + '</a>')
+    # Unlike project pages, Journal/News does not normally render the cover;
+    # the result announcement explicitly displays the user's original artwork.
+    cover_html = ''
+    if p['slug'] == 'next-vita-project-poll-result' and p.get('cover'):
+        cover_html = ('<figure class="wr-result-cover">'
+                      + pic(p, lang)
+                      + '</figure>')
     return (f'<article data-l="{lang}" class="wr-journal-news" style="max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:18px;border:4px solid #555;padding:24px;background:#0e0e0e">'
              f'<button class="wr-btn wr-back-standard wr-journal-back" type="button" data-act="goHome" '
              f'style="align-self:flex-start;box-sizing:border-box;min-height:48px;background:#141414;'
@@ -967,7 +1012,7 @@ def news_article(p, lang):
              + '<span aria-hidden="true">◀</span> ' + T('Voltar', 'Back') + '</button>'
             f'<h1 style="{DF};font-size:20px;line-height:1.6;margin:0">{e(q["title"])}</h1>'
             f'<p style="color:#aaa;margin:0">{e(p["date"].isoformat())}</p>'
-            + content + ''.join(media) + '</article>')
+            + cover_html + content + ''.join(media) + '</article>')
 
 
 def detail(p):
@@ -1291,9 +1336,13 @@ def floating_poll_buttons(posts, order):
         poll = posts[slug].get('poll')
         if not poll:
             continue
+        result_slug = slug + '-result'
+        ends_at = datetime.datetime.fromisoformat(poll['ends_at'])
+        now_local = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3))).replace(tzinfo=None)
+        target = result_slug if result_slug in posts and now_local >= ends_at else slug
         buttons.append(
-            f'<a class="wr-poll-float" href="{SITE_URL}posts/{e(slug)}/" '
-            f'data-act="open_{e(slug)}" data-wr-open-poll '
+            f'<a class="wr-poll-float" href="{SITE_URL}posts/{e(target)}/" '
+            f'data-act="open_{e(target)}" data-wr-open-poll '
             f'data-poll-start="{e(poll["starts_at"])}-03:00" '
             f'data-poll-end="{e(poll["ends_at"])}-03:00" '
             'aria-label="Poll and results" title="Poll and results" hidden>'

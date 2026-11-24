@@ -352,6 +352,21 @@ body.wr-tools-open .wr-visitors-panel{left:50%;top:50%;right:auto;bottom:auto;tr
   body.wr-tools-open .wr-visitors-btn{right:168px;bottom:16px}
   body.wr-tools-open .wr-sndmenu{right:92px;bottom:92px}
 }
+/* Poll result: center-aligned retro pixel chart with crisp, stepped bars. */
+.wr-result-cover{margin:0;max-width:100%;border:4px solid #555;background:#000;line-height:0}
+.wr-result-cover img{width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;image-rendering:auto}
+.wr-result-chart{margin:20px auto 24px;max-width:600px;width:100%;box-sizing:border-box;padding:22px 18px;border:4px solid #626262;background:#090909;text-align:center;box-shadow:6px 6px 0 #252525}
+.wr-result-heading{font-family:'WR Start 2P','Press Start 2P',monospace;font-size:15px;line-height:1.65;color:#fff;margin:0 0 26px;text-align:center}
+.wr-result-entry{border:2px solid #494949;background:#101010;padding:14px 12px;margin:0 0 13px}
+.wr-result-entry:last-child{margin-bottom:0}
+.wr-result-entry--winner{border-color:#ff0033;background:#19080e;box-shadow:3px 3px 0 #580018}
+.wr-result-name{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;font-family:'WR Start 2P','Press Start 2P',monospace;font-size:10px;line-height:1.9;color:#fff}
+.wr-result-winner{color:#ff3155;font-size:9px}
+.wr-result-track{height:20px;margin:10px 0 8px;border:3px solid #777;background:repeating-linear-gradient(90deg,#171717 0,#171717 10px,#242424 10px,#242424 12px);box-sizing:border-box;text-align:left}
+.wr-result-fill{display:block;height:100%;background:repeating-linear-gradient(90deg,#c0c0c0 0,#c0c0c0 10px,#e5e5e5 10px,#e5e5e5 12px);max-width:100%;min-width:2px}
+.wr-result-entry--winner .wr-result-fill{background:repeating-linear-gradient(90deg,#ff0033 0,#ff0033 10px,#d6002b 10px,#d6002b 12px)}
+.wr-result-metric{font-family:'WR Start 2P','Press Start 2P',monospace;font-size:9px;line-height:1.8;color:#c7c7c7}
+@media(max-width:550px){.wr-result-chart{padding:16px 10px}.wr-result-heading{font-size:12px}.wr-result-name{font-size:9px}.wr-result-metric{font-size:8px}}
 </style>
 <style>
 .dc-if{display:contents}
