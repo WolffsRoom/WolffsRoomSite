@@ -13,7 +13,7 @@ class NoFakePollProductionTests(unittest.TestCase):
   self.assertNotIn("enquete-demo-local",order)
   self.assertEqual(len(posts), len(list((ROOT / "content/posts").glob("*/post.md"))))
   self.assertTrue(posts["next-vita-project-poll"].get("poll"))
-  self.assertIn(build.choose_feature(posts,order), ("next-vita-project-poll", "youtube-on-vita"))
+  self.assertIn(build.choose_feature(posts,order), ("next-vita-project-poll", "youtube-on-vita", "next-vita-project-poll-result"))
 
  def test_no_demo_script_or_fake_post_in_production(self):
   template=(ROOT/"tools/template.html").read_text("utf-8")

@@ -399,7 +399,23 @@ html[lang="en"] [data-l="pt"],html:not([lang="en"]) [data-l="en"]{display:none !
 .wr-poll-float:hover{border-color:#ffffff}
 .wr-poll-float:active{transform:translate(4px,4px)}
 .wr-poll-float:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
-.wr-poll-float img{display:block;max-width:100%;max-height:100%;object-fit:contain;image-rendering:pixelated}
+.wr-poll-float img{display:block;object-fit:contain;image-rendering:pixelated}
+.wr-poll-art{position:relative;display:block;width:48px;height:54px;flex-shrink:0;overflow:visible}
+.wr-poll-box{position:absolute;bottom:0;left:2px;width:44px;height:34px;transform-origin:50% 100%;animation:wr-poll-shake 2.8s steps(1,end) infinite}
+.wr-poll-paper{position:absolute;top:0;left:14px;width:21px;height:24px;z-index:1;transform-origin:50% 100%;animation:wr-poll-paper 2.8s steps(1,end) infinite}
+@keyframes wr-poll-shake{
+  0%,61%,85%,100%{transform:rotate(0)}
+  64%,72%{transform:translateX(-2px) rotate(-7deg)}
+  68%,76%{transform:translateX(2px) rotate(7deg)}
+  80%{transform:translateX(-1px) rotate(-3deg)}
+}
+@keyframes wr-poll-paper{
+  0%,61%,85%,100%{transform:translateY(0) rotate(0)}
+  64%,72%{transform:translateY(-3px) rotate(7deg)}
+  68%,76%{transform:translateY(-5px) rotate(-7deg)}
+  80%{transform:translateY(-2px)}
+}
+@media(prefers-reduced-motion:reduce){.wr-poll-box,.wr-poll-paper{animation:none!important}}
 .wr-vitabtn:hover{border-color:#ffffff}
 .wr-vitabtn:active{transform:translate(4px,4px)}
 .wr-vitabtn:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
@@ -1109,25 +1125,28 @@ class Component extends DCLogic {
   }
   refreshPollCountdowns();
   setInterval(refreshPollCountdowns, 30000);
-  // Keep the floating poll shortcut current even without a Pages rebuild.
-  // Only the newest poll within its scheduled start/end is shown.
+  // The newest started poll remains accessible after closing so visitors
+  // can open its original post and see the official results. Future polls
+  // do not appear before their opening time.
   function refreshActivePollButton() {
-    var now = Date.now(), active = null, latest = -Infinity;
+    var now = Date.now(), latestBtn = null, latestTime = -Infinity;
     document.querySelectorAll('[data-wr-open-poll]').forEach(function (btn) {
       var from = Date.parse(btn.getAttribute('data-poll-start'));
-      var until = Date.parse(btn.getAttribute('data-poll-end'));
       btn.hidden = true;
-      if (Number.isFinite(from) && Number.isFinite(until) &&
-          from <= now && now < until && from > latest) {
-        active = btn; latest = from;
+      if (Number.isFinite(from) && from <= now && from > latestTime) {
+        latestBtn = btn; latestTime = from;
       }
     });
-    if (!active) return;
+    if (!latestBtn) return;
+    var end = Date.parse(latestBtn.getAttribute('data-poll-end'));
+    var closed = Number.isFinite(end) && now >= end;
     var en = document.documentElement.lang === 'en';
-    var label = en ? 'Vote in the active poll' : 'Votar na enquete aberta';
-    active.setAttribute('aria-label', label);
-    active.setAttribute('title', label);
-    active.hidden = false;
+    var label = closed
+      ? (en ? 'View poll results' : 'Ver resultado da enquete')
+      : (en ? 'Vote in the active poll' : 'Votar na enquete aberta');
+    latestBtn.setAttribute('aria-label', label);
+    latestBtn.setAttribute('title', label);
+    latestBtn.hidden = false;
   }
   refreshActivePollButton();
   setInterval(refreshActivePollButton, 30000);

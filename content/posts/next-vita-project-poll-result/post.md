@@ -1,0 +1,44 @@
+---
+titulo: "POLL ENDED! — New Browser for Vita é o vencedor!"
+categoria: journal
+subcategoria: news
+grupo: Em andamento
+data: "2026-11-23 22:41"
+destaque_ate: "2026-11-24 22:41"
+tag: "Poll Result · Wolff's Room · PS Vita"
+status: "Resultado oficial da enquete"
+resumo: "A comunidade escolheu! New Browser for Vita venceu a enquete com 16 dos 19 votos."
+chamada: "POLL ENDED! Conheça o próximo projeto escolhido pela comunidade!"
+capa: capa.png
+ficha:
+  Projeto vencedor: "New Browser for Vita"
+  Votos no vencedor: "16 (84,21%)"
+  Total de votos: 19
+  Encerramento: "23/11/2026 às 22h25"
+fontes:
+  Enquete original: https://wolffsroom.github.io/WolffsRoomSite/posts/next-vita-project-poll/
+---
+**POLL ENDED!**
+
+E aí, pessoal! Wolff aqui!
+
+A nossa enquete chegou ao fim e vocês decidiram qual será o próximo projeto da Wolff's Room para PlayStation Vita!
+
+**NEW BROWSER FOR VITA** foi o vencedor, com **16 votos (84,21%)**!
+
+Obrigado a todos que participaram da votação. Foram **19 votos** registrados no total.
+
+## Resultado final
+
+- **New Browser for Vita:** 16 votos (84,21%) — VENCEDOR!
+- **Reddit Vita:** 1 voto (5,26%)
+- **Internet Archive Vita:** 1 voto (5,26%)
+- **GameFAQs Vita:** 1 voto (5,26%)
+
+## E agora?
+
+O novo navegador será nosso próximo projeto escolhido pela comunidade! Vamos compartilhar o progresso e as novidades aqui no site e na Wolff's Store.
+
+**Este é um anúncio do projeto selecionado, não uma confirmação de lançamento ou uma promessa de data.**
+
+Mais uma vez, obrigado por votarem! **Vita means life!**

@@ -23,7 +23,7 @@ class JournalAndPollTests(unittest.TestCase):
   for slug in ("p4g","god-of-war-ragnarok"):
    self.assertEqual(posts[slug]["cat"],"journal")
    self.assertEqual(posts[slug]["subcat"],"reviews")
-  self.assertIn(build.choose_feature(posts,order), ("youtube-on-vita", "next-vita-project-poll"))
+  self.assertIn(build.choose_feature(posts,order), ("youtube-on-vita", "next-vita-project-poll", "next-vita-project-poll-result"))
 
  def _fixture(self,td,now,days=None):
   f=Path(td)/"vote-test"
@@ -65,12 +65,13 @@ class JournalAndPollTests(unittest.TestCase):
     poll=build.load_post("vote-test")
    self.assertEqual(poll["poll"]["days"],5)
    posts,order=build.load_all()
+   posts.pop("next-vita-project-poll-result", None)  # Synthetic poll test without production time-limited pin.
    posts["vote-test"]=poll
    order=build.order_posts(posts)
-   self.assertEqual(build.choose_feature(posts,order),"vote-test")
+   self.assertEqual(build.choose_feature(posts,order, now),"vote-test")
    poll["poll"]["starts_at"]=(now-datetime.timedelta(days=1)).replace(tzinfo=None).isoformat()
    poll["poll"]["ends_at"]=(now+datetime.timedelta(days=2)).replace(tzinfo=None).isoformat()
-   self.assertIn(build.choose_feature(posts,order), ("next-vita-project-poll", "youtube-on-vita"))
+   self.assertNotEqual(build.choose_feature(posts,order, now),"vote-test")
 
  def test_compact_news_media(self):
   posts,_=build.load_all()

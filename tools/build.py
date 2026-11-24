@@ -260,6 +260,19 @@ def load_post(slug):
     home_allowed = meta.get('destaque_home', True)
     if not isinstance(home_allowed, bool):
         raise PostError('destaque_home: use true ou false')
+    # Time-limited featured spot for major news, such as a closed poll's result.
+    # Rebuilds restore the normal feature automatically once this deadline passes.
+    home_pin_until = None
+    if meta.get('destaque_ate'):
+        try:
+            home_pin_until = datetime.datetime.fromisoformat(str(meta['destaque_ate']))
+            if home_pin_until.tzinfo is not None:
+                brazil = datetime.timezone(datetime.timedelta(hours=-3))
+                home_pin_until = home_pin_until.astimezone(brazil).replace(tzinfo=None)
+        except ValueError as ex:
+            raise PostError('destaque_ate: use YYYY-MM-DD HH:MM') from ex
+        if home_pin_until <= when:
+            raise PostError('destaque_ate: deve ser depois da data do post')
     activity_when = max(when, last_activity) if news_kind in ('Update', 'Release') and last_activity else when
     poll = None
     if cat == 'journal' and subcat == 'enquetes':
@@ -297,7 +310,7 @@ def load_post(slug):
     p = {
         'slug': slug, 'title': str(meta['titulo']), 'cat': cat, 'subcat': subcat, 'poll': poll, 'group': group, 'date': date, 'when': when,
         'updated': updated_date, 'activity_when': activity_when,
-        'home_allowed': home_allowed,
+        'home_allowed': home_allowed, 'home_pin_until': home_pin_until,
         'tag': str(meta.get('tag') or CAT_NAMES[cat]), 'status': str(meta.get('status') or group),
         'author': str(meta.get('autor') or '').strip(),
         'author_url': str(meta.get('autor_url') or '').strip(),
@@ -399,9 +412,16 @@ def order_posts(posts):
                                            posts[slug]['when'], slug), reverse=True)
 
 
-def choose_feature(posts, order):
-    """First-day open polls temporarily take Home; thereafter use latest news."""
-    today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3)))
+def choose_feature(posts, order, at=None):
+    """One-day pinned news takes Home; then restore the normal featured update."""
+    today = at or datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=-3)))
+    local = today.astimezone(datetime.timezone(datetime.timedelta(hours=-3))).replace(tzinfo=None) if today.tzinfo else today
+    pinned = [slug for slug in order
+              if posts[slug].get('home_allowed', True)
+              and posts[slug].get('home_pin_until')
+              and posts[slug]['when'] <= local < posts[slug]['home_pin_until']]
+    if pinned:
+        return max(pinned, key=lambda slug: posts[slug]['when'])
     polls = [slug for slug in order if posts[slug].get('poll')
              and posts[slug].get('home_allowed', True)
              and posts[slug]['poll']['starts_at'][:10] == today.date().isoformat()
@@ -1260,10 +1280,10 @@ def write_share_pages(posts):
 
 
 def floating_poll_buttons(posts, order):
-    """Provide every configured poll to a live client-side availability check.
+    """Persistent shortcut to the newest started poll, including its closed results.
 
-    No hard-coded poll ID. The newest currently active poll is displayed.
-    Dates are local Brazil times, explicitly converted to UTC-03:00.
+    The current poll stays visible after closing, pointing to its original post
+    (with official counts), rather than disappearing at the end timestamp.
     """
     from store import SITE_URL
     buttons = []
@@ -1276,9 +1296,11 @@ def floating_poll_buttons(posts, order):
             f'data-act="open_{e(slug)}" data-wr-open-poll '
             f'data-poll-start="{e(poll["starts_at"])}-03:00" '
             f'data-poll-end="{e(poll["ends_at"])}-03:00" '
-            'aria-label="Open active poll" title="Open active poll" hidden>'
-            '<img src="assets/polls/CaixaWhite.png" alt="" aria-hidden="true" '
-            'width="46" height="46"></a>'
+            'aria-label="Poll and results" title="Poll and results" hidden>'
+            '<span class="wr-poll-art" aria-hidden="true">'
+            '<img class="wr-poll-paper" src="assets/polls/PollPaper.png" alt="" width="21" height="24">'
+            '<img class="wr-poll-box" src="assets/polls/PollBox.png" alt="" width="44" height="34">'
+            '</span></a>'
         )
     return ''.join(buttons)
 

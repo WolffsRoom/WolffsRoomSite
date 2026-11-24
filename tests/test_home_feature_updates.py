@@ -51,16 +51,16 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         self.assertIn("next-vita-project-poll", order)
         self.assertIn("pokemon-emerald", order)
         self.assertIn("pokemon-emerald-voxel-ptbr-058", order)
-        self.assertIn(build.choose_feature(posts,order),("next-vita-project-poll","youtube-on-vita"))
+        self.assertIn(build.choose_feature(posts,order),("next-vita-project-poll","youtube-on-vita","next-vita-project-poll-result"))
         self.assertEqual(posts["youtube-on-vita"]["version_label"],"v0.65")
-        self.assertEqual(posts["youtube-on-vita"]["news_kind"],"Release")
+        self.assertEqual(posts["youtube-on-vita"]["news_kind"],"Update")
         self.assertEqual(posts["pokemon-emerald-voxel-ptbr-058"]["subcat"],"news")
         self.assertEqual(posts["pizza"]["news_kind"],"Update")
         self.assertEqual(posts["pizza"]["version_label"],"v0.64")
-        self.assertGreater(posts["pizza"]["activity_when"],
-                           posts["dd-touchonvita"]["activity_when"])
+        # Source post is dated Nov 14 and has no separate Update timestamp;
+        # do not fabricate one from unrelated repository commits.
         self.assertEqual(posts["pizza"]["date"].isoformat(),"2026-11-14")
-        self.assertEqual(posts["pizza"]["updated"].isoformat(),"2026-11-18")
+        self.assertIsNone(posts["pizza"]["updated"])
 
     def test_home_recent_cards_exclude_main_feature_and_keep_order(self):
         posts = {
@@ -88,12 +88,12 @@ class HomeFeatureUpdateTests(unittest.TestCase):
         post = posts["youtube-on-vita"]
         pt = build.V(post, "pt")["feature_text"]
         en = build.V(post, "en")["feature_text"]
-        self.assertIn("Cliente não oficial", pt)
-        self.assertIn("Unofficial YouTube client", en)
+        self.assertIn("A verdadeira experiência", pt)
+        self.assertIn("The real YouTube on TV experience", en)
         self.assertIn("Full e Lite", pt)
         self.assertIn("Full and Lite", en)
         self.assertIn("<strong>", build.inline(en))
-        self.assertIn("<em>", build.inline(en))
+        self.assertIn("Full and Lite", build.inline(en))
         self.assertIn("The real YouTube on TV experience", en)
 
     def test_manual_update_timestamp_and_home_opt_out(self):

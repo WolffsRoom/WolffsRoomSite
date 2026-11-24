@@ -3,7 +3,8 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '17 */6 * * *'                # pega releases novas dos repos dos projetos
+    - cron: '17 */6 * * *' # refresh release catalogs
+    - cron: '45 1 * * *' # 22:45 BRT: expire one-day Home feature
   workflow_dispatch:
 permissions:
   contents: read

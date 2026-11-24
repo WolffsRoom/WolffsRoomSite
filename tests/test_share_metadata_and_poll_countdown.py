@@ -54,17 +54,16 @@ class SocialShareAndCountdownTests(unittest.TestCase):
                 self.assertIn('name="twitter:card" content="summary_large_image"', page)
                 self.assertNotIn('http-equiv="refresh"', page)
 
-    def test_poll_has_two_localized_timer_blocks(self):
+    def test_closed_poll_has_bilingual_results_instead_of_countdown(self):
         p = self.posts["next-vita-project-poll"]
         pt = build.poll_article(p, "pt")
         en = build.poll_article(p, "en")
         for html in (pt, en):
-            self.assertIn('data-wr-poll-countdown', html)
-            self.assertIn('data-ends-at="2026-11-23T22:25:00-03:00"', html)
-            self.assertIn('wr-poll-countdown-value', html)
-        self.assertIn('Encerra em:', pt)
-        self.assertIn('Ends in:', en)
-        self.assertRegex(pt, r'\d{2} dias? \d{2} horas? \d{2} minutos?')
+            self.assertNotIn('data-wr-poll-countdown', html)
+            self.assertIn('84%',html)
+            self.assertIn('wr-poll-options',html)
+        self.assertIn('Enquete encerrada.',pt)
+        self.assertIn('Poll closed.',en)
 
 
 if __name__ == "__main__":
