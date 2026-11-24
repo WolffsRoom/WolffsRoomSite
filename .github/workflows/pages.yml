@@ -37,5 +37,9 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
+      # The 100+ MB site artifact can take a few seconds to appear in the
+      # Pages deployment artifact lookup after upload-artifact succeeds.
+      - name: Wait for Pages artifact indexing
+        run: sleep 25
       - id: deployment
         uses: actions/deploy-pages@v4
