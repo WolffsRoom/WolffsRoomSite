@@ -300,6 +300,8 @@ def write_store(posts, order, feat, groups, out_dir):
             'novidade': p.get('news_kind') or '',
             'github_downloads_total': p.get('github_downloads_total'),
             'enquete': ({**p['poll'],
+                         'closed': bool(p['poll'].get('counts')),
+                         'counts': p['poll'].get('counts') or [],
                          'question_pt': p['poll']['question'],
                          'options_pt': p['poll']['options'],
                          'question_en': (p.get('en') or {}).get('poll_question', p['poll']['question']),
