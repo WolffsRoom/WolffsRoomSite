@@ -591,7 +591,11 @@ class Component extends DCLogic {
     try {
       document.addEventListener('keydown', function (ev) {
         if (!self.state.started && !ev.repeat && !ev.ctrlKey && !ev.metaKey && !ev.altKey) { self.start(); return; }
-        if (ev.key === 'Escape' && self.state.vitaOpen) { self.beep('back'); self.setState({ vitaOpen: false, qrOpen: false }); }
+        if (ev.key === 'Escape' && self.state.vitaOpen) {
+          self.beep('back');
+          self.setState({ vitaOpen: false, qrOpen: false });
+          clearStoreDownloadLink();
+        }
       });
     } catch (e) {}
     this._mT = setInterval(function () { try { self.musicTick(); } catch (e) {} }, 150);
@@ -600,7 +604,7 @@ class Component extends DCLogic {
     var ac = this.audio();
     // Do not start based on sound settings, loaded assets, timers or AudioContext.
     // Direct links into posts skip the intro; the homepage requires a user gesture.
-    if (!atHome) { this.start(true); return; }
+    if (!atHome || st.vitaOpen) { this.start(true); return; }
 
   }
   start(skipSfx) {
@@ -895,7 +899,11 @@ class Component extends DCLogic {
       vitaLabel: en ? "Wolff's Store for PS Vita" : "Wolff's Store para PS Vita",
       closeLabel: en ? 'Close' : 'Fechar',
       openVita: function () { self.beep('open'); self.setState({ vitaOpen: true, qrOpen: false, sndMenu: false }); },
-      closeVita: function () { self.beep('back'); self.setState({ vitaOpen: false, qrOpen: false }); },
+      closeVita: function () {
+        self.beep('back');
+        self.setState({ vitaOpen: false, qrOpen: false });
+        clearStoreDownloadLink();
+      },
       toggleQr: function () { self.beep('tick', true); self.setState({ qrOpen: !st.qrOpen }); },
       toggleSndMenu: function () {
         self.beep('tick', true);
@@ -949,6 +957,17 @@ class Component extends DCLogic {
   // The existing #slug links still work for bookmarks and redirects.
   var rootPath = location.pathname.indexOf('/WolffsRoomSite/') === 0
       ? '/WolffsRoomSite/' : '/';
+  // Shareable shortcut: /WolffsRoomSite/?download=store
+  // Keep the ordinary homepage URL when visitors close the download modal.
+  function clearStoreDownloadLink() {
+    var url = new URL(location.href);
+    if (url.searchParams.get('download') !== 'store') return;
+    url.searchParams.delete('download');
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+  }
+  function storeDownloadRequested() {
+    return new URLSearchParams(location.search).get('download') === 'store';
+  }
   function stateFromHash() {
     var h = decodeURIComponent((location.hash || '').slice(1));
     if (!h) {
@@ -1183,6 +1202,8 @@ class Component extends DCLogic {
     if (img.complete && img.naturalWidth) fire(); else img.addEventListener('load', fire);
   });
   Object.assign(comp.state, stateFromHash());
+  // Open the real download dialog immediately, without the lengthy intro.
+  if (storeDownloadRequested()) comp.state.vitaOpen = true;
   render();
   mounted = true;
   if (comp.componentDidMount) comp.componentDidMount();
